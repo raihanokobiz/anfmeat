@@ -6,6 +6,8 @@
   :root {
     /* custom color  */
     --primary-color: #1e6a39;
+    --primary-color: 30 90% 50%;
+    --primary-foreground: 0 0% 100%;
     --background: 0 0% 100%;
     --foreground: 224 71.4% 4.1%;
     --card: 0 0% 100%;
@@ -71,7 +73,7 @@
 }
 
 .custom-scroll::-webkit-scrollbar-thumb {
-  background-color: #FF6C0C;
+  background-color: #1e6a39;
   border-radius: 4px;
   max-height: 50px;
 }
