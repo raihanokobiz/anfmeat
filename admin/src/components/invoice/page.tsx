@@ -47,10 +47,10 @@ const PrintInvoice = React.forwardRef<HTMLDivElement, PrintInvoiceProps>(
           </p>
           <div className="flex items-center justify-start text-[10px]">
             <span>Hotline:</span>{" "}
-            <span className="">Phone: +880 01623-726069</span>
+            <span className="">Phone: +880 01700000000</span>
           </div>
-          <p className="text-[10px]">Email :silkthread.bd@gmail.com</p>
-          <p className="text-[10px]">Website : www.silkthread.bd.com</p>
+          <p className="text-[10px]">Email :a..............@gmail.com</p>
+          <p className="text-[10px]">Website : www...............com</p>
         </div>
 
         <div className="w-full border-b border-[#000000] py-2">

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
-import logo from "@/assets/logo/logo_navbar_taller.png";
+import logo from "@/assets/logo/logo.png";
 // import SearchForm from "../SearchForm/SearchForm";
 import Link from "next/link";
 import { BsCart2 } from "react-icons/bs";
@@ -93,8 +93,8 @@ const NavBar: React.FC<NavBarProps> = ({ userCartProducts }) => {
   return (
     <>
       {/* Main Navbar - Sticky */}
-      <div className="py-2 lg:px-[220px] px-4   fixed w-full z-40 top-0 bg-white">
-        <div className="flex items-center justify-between gap-6">
+      <div className="py-2 fixed w-full z-40 top-0 bg-white">
+        <div className="max-w-6xl mx-auto flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center gap-4">
             <div
@@ -107,7 +107,7 @@ const NavBar: React.FC<NavBarProps> = ({ userCartProducts }) => {
                 <RiMenuAddFill className="text-2xl" />
               )}
             </div>
-            <div className="md:w-[150px] w-[100px]">
+            <div className="md:w-[80px] w-[50px]">
               <Link href="/">
                 <Image
                   src={logo || null}
@@ -121,11 +121,11 @@ const NavBar: React.FC<NavBarProps> = ({ userCartProducts }) => {
           </div>
 
           {/* Desktop Search Bar with Animated Placeholder */}
-          <div className="hidden lg:block flex-1 max-w-2xl relative">
+          <div className=" hidden lg:block flex-1 max-w-md relative">
             <div className="relative">
               <input
                 type="text"
-                className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:border-[#FF6C0C] focus:outline-none transition-colors duration-300"
+                className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:border-primary focus:outline-none transition-colors duration-300"
                 placeholder=""
               />
               <motion.div
@@ -138,7 +138,7 @@ const NavBar: React.FC<NavBarProps> = ({ userCartProducts }) => {
               >
                 {placeholders[placeholderIndex]}
               </motion.div>
-              <button className="absolute right-2 top-1/2 -translate-y-1/2 bg-[#FF6C0C] text-white px-4 py-1.5 rounded-md hover:bg-[#e55a00] transition-colors duration-300">
+              <button className="absolute right-2 top-1/2 -translate-y-1/2 bg-primary text-white px-4 py-1.5 rounded-md hover:bg-primary transition-colors duration-300">
                 <IoSearchOutline className="text-lg" />
               </button>
             </div>
@@ -148,29 +148,29 @@ const NavBar: React.FC<NavBarProps> = ({ userCartProducts }) => {
           <div className="flex items-center lg:gap-2.5 gap-1 ">
             {/* Contact Number */}
             <div className="hidden lg:flex items-center gap-2 px-3 py-1.5 bg-gray-100 rounded-lg">
-              <FiPhone className="text-[#FF6C0C] text-lg" />
+              <FiPhone className="text-primary text-lg" />
               <div className="flex flex-col">
                 <span className="text-xs text-gray-500">Call Us</span>
-                <span className="text-xs font-semibold text-gray-700">+8801623-726069</span>
+                <span className="text-xs font-semibold text-gray-700">+8801700000000</span>
               </div>
             </div>
 
             {/* Mobile Search Icon */}
             <div
               onClick={() => setShowSearch(true)}
-              className="px-2 py-2 rounded-full bg-[#FF6C0C] text-white lg:font-bold font-semibold cursor-pointer lg:hidden hover:bg-[#e55a00] transition-colors duration-300"
+              className="px-2 py-2 rounded-full bg-primary text-white lg:font-bold font-semibold cursor-pointer lg:hidden hover:bg-primary transition-colors duration-300"
             >
               <IoSearchOutline className="lg:text-lg text-md" />
             </div>
 
             {/* Cart */}
             <Link href="/cart">
-              <div className="px-2 py-2 rounded-full relative bg-[#FF6C0C] text-white lg:font-bold font-semibold hover:bg-[#e55a00] transition-colors duration-300">
+              <div className="px-2 py-2 rounded-full relative bg-primary text-white lg:font-bold font-semibold hover:bg-primary transition-colors duration-300">
                 <BsCart2 className="lg:text-lg text-md" />
                 <motion.p
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
-                  className="-top-2 -right-2 absolute w-5 h-5 text-xs text-white flex items-center justify-center rounded-full bg-red-500"
+                  className="-top-2 -right-2 absolute w-5 h-5 text-xs text-white flex items-center justify-center rounded-full bg-primary"
                 >
                   {userCartProducts?.cartDetails?.length || 0}
                 </motion.p>
@@ -180,12 +180,12 @@ const NavBar: React.FC<NavBarProps> = ({ userCartProducts }) => {
             {/* User */}
             <div>
               {userName ? (
-                <div className="p-1.5 border-2 border-gray-300 rounded-lg hover:border-[#FF6C0C] transition-colors duration-300">
+                <div className="p-1.5 border-2 border-gray-300 rounded-lg hover:border-primary transition-colors duration-300">
                   <UserPopover />
                 </div>
               ) : (
                 <Link href="/login">
-                  <div className="px-2 py-2 rounded-full bg-[#FF6C0C] text-white lg:font-bold font-semibold hover:bg-[#e55a00] transition-colors duration-300">
+                  <div className="px-2 py-2 rounded-full bg-primary text-white lg:font-bold font-semibold hover:bg-primary transition-colors duration-300">
                     <FiUser className="lg:text-lg text-md" />
                   </div>
                 </Link>
@@ -196,7 +196,7 @@ const NavBar: React.FC<NavBarProps> = ({ userCartProducts }) => {
       </div>
 
       {/* Secondary Navbar - Categories (Smaller) */}
-      <div className="hidden lg:block w-full  bg-[#FF6C0C] text-white sticky top-[80px] z-30 shadow-sm backdrop-blur-lg">
+      <div className="hidden lg:block w-full  bg-primary text-white sticky top-[80px] z-30 shadow-sm backdrop-blur-lg">
         <div className="lg:px-[220px] px-4 py-2">
           <div className="flex items-center justify-center gap-6">
             {categories?.map((category, index) => (
@@ -209,7 +209,7 @@ const NavBar: React.FC<NavBarProps> = ({ userCartProducts }) => {
                 <Link href={`/shop?category=${category.id || category.slug}`}>
                   <motion.div
                     whileHover={{ scale: 1.05 }}
-                    className="text-sm font-medium text-gray-0 hover:text-[#FF6C0C] tracking-wide
+                    className="text-sm font-medium text-gray-0 hover:text-primary tracking-wide
                      duration-300 cursor-pointer whitespace-nowrap py-1.5 px-3 rounded-md group-hover:bg-white transition-all"
                   >
                     {category.name || category.title}
@@ -235,7 +235,7 @@ const NavBar: React.FC<NavBarProps> = ({ userCartProducts }) => {
                           >
                             <motion.div
                               whileHover={{ x: 5 }}
-                              className="text-sm text-gray-600 hover:text-[#FF6C0C] hover:bg-orange-50 p-2 rounded-md transition-all duration-200"
+                              className="text-sm text-gray-600 hover:text-primary hover:bg-orange-50 p-2 rounded-md transition-all duration-200"
                             >
                               {subCat.name || subCat.title}
                             </motion.div>
