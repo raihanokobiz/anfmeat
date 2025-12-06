@@ -18,10 +18,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${lato.className} antialiased `}>
         <NextTopLoader showSpinner={false} color="#FF6C0C" />
-        <LanguageProvider>
           {children}
-          </LanguageProvider>
-       
       </body>
     </html>
   );
