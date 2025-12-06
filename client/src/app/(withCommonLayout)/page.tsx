@@ -36,6 +36,7 @@ const page = async () => {
   // ------for campaign----
 
   const { data: campaign } = await getCampaign();
+  // slkfjdlkf
 
   // const user = await getUser();
   // const userId = user?.id;
