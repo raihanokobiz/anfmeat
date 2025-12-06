@@ -50,10 +50,10 @@ const page = async () => {
         {/* <Category /> */}
         {/* <SubCategory /> */}
         {/* <ChildCategory />   */}
-        {/* <Offersection/> */}
+        <Offersection/>
 
 
-        <PopularItems/>
+  <PopularItems/>
 
 
 

@@ -30,7 +30,7 @@ const Loading = () => {
       /> */}
 
       <BeatLoader
-        color={"#FF6C0C"}
+        color={"#1e6a39"}
         cssOverride={override}
         aria-label="Loading Spinner"
         data-testid="loader"
