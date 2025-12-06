@@ -17,3 +17,5 @@ export const fjallaOne = Fjalla_One({
   weight: ["400"],
   display: "swap",
 });
+
+

@@ -157,7 +157,7 @@ export default function LoginPage() {
       <div className="max-h-screen flex justify-center items-center">
         <Image
           src={logo}
-          alt="Login to Silk thread"
+          alt="Login to ANF Meat"
           // height={1600}
           // width={800}
           quality={100}

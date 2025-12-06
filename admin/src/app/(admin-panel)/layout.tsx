@@ -10,7 +10,7 @@ import { SessionProvider } from "next-auth/react";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Admin | Silk Thread",
+  title: "Admin | ANF Meat",
 };
 
 export default function RootLayout({

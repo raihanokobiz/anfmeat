@@ -10,7 +10,7 @@ import { Key, ReactNode } from "react";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Silk Thread | cart",
+  title: "ANF Meat | cart",
   description: "Best E-commerce platform in BD",
 };
 
@@ -211,9 +211,9 @@ const Cart = async () => {
         <div className="bg-[#F6F6F6] text-gray-600 rounded text-center py-5 px-8 my-5">
           <span>
             * If you wish to make a bulk order, please call us at{" "}
-            <span className="font-bold text-black"> 01623-726069 </span>
+            <span className="font-bold text-black"> 01700000000 </span>
             or email at{" "}
-            <span className="font-bold text-black">silkthread.bd@gmail.com</span> for more
+            <span className="font-bold text-black">a..............@gmail.com</span> for more
             information.
           </span>
         </div>

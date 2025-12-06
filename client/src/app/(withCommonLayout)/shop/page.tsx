@@ -12,7 +12,7 @@ import { getAllBanners } from "@/services/banners";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Silk Thread | All Product",
+  title: "ANF Meat | All Product",
   description: "Best E-commerce platform in BD",
 };
 

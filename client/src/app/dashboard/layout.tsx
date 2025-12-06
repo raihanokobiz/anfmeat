@@ -69,7 +69,7 @@ export default function Layout({
             <Link href="/">
               <Image
                 src={logo}
-                alt="Silk Thread  | Best E-commerce platform in BD"
+                alt="ANF Meat  | Best E-commerce platform in BD"
                 width={120}
                 height={60}
                 className="w-full h-full"

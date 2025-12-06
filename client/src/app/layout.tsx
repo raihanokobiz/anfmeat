@@ -5,7 +5,7 @@ import NextTopLoader from "nextjs-toploader";
 import { LanguageProvider } from "@/context/LanguageContext";
 
 export const metadata: Metadata = {
-  title: "Silk Thread | Best E-commerce Platform in BD",
+  title: "ANF Meat | Best E-commerce Platform in BD",
   description: "Best E-commerce Platform in BD",
 };
 

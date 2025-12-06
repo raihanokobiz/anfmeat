@@ -5,7 +5,7 @@ import MainCheckOut from "@/components/pages/checkoutPage/MainCheckOut/MainCheck
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Silk Thread | Checkout",
+  title: "ANF Meat | Checkout",
   description: "Best E-commerce platform in BD",
 };
 

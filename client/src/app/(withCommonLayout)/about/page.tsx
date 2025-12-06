@@ -7,7 +7,7 @@ import Image from "next/image";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Silk Thread | About",
+  title: "ANF Meat | About",
   description: "Best E-commerce platform in BD",
 };
 
@@ -23,18 +23,18 @@ const page = async () => {
       <div className="w-full lg:w-1/3">
         <Image 
           src={aboutImage}
-          alt="Silk Thread apparel — shirts and polos"
+          alt="ANF Meat apparel — shirts and polos"
           className="w-full h-auto rounded-lg shadow-sm object-cover"
         />
       </div>
 
       <div className="w-full lg:w-2/3">
         <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900">
-          Silk Thread — Redefining Everyday Style
+          ANF Meat — Redefining Everyday Style
         </h1>
 
         <p className="mt-4 text-gray-700 leading-relaxed policy-page-text">
-          Silk Thread is a modern e-commerce brand dedicated to delivering
+          ANF Meat is a modern e-commerce brand dedicated to delivering
           high-quality, stylish, and comfortable apparel for everyday wear.
           Specializing in premium shirts, polos, and casual essentials, we
           combine contemporary design with expert craftsmanship to create pieces
@@ -69,7 +69,7 @@ const page = async () => {
         </ul>
 
         <p className="mt-6 text-gray-600">
-          Driven by a passion for design and customer satisfaction, Silk Thread
+          Driven by a passion for design and customer satisfaction, ANF Meat
           continually expands its collections with fresh colors, modern cuts,
           and dependable basics — all backed by hassle-free shipping and easy
           returns.
@@ -79,14 +79,14 @@ const page = async () => {
           <a
             href="/shop"
             className="inline-block px-6 py-3 bg-black text-white font-semibold rounded-lg shadow hover:opacity-95"
-            aria-label="Shop Silk Thread collections"
+            aria-label="Shop ANF Meat collections"
           >
             Shop Collections
           </a>
           <a
             href="/about"
             className="inline-block px-6 py-3 border border-gray-300 text-gray-800 font-medium rounded-lg"
-            aria-label="Learn more about Silk Thread"
+            aria-label="Learn more about ANF Meat"
           >
             Learn More
           </a>

@@ -2,6 +2,32 @@
 @import "tw-animate-css";
 
 @layer base {
+
+  :root {
+    /* custom color  */
+    --primary-color: #1e6a39;
+    --background: 0 0% 100%;
+    --foreground: 224 71.4% 4.1%;
+    --card: 0 0% 100%;
+    --card-foreground: 224 71.4% 4.1%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 224 71.4% 4.1%;
+    --primary: 23 100% 52%;
+    --primary-foreground: 210 20% 98%;
+    --secondary: 226, 66.7%, 90%;
+    --secondary-foreground: 220.9 39.3% 11%;
+    --muted: 220 14.3% 95.9%;
+    --muted-foreground: 220 8.9% 46.1%;
+    --accent: 220 14.3% 95.9%;
+    --accent-foreground: 220.9 39.3% 11%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 20% 98%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 262.1 83.3% 57.8%;
+    --radius: 0.5rem;
+  }
+
   .Container {
     @apply 2xl:px-56 xl:px-20 lg:px-10 md:px-10 px-4;
   }
@@ -11,7 +37,7 @@
   }
 
   .bg-primary {
-    @apply bg-[#FF6C0C]
+    @apply bg-[#1e6a39]
   }
 
   .text-secondary {
@@ -25,6 +51,7 @@
   .button-primary {
     @apply bg-[#1D4092] text-white font-bold py-1.5 rounded-md cursor-pointer;
   }
+
   .button-primary:hover {
     @apply bg-blue-800;
   }
@@ -141,7 +168,17 @@
 }
 
 @keyframes spinner-fzua35 {
-  0%, 10%, 20%, 30%, 50%, 60%, 70%, 80%, 90%, 100% {
+
+  0%,
+  10%,
+  20%,
+  30%,
+  50%,
+  60%,
+  70%,
+  80%,
+  90%,
+  100% {
     transform: rotate(calc(var(--rotation) * 1deg)) translate(0, calc(var(--translation) * 1%));
   }
 
@@ -199,12 +236,13 @@
     left: -200px;
     transform: scale(1) rotate(0deg);
   }
+
   50% {
     transform: scale(1.1) rotate(-2deg);
   }
+
   100% {
     left: 100vw;
     transform: scale(1) rotate(0deg);
   }
 }
-

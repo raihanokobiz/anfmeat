@@ -43,10 +43,10 @@ const page = async () => {
   return (
     <>
       {/* <NavBar userCartProducts={products?.data} /> */}
-      <div className="">
+      <div className="max-w-6xl mx-auto">
         <Banner banners={[]} />
-        <Category />
-        <SubCategory />
+        {/* <Category />
+        <SubCategory /> */}
         {/* <ChildCategory />   */}
         <TopChildCategory childCategoriesList={topChildCategoriesList?.data} />
         {topRes?.status === "success" && (
@@ -59,7 +59,7 @@ const page = async () => {
           <HomeProductSection products={middleRes?.data} />
         )}
 
-        <Campaign campaign={campaign[0]} />
+        {/* <Campaign campaign={campaign[0]} /> */}
 
         <LowerMiddleChildCategory
           childCategoriesList={lowerMiddleChildCategoriesList?.data}

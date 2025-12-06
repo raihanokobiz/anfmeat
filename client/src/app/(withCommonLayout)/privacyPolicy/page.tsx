@@ -23,11 +23,11 @@ const PrivacyPolicy = async () => {
         </h1>
 
         <p className="policy-page-text">
-          Silk Thread considers each of our customers to be a part of our
+          ANF Meat considers each of our customers to be a part of our
           family. Ensuring and encouraging the bond of trust with our
-          customers, Silk Thread brings you the option to return products
+          customers, ANF Meat brings you the option to return products
           you received (if the product is damaged or mistakenly designed).
-          In such cases, Silk Thread will provide you with fresh
+          In such cases, ANF Meat will provide you with fresh
           replacement products.
         </p>
 
@@ -89,9 +89,9 @@ const PrivacyPolicy = async () => {
 
         <h2 className="text-xl font-semibold mt-4">How to Return</h2>
         <p className="policy-page-text">
-          Contact Silk Thread Customer Care at{" "}
-          <a href="mailto:silkthread.bd@gmail.com" className="text-blue-600">
-            silkthread.bd@gmail.com
+          Contact ANF Meat Customer Care at{" "}
+          <a href="mailto:a..............@gmail.com" className="text-blue-600">
+            a..............@gmail.com
           </a>{" "}
           within 72 hours after receiving your order.
         </p>
@@ -132,10 +132,10 @@ const PrivacyPolicy = async () => {
             Refund processing time is 7–10 working days. If not received
             within this time, please contact us at{" "}
             <a
-              href="mailto:silkthread.bd@gmail.com"
+              href="mailto:a..............@gmail.com"
               className="text-blue-600"
             >
-              silkthread.bd@gmail.com
+              a..............@gmail.com
             </a>
             .
           </li>
