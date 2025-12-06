@@ -11,6 +11,8 @@ import { getAllChildCategorys } from "@/services/childCategorys";
 import ButtomChildCategory from "@/components/pages/landing_pages/ButtomChildCategory/ButtomChildCategory";
 import Campaign from "@/components/pages/landing_pages/Campaign/Campaign";
 import { getCampaign } from "@/services/campaign";
+import Offer from "@/components/pages/landing_pages/offer/Offer";
+import Text1 from "../../assets/texture/Text1.jpg";
 
 // import { getCartProducts } from "@/services/cart";
 // import NavBar from "@/components/pages/header/NavBar/NavBar";
@@ -43,25 +45,35 @@ const page = async () => {
   return (
     <>
       {/* <NavBar userCartProducts={products?.data} /> */}
-      <div className="max-w-6xl mx-auto">
+      <div className="">
         <Banner banners={[]} />
-        {/* <Category />
-        <SubCategory /> */}
+        <div
+          style={{
+            backgroundImage: `url(${Text1.src})`,
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        >
+          <Category />
+          <Offer />
+        </div>
+        {/* <SubCategory /> */}
         {/* <ChildCategory />   */}
         <TopChildCategory childCategoriesList={topChildCategoriesList?.data} />
         {topRes?.status === "success" && (
           <HomeProductSection products={topRes?.data} />
         )}
-        <MiddleChildCategory
+        {/* <MiddleChildCategory
           childCategoriesList={middleChildCategoriesList?.data}
         />
         {middleRes?.status === "success" && (
           <HomeProductSection products={middleRes?.data} />
-        )}
+        )} */}
 
         {/* <Campaign campaign={campaign[0]} /> */}
 
-        <LowerMiddleChildCategory
+        {/* <LowerMiddleChildCategory
           childCategoriesList={lowerMiddleChildCategoriesList?.data}
         />
 
@@ -72,10 +84,10 @@ const page = async () => {
         <ButtomChildCategory
           childCategoriesList={buttomChildCategoriesList?.data}
         />
-        
+
         {buttomRes?.status === "success" && (
           <HomeProductSection products={buttomRes?.data} />
-        )}
+        )} */}
       </div>
     </>
   );

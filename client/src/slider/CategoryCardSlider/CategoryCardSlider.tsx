@@ -85,39 +85,31 @@ const CategoryCardSlider: React.FC<CategoryProps> = ({ categoriesList }) => {
     }, 3000);
     return () => clearInterval(interval);
   }, []);
+  
   return (
-    <div className="w-full lg:px-2">
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-800">
-            Shop by Category
-          </h2>
-          <p className="text-xs sm:text-sm text-gray-500 font-bold mt-1 mb-3 ">
-            Explore our wide range of products
-          </p>
-        </div>
-        <div className="hidden md:flex gap-2">
-          <button
-            onClick={() => scroll("left")}
-            className="p-2 rounded-full bg-white border-2 border-gray-200 hover:border-[#FF6C0C] hover:bg-[#FF6C0C] hover:text-white transition-all duration-300 shadow-md"
-            aria-label="Scroll left"
-          >
-            <ChevronLeft className="w-5 h-5" />
-          </button>
-          <button
-            onClick={() => scroll("right")}
-            className="p-2 rounded-full bg-white border-2 border-gray-200 hover:border-[#FF6C0C] hover:bg-[#FF6C0C] hover:text-white transition-all duration-300 shadow-md"
-            aria-label="Scroll right"
-          >
-            <ChevronRight className="w-5 h-5" />
-          </button>
-        </div>
-      </div>
-
+    <div className="w-full lg:px-2 -mt-20 md:-mt-24 lg:-mt-24 z-50">
       <div className="relative">
+        {/* Left button */}
+        <button
+          onClick={() => scroll("left")}
+          className="absolute left-0 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-white border-2 border-gray-200 hover:border-[#1e6a39] hover:bg-[#1e6a39] hover:text-white transition-all duration-300 shadow-md"
+          aria-label="Scroll left"
+        >
+          <ChevronLeft className="w-5 h-5" />
+        </button>
+
+        {/* Right button */}
+        <button
+          onClick={() => scroll("right")}
+          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-white border-2 border-gray-200 hover:border-[#1e6a39] hover:bg-[#1e6a39] hover:text-white transition-all duration-300 shadow-md"
+          aria-label="Scroll right"
+        >
+          <ChevronRight className="w-5 h-5" />
+        </button>
+
         <div
           ref={scrollContainerRef}
-          className="flex gap-2 sm:gap-3 lg:gap-4 overflow-x-auto scrollbar-hide scroll-smooth pb-4 snap-x snap-mandatory"
+          className="flex gap-5 md:gap-4 lg:gap-16 overflow-x-auto scrollbar-hide scroll-smooth  mx-10"
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         >
           {displayCategories?.map((category, index) => {
@@ -135,18 +127,18 @@ const CategoryCardSlider: React.FC<CategoryProps> = ({ categoriesList }) => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
                   whileHover={{ scale: isUpcoming ? 1 : 1.03 }}
-                  className={`group relative w-32 h-40 sm:w-40 sm:h-52 md:w-48 md:h-64 lg:w-60 lg:h-80 bg-white border-2 ${
+                  className={`group relative w-[90px] h-40 sm:w-40 sm:h-52  lg:w-40 lg:h-44 bg-white border-2 ${
                     isUpcoming 
                       ? "border-dashed border-gray-300 bg-gray-50" 
-                      : "border-gray-200 hover:border-[#FF6C0C] hover:shadow-2xl"
-                  } rounded-xl sm:rounded-2xl overflow-hidden transition-all duration-300 ${
+                      : "border-gray-200 hover:border-[#1e6a39] hover:shadow-2xl"
+                  } rounded-md overflow-hidden transition-all duration-300 ${
                     isUpcoming ? "cursor-default" : "cursor-pointer"
                   } flex flex-col`}
                 >
                   {isUpcoming ? (
                     <div className="relative w-full flex-1 flex items-center justify-center bg-linear-to-br from-gray-100 to-gray-200">
                       <div className="text-center p-4">
-                        <div className="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 mx-auto mb-2 sm:mb-3 rounded-full bg-white/80 flex items-center justify-center">
+                        <div className="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 mx-auto mb-2 sm:mb-3 rounded-md bg-white/80 flex items-center justify-center">
                           <span className="text-2xl sm:text-3xl lg:text-4xl">🎁</span>
                         </div>
                         <p className="text-xs sm:text-sm lg:text-base font-semibold text-gray-400">
@@ -160,7 +152,6 @@ const CategoryCardSlider: React.FC<CategoryProps> = ({ categoriesList }) => {
                         src={apiBaseUrl + category.image || ""}
                         alt={category.name}
                         fill
-                        sizes="(max-width: 640px) 128px, (max-width: 768px) 160px, (max-width: 1024px) 192px, 240px"
                         className="object-cover group-hover:scale-110 transition-transform duration-300"
                       />
                     </div>
@@ -170,7 +161,7 @@ const CategoryCardSlider: React.FC<CategoryProps> = ({ categoriesList }) => {
                     <p className={`text-xs sm:text-sm lg:text-base font-semibold ${
                       isUpcoming 
                         ? "text-gray-400" 
-                        : "text-gray-700 group-hover:text-[#FF6C0C]"
+                        : "text-gray-700 group-hover:text-[#1e6a39]"
                     } transition-colors duration-300 capitalize line-clamp-2`}>
                       {isUpcoming ? "Upcoming" : category.name}
                     </p>
@@ -182,7 +173,7 @@ const CategoryCardSlider: React.FC<CategoryProps> = ({ categoriesList }) => {
                       whileHover={{ opacity: 1, x: 0 }}
                       className="absolute bottom-2 right-2 sm:bottom-4 sm:right-4 opacity-0 group-hover:opacity-100 transition-all duration-300"
                     >
-                      <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-[#FF6C0C]" />
+                      <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-[#1e6a39]" />
                     </motion.div>
                   )}
                 </motion.div>
@@ -190,10 +181,6 @@ const CategoryCardSlider: React.FC<CategoryProps> = ({ categoriesList }) => {
             );
           })}
         </div>
-
-        {/* Gradient overlays - hidden on mobile for better visibility */}
-        <div className="absolute top-0 left-0 h-full w-12 sm:w-16 lg:w-20 bg-linear-to-r from-white to-transparent pointer-events-none hidden sm:block" />
-        <div className="absolute top-0 right-0 h-full w-12 sm:w-16 lg:w-20 bg-linear-to-l from-white to-transparent pointer-events-none hidden sm:block" />
       </div>
 
       {/* Mobile scroll indicators */}
@@ -203,7 +190,7 @@ const CategoryCardSlider: React.FC<CategoryProps> = ({ categoriesList }) => {
             key={index}
             className={`w-2 h-2 rounded-full transition-all duration-300 ${
               index === activeIndex % 5
-                ? "bg-[#FF6C0C] w-6"
+                ? "bg-[#1e6a39] w-6"
                 : "bg-gray-300"
             }`}
           />
