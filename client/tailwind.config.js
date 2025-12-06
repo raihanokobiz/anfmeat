@@ -1,12 +1,19 @@
 /** @type {import('tailwindcss').Config} */
-export const theme = {
+module.exports = {
+  content: [
+    "./src/**/*.{js,jsx,ts,tsx}",
+    "./index.html",
+  ],
+
+  theme: {
     extend: {
-        colors: {
-            brand: {
-                DEFAULT: '#FF6C0C', // brand
-                light: '#6366F1',
-                dark: '#4338CA',
-            }
-        }
-    }
+      fontFamily: {
+        psRegular: ["ProductSansRegular", "sans-serif"],
+        psItalic: ["ProductSansItalic", "sans-serif"],
+        psBold: ["ProductSansBold", "sans-serif"],
+      },
+    },
+  },
+
+  plugins: [],
 };

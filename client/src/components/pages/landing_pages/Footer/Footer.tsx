@@ -9,9 +9,6 @@ import {
 import { FaRegMessage, FaRightLeft } from "react-icons/fa6";
 import Link from "next/link";
 import DownFooter from "../../DownFooter/DownFooter";
-import Instagram from "../../../../assets/images/2227.jpg"
-import Image from "next/image";
-
 interface FooterProps {
   userCartProducts: {
     cartDetails: any[]; 
@@ -52,59 +49,11 @@ const Footer: React.FC<FooterProps> = ({ userCartProducts }) => {
 
   return (
     <div className="relative">
-      <div className="Container bg-[#F3F3F3]">
-        <div className="max-w-6xl grid grid-cols-2 lg:grid-cols-4 lg:justify-center mx-auto py-5 lg:py-10 px-1 gap-y-4 gap-x-2">
-          <div className="flex items-center space-x-2 lg:space-x-4">
-            <div className="lg:text-xl text-white bg-[#FF6C0C] p-3 rounded-full">
-              <FaTruck />
-            </div>
-            <div className="flex flex-col space-y-1">
-              <div className="text-md lg:text-xl">Free Shipping</div>
-              <div className="text-sm text-gray-600">
-                Free Shipping for orders
-              </div>
-            </div>
-          </div>
-          <div className="flex items-center space-x-2 lg:space-x-4">
-            <div className="lg:text-xl text-white bg-[#FF6C0C] p-3 rounded-full">
-              <FaRightLeft />
-            </div>
-            <div className="flex flex-col space-y-1">
-              <div className="text-md lg:text-xl">Return & Exchanges</div>
-              <div className="text-sm text-gray-600">
-                Free Shipping for orders
-              </div>
-            </div>
-          </div>
-          <div className="flex items-center space-x-2 lg:space-x-4">
-            <div className="lg:text-xl text-white bg-[#FF6C0C] p-3 rounded-full">
-              <FaRegMessage />
-            </div>
-            <div className="flex flex-col space-y-1">
-              <div className="text-md lg:text-xl">Online Support</div>
-              <div className="text-sm text-gray-600">
-                24 hours a day, 7 days a week
-              </div>
-            </div>
-          </div>
-          <div className="flex items-center space-x-2 lg:space-x-4">
-            <div className="lg:text-xl text-white bg-[#FF6C0C] p-3 rounded-full">
-              <FaRegCreditCard />
-            </div>
-            <div className="flex flex-col space-y-1">
-              <div className="text-md lg:text-xl">Flexible payment</div>
-              <div className="text-sm text-gray-600">
-                Pay with Multiple Credit Cards
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
+    
       <div className="Container bg-[#D9D9D9] py-10 lg:py-16">
         <div className=" flex flex-col lg:flex-row justify-between space-y-5">
           <div>
-            <div className="text-black font-semibold mb-5 text-xl">
+            <div className="text-black  mb-5 font-psBold ">
               Contact Info
             </div>
             <div className="text-black text-md lg:text-lg flex flex-col space-y-1">
@@ -115,7 +64,7 @@ const Footer: React.FC<FooterProps> = ({ userCartProducts }) => {
             </div>
           </div>
           <div>
-            <div className="text-black font-semibold mb-5 text-xl">
+            <div className="text-black  mb-5 text-xl">
               Quick Links
             </div>
             <ul className="text-black text-xl">
@@ -174,18 +123,6 @@ const Footer: React.FC<FooterProps> = ({ userCartProducts }) => {
                   aria-label="youtube"
                 >
                   <FaYoutube />
-                </a>
-                 
-                 <a
-                  href="https://www.instagram.com/silk3866?igsh=MXJjcWk3ZnBhOTJo"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-2 py-2   hover:scale-95 duration-300"
-                  aria-label="Facebook"
-                >
-                 <Image src={Instagram}
-                  width={40}
-                  height={40} alt={""}/>
                 </a>
                 <a
                   href="http://tiktok.com/@silk.thread5"

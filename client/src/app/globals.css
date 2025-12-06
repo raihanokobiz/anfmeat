@@ -248,3 +248,20 @@
     transform: scale(1) rotate(0deg);
   }
 }
+@font-face {
+  font-family: "ProductSansRegular";
+  src: url("/fonts/ProductSans-Regular.ttf");
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "ProductSansItalic";
+  src: url("/fonts/ProductSans-Italic.ttf");
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "ProductSansBold";
+  src: url("/fonts/ProductSans-Bold.ttf");
+  font-weight: 700;
+}

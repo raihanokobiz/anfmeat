@@ -11,6 +11,8 @@ import { getAllChildCategorys } from "@/services/childCategorys";
 import ButtomChildCategory from "@/components/pages/landing_pages/ButtomChildCategory/ButtomChildCategory";
 import Campaign from "@/components/pages/landing_pages/Campaign/Campaign";
 import { getCampaign } from "@/services/campaign";
+import { Offersection } from "@/components/pages/landing_pages/OfferSection/Offersection";
+import { PopularItems } from "@/components/pages/landing_pages/PopularItems/PopularItems";
 
 // import { getCartProducts } from "@/services/cart";
 // import NavBar from "@/components/pages/header/NavBar/NavBar";
@@ -43,39 +45,46 @@ const page = async () => {
   return (
     <>
       {/* <NavBar userCartProducts={products?.data} /> */}
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-6xl mx-auto ">
         <Banner banners={[]} />
-        {/* <Category />
-        <SubCategory /> */}
+        {/* <Category /> */}
+        {/* <SubCategory /> */}
         {/* <ChildCategory />   */}
-        <TopChildCategory childCategoriesList={topChildCategoriesList?.data} />
+        {/* <Offersection/> */}
+
+
+        <PopularItems/>
+
+
+
+        {/* <TopChildCategory childCategoriesList={topChildCategoriesList?.data} />
         {topRes?.status === "success" && (
           <HomeProductSection products={topRes?.data} />
-        )}
-        <MiddleChildCategory
+        )} */}
+        {/* <MiddleChildCategory
           childCategoriesList={middleChildCategoriesList?.data}
-        />
-        {middleRes?.status === "success" && (
+        /> */}
+        {/* {middleRes?.status === "success" && (
           <HomeProductSection products={middleRes?.data} />
-        )}
+        )} */}
 
         {/* <Campaign campaign={campaign[0]} /> */}
 
-        <LowerMiddleChildCategory
+        {/* <LowerMiddleChildCategory
           childCategoriesList={lowerMiddleChildCategoriesList?.data}
-        />
-
+        /> */}
+{/* 
         {lowerMiddleRes?.status === "success" && (
           <HomeProductSection products={lowerMiddleRes?.data} />
-        )}
+        )} */}
 
-        <ButtomChildCategory
+        {/* <ButtomChildCategory
           childCategoriesList={buttomChildCategoriesList?.data}
-        />
+        /> */}
         
-        {buttomRes?.status === "success" && (
+        {/* {buttomRes?.status === "success" && (
           <HomeProductSection products={buttomRes?.data} />
-        )}
+        )} */}
       </div>
     </>
   );
