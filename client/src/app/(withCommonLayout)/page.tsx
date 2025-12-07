@@ -13,6 +13,9 @@ import Campaign from "@/components/pages/landing_pages/Campaign/Campaign";
 import { getCampaign } from "@/services/campaign";
 import Offer from "@/components/pages/landing_pages/offer/Offer";
 import Text1 from "../../assets/texture/Text1.jpg";
+import { WhyChooseUs } from "@/components/pages/landing_pages/WhyChooseUs/WhyChooseUs";
+import { Testimonial } from "@/components/pages/landing_pages/Testimonial/Testimonial";
+
 
 // import { getCartProducts } from "@/services/cart";
 // import NavBar from "@/components/pages/header/NavBar/NavBar";
@@ -65,6 +68,13 @@ const page = async () => {
         {topRes?.status === "success" && (
           <HomeProductSection products={topRes?.data} />
         )}
+        
+        <TopChildCategory childCategoriesList={topChildCategoriesList?.data} />
+        {topRes?.status === "success" && (
+          <HomeProductSection products={topRes?.data} />
+        )}
+        <WhyChooseUs/>
+        <Testimonial/>
         {/* <MiddleChildCategory
           childCategoriesList={middleChildCategoriesList?.data}
         />

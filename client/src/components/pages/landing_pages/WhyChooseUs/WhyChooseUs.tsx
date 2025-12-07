@@ -1,0 +1,76 @@
+"use client"
+
+import Image from "next/image";
+import React from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import F1 from "../../../../assets/fake/F1.jpg";
+import F2 from "../../../../assets/fake/F2.jpg";
+import F3 from "../../../../assets/fake/F3.jpg";
+import F4 from "../../../../assets/fake/F1.jpg";
+import F5 from "../../../../assets/fake/F2.jpg";
+import F6 from "../../../../assets/fake/F3.jpg";
+
+
+const data = [F1, F2, F3, F4, F5, F6];
+
+export function WhyChooseUs() {
+
+    return (
+        <section className="bg-white py-12 px-4">
+            <div className="max-w-6xl mx-auto">
+                {/* Heading */}
+                <h2 className="text-3xl md:text-4xl font-bold text-center text-[#1a1a1a] mb-6">Why ANF Meat?</h2>
+
+                {/* Description */}
+                <p className="text-center text-[#1a1a1a] leading-relaxed mb-10">
+                    At ANF Meat, quality and safety are our top priorities. From responsibly sourced livestock to hygienic processing, every step is carefully monitored by our skilled team. Our state-of-the-art facilities ensure that each cut of meat is fresh, premium, and delivered with utmost care, bringing farm-to-table excellence to your plate.
+                </p>
+
+                {/* Carousel */}
+                <div className=" px-4 md:px-0">
+                    <Swiper
+                        modules={[Navigation, Pagination, Autoplay]}
+                        pagination={{ clickable: true }}
+                        autoplay={{ delay: 2000, disableOnInteraction: false }}
+                        loop={true}
+                        speed={2000}
+                        slidesPerView={2}
+                        breakpoints={{
+                            640: {
+                                slidesPerView: 2,
+                                spaceBetween: 10,
+                            },
+                            768: {
+                                slidesPerView: 3,
+                                spaceBetween: 20,
+                            },
+                            1024: {
+                                slidesPerView: 4,
+                                spaceBetween: 30,
+                            },
+                        }}
+                        className="rounded-md overflow-hidden"
+                    >
+                        {data.map((img, index) => (
+                            <SwiperSlide key={index}>
+                                <div className="relative w-full h-48 md:h-64 lg:h-52">
+                                    <Image
+                                        src={img}
+                                        alt={`Offer ${index + 1}`}
+                                        fill
+                                        style={{ objectFit: "cover" }}
+                                        className="rounded-md shadow-md"
+                                    />
+                                </div>
+                            </SwiperSlide>
+                        ))}
+                    </Swiper>
+                </div>
+            </div>
+        </section>
+    )
+}
