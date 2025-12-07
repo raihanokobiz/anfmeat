@@ -38,16 +38,18 @@ const CategoryCardSlider: React.FC<CategoryProps> = ({ categoriesList }) => {
     }
   }
 
-  const scroll = (direction: "left" | "right") => {
-    if (scrollContainerRef.current) {
-      const container = scrollContainerRef.current;
-      const scrollAmount = direction === "left" ? -300 : 300;
-      container.scrollBy({
-        left: scrollAmount,
-        behavior: "smooth",
-      });
-    }
-  };
+ const scroll = (direction: "left" | "right") => {
+  if (scrollContainerRef.current) {
+    const container = scrollContainerRef.current;
+    const cardWidth = container.querySelector('a')?.clientWidth || 0;
+    const gap = 64; // lg:gap-16 = 64px
+    const scrollAmount = direction === "left" ? -(cardWidth + gap) : (cardWidth + gap);
+    container.scrollBy({
+      left: scrollAmount,
+      behavior: "smooth",
+    });
+  }
+};
 
   // Track scroll position for indicators
   useEffect(() => {
@@ -119,7 +121,7 @@ const CategoryCardSlider: React.FC<CategoryProps> = ({ categoriesList }) => {
               <Link
                 key={category._id}
                 href={isUpcoming ? "#" : `/shop?category=${category.slug || category._id}`}
-                className="flex-shrink-0 snap-start"
+                className="flex-shrink-0 snap-start bg-white/40 backdrop-blur-lg"
                 onClick={(e) => isUpcoming && e.preventDefault()}
               >
                 <motion.div
@@ -147,12 +149,12 @@ const CategoryCardSlider: React.FC<CategoryProps> = ({ categoriesList }) => {
                       </div>
                     </div>
                   ) : (
-                    <div className="relative w-full flex-1">
+                    <div className="relative lg:w-32 lg:h-32 mx-auto flex-1 p-12">
                       <Image
                         src={apiBaseUrl + category.image || ""}
                         alt={category.name}
                         fill
-                        className="object-cover group-hover:scale-110 transition-transform duration-300"
+                        className="object-cover "
                       />
                     </div>
                   )}

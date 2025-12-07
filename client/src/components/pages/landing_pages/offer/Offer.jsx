@@ -16,7 +16,7 @@ const data = [F1, F2, F3];
 export default function Offer() {
   return (
   
-      <div className="max-w-6xl mx-auto px-4 md:px-0 py-20">
+      <div className="max-w-7xl mx-auto px-4 md:px-0 py-20">
         <Swiper
           modules={[Navigation, Pagination, Autoplay]}
           pagination={{ clickable: true }}

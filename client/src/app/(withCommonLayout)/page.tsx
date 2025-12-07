@@ -15,6 +15,7 @@ import Offer from "@/components/pages/landing_pages/offer/Offer";
 import Text1 from "../../assets/texture/Text1.jpg";
 import { WhyChooseUs } from "@/components/pages/landing_pages/WhyChooseUs/WhyChooseUs";
 import { Testimonial } from "@/components/pages/landing_pages/Testimonial/Testimonial";
+import { Subscribe } from "@/components/pages/landing_pages/Subscribe/Subscribe";
 
 
 // import { getCartProducts } from "@/services/cart";
@@ -52,12 +53,12 @@ const page = async () => {
       <div className="">
         <Banner banners={[]} />
         <div
-          style={{
-            backgroundImage: `url(${Text1.src})`,
-            backgroundRepeat: "no-repeat",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
+          // style={{
+          //   backgroundImage: `url(${Text1.src})`,
+          //   backgroundRepeat: "no-repeat",
+          //   backgroundSize: "cover",
+          //   backgroundPosition: "center",
+          // }}
         >
           <Category />
           <Offer />
@@ -75,6 +76,7 @@ const page = async () => {
         )}
         <WhyChooseUs/>
         <Testimonial/>
+        <Subscribe/>
         {/* <MiddleChildCategory
           childCategoriesList={middleChildCategoriesList?.data}
         />
