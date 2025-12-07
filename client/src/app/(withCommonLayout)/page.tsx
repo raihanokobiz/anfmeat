@@ -18,6 +18,7 @@ import Text1 from "../../assets/texture/Text1.jpg";
 // import NavBar from "@/components/pages/header/NavBar/NavBar";
 
 // import { getUser } from "@/services/auth";
+// import { getUser } from "@/services/auth";
 
 const page = async () => {
   const topRes = await getHomePageSubCategoryProducts("top");
