@@ -504,7 +504,7 @@ const HomeProductSection: React.FC<HomeProductSectionProps> = ({ products, userR
 
     <div>
       <div className="">
-        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 lg:grid-rows-2 gap-6  mt-4">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6  mt-4">
           {/* Category Banner - Takes 2 columns and 2 rows on lg */}
           {/* <div className="col-span-2 row-span-2 min-h-[300px] lg:min-h-[400px]">
           {products?.category && (
