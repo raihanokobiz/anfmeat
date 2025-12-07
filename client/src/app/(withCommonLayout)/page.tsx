@@ -13,6 +13,7 @@ import Campaign from "@/components/pages/landing_pages/Campaign/Campaign";
 import { getCampaign } from "@/services/campaign";
 import Offer from "@/components/pages/landing_pages/offer/Offer";
 import Text1 from "../../assets/texture/Text1.jpg";
+import { PopularItems } from "@/components/pages/landing_pages/PopularItems/PopularItems";
 
 // import { getCartProducts } from "@/services/cart";
 // import NavBar from "@/components/pages/header/NavBar/NavBar";
@@ -66,6 +67,7 @@ const page = async () => {
         {topRes?.status === "success" && (
           <HomeProductSection products={topRes?.data} />
         )}
+        <PopularItems />
         {/* <MiddleChildCategory
           childCategoriesList={middleChildCategoriesList?.data}
         />
