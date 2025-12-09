@@ -2,7 +2,7 @@
 
 import React from "react";
 import { formatDate } from "date-fns";
-import logo from "@/assets/logo/logo_sidebar.png";
+import logo from "@/assets/logo/logo.png";
 import Barcode from "react-barcode";
 import { TOrder } from "@/types/shared";
 import { upperCase, upperFirst } from "lodash";

@@ -25,6 +25,7 @@ const WarehouseRoute = require("./routes/warehouse.route.js");
 const WarehouseTransferRoute = require("./routes/warehouseTransfer.route.js");
 const OrderBulkRoute = require("./routes/order.bulk.route.js");
 const Payment = require("./routes/payment.route.js");
+const OfferRoute = require("./routes/offer.route.js");
 
 const { Router } = require("express");
 const CampaignRoute = require("./routes/campaign.route.js");
@@ -35,6 +36,7 @@ rootRouter.use("/banners", BannerRouter);
 rootRouter.use("/about-us", AboutUsRouter);
 rootRouter.use("/brand", BrandRouter);
 rootRouter.use("/category", CategoryRouter);
+rootRouter.use("/offer", OfferRoute );
 rootRouter.use("/contact-info", ContactRouter);
 rootRouter.use("/coupon", CouponRouter);
 rootRouter.use("/inventory", InventoryRouter);

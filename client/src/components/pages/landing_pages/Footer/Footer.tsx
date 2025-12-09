@@ -2,15 +2,11 @@
 import React from "react";
 import {
   FaFacebookF,
-  FaRegCreditCard,
-  FaTruck,
+  FaInstagram,
   FaYoutube,
 } from "react-icons/fa";
-import { FaRegMessage, FaRightLeft } from "react-icons/fa6";
 import Link from "next/link";
 import DownFooter from "../../DownFooter/DownFooter";
-import Instagram from "../../../../assets/images/2227.jpg"
-import Image from "next/image";
 
 interface FooterProps {
   userCartProducts: {
@@ -51,7 +47,7 @@ const Footer: React.FC<FooterProps> = ({ userCartProducts }) => {
   ];
 
   return (
-    <div className="relative">
+    <div className="relative max-w-7xl mx-auto">
       {/* <div className="Container bg-[#F3F3F3]">
         <div className="max-w-6xl grid grid-cols-2 lg:grid-cols-4 lg:justify-center mx-auto py-5 lg:py-10 px-1 gap-y-4 gap-x-2">
           <div className="flex items-center space-x-2 lg:space-x-4">
@@ -183,9 +179,7 @@ const Footer: React.FC<FooterProps> = ({ userCartProducts }) => {
                   className="px-2 py-2   hover:scale-95 duration-300"
                   aria-label="Facebook"
                 >
-                 <Image src={Instagram}
-                  width={40}
-                  height={40} alt={""}/>
+                 <FaInstagram/>
                 </a>
                 <a
                   href="http://tiktok.com/@silk.thread5"

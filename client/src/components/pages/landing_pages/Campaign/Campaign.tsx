@@ -59,9 +59,9 @@ const Campaign: React.FC<Props> = ({ campaign }) => {
   }, [campaign]);
 
   return (
-    <div className="Container pb-8 py-4">
+    <div className="max-w-6xl mx-auto pb-8 py-4">
       <div className="grid md:grid-cols-2   rounded">
-        <div className="flex flex-col items-center justify-center bg-[#222222]/80 md:rounded-l rounded-t">
+        <div className="flex flex-col items-center justify-center bg-primary md:rounded-l rounded-t">
           <div className="text-center lg:pb-8 pb-4 text-[#fff]">
             <p className="md:mt-0 mt-3">Special Offer</p>
             <h2 className="lg:text-2xl text-xl font-semibold mt-1">
@@ -97,7 +97,7 @@ const Campaign: React.FC<Props> = ({ campaign }) => {
 
           <div className="my-8">
             <Link href="/shop">
-              <button className="px-8 py-3 bg-[#1D4092] text-[#fff] rounded cursor-pointer border border-[#ffff]/0 hover:border-[#fff] duration-300">
+              <button className="px-8 py-3 bg-white text-primay rounded cursor-pointer border border-[#ffff]/0 hover:border-[#fff] duration-300">
                 Shop Now
               </button>
             </Link>
