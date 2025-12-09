@@ -18,7 +18,7 @@ const HomeProducts = async ({ products }: ProductsProps) => {
   const user = await getUser();
   console.log("HomeProducts products:", products);
   return (
-    <div className="max-w-7xl mx-auto py-20">
+    <div className="max-w-6xl mx-auto px-4 md:px-0 py-6 md:py-10  lg:py-12">
       <div className="flex items-center justify-between mb-6 px-4 pb-4 border-b-2 border-gray-200">
         <h2 className="text-2xl md:text-3xl font-bold text-gray-800 flex items-center gap-2">
           <TrendingUp className="w-7 h-7 text-[#1e6a39]" />

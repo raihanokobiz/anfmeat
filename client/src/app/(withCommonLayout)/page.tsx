@@ -16,6 +16,7 @@ import Text1 from "../../assets/texture/Text1.jpg";
 import { WhyChooseUs } from "@/components/pages/landing_pages/WhyChooseUs/WhyChooseUs";
 import { Testimonial } from "@/components/pages/landing_pages/Testimonial/Testimonial";
 import { Subscribe } from "@/components/pages/landing_pages/Subscribe/Subscribe";
+import { getAllOffers } from "@/services/offer";
 
 
 // import { getCartProducts } from "@/services/cart";
@@ -40,6 +41,7 @@ const page = async () => {
   // ------for campaign----
 
   const { data: campaign } = await getCampaign();
+  const offrs = await getAllOffers()
 
   // const user = await getUser();
   // const userId = user?.id;
@@ -61,7 +63,7 @@ const page = async () => {
           // }}
         >
           <Category />
-          <Offer />
+          <Offer offrs={offrs} />
         </div>
         {/* <SubCategory /> */}
         {/* <ChildCategory />   */}
@@ -75,7 +77,7 @@ const page = async () => {
           <HomeProductSection products={topRes?.data} />
         )}
         <WhyChooseUs/>
-        <Testimonial/>
+        {/* <Testimonial/> */}
         <Subscribe/>
         {/* <MiddleChildCategory
           childCategoriesList={middleChildCategoriesList?.data}
@@ -84,7 +86,7 @@ const page = async () => {
           <HomeProductSection products={middleRes?.data} />
         )} */}
 
-        {/* <Campaign campaign={campaign[0]} /> */}
+        <Campaign campaign={campaign[0]} />
 
         {/* <LowerMiddleChildCategory
           childCategoriesList={lowerMiddleChildCategoriesList?.data}

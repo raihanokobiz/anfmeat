@@ -57,11 +57,11 @@ export default async function ShopPage({
   return (
     <>
       {/* <NavBar userCartProducts={cartProducts?.data} /> */}
-      <div className="flex min-h-screen Container mt-20">
-        <div className="w-[20%] hidden lg:block mt-6">
+      <div className=" max-w-7xl mx-auto Container mt-20">
+        <div className="w-full mb-5">
           <ShopProductsCategories shopSideBar={shopSideBar} />
         </div>
-        <div className="flex-1">
+        <div className="">
           <ShopProducts
             products={sortedData}
             pagination={products.pagination}
@@ -71,7 +71,7 @@ export default async function ShopPage({
           />
         </div>
         <CartSideBar cartProducts={cartProducts?.data} />
-        <UpcomingSideBanner banners={banners} />
+        {/* <UpcomingSideBanner banners={banners} /> */}
       </div>
     </>
   );

@@ -29,7 +29,7 @@
   }
 
   .Container {
-    @apply 2xl:px-56 xl:px-20 lg:px-10 md:px-10 px-4;
+    @apply  px-4 md:px-0 py-6 md:py-10  lg:py-12;
   }
 
   .text-primary {
@@ -63,6 +63,10 @@
   .policy-page-li {
     @apply list-disc ml-6;
   }
+}
+
+.category-swiper .swiper-wrapper {
+  justify-content: center !important;
 }
 
 /* Fish animation */

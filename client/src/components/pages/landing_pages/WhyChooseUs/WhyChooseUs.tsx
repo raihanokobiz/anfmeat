@@ -20,8 +20,8 @@ const data = [F1, F2, F3, F4, F5, F6];
 export function WhyChooseUs() {
 
     return (
-        <section className="bg-white py-12 px-4">
-            <div className="max-w-7xl mx-auto">
+        <section className="bg-white px-4 md:px-0 py-6 md:py-10  lg:py-12">
+            <div className="max-w-6xl mx-auto">
                 {/* Heading */}
                 <h2 className="text-3xl md:text-4xl font-bold text-center text-[#1a1a1a] mb-6">Why ANF Meat?</h2>
 

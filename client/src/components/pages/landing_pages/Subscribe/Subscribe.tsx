@@ -17,7 +17,7 @@ export function Subscribe() {
     }
 
     return (
-        <section className="relative max-w-7xl mx-auto">
+        <section className="relative max-w-6xl mx-auto px-4 md:px-0 py-6 md:py-10  lg:py-12">
             <Player
                 autoplay
                 loop

@@ -93,8 +93,8 @@ const NavBar: React.FC<NavBarProps> = ({ userCartProducts }) => {
   return (
     <>
       {/* Main Navbar - Sticky */}
-      <div className="py-2 fixed w-full z-40 top-0 bg-white">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
+      <div className="py-2 fixed w-full z-40 top-0 bg-white px-4 md:px-0 shadow-sm backdrop-blur-lg">
+        <div className="max-w-6xl mx-auto flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center gap-4">
             <div

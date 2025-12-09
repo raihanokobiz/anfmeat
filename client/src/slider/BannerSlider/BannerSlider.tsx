@@ -30,7 +30,7 @@ const BannerSlider: React.FC<BannerProps> = ({ banners }) => {
       >
         {banners?.map((banner: TBanner) => (
           <SwiperSlide key={banner._id}>
-            <div className="2xl:h-[550px] xl:h-[430px] md:h-[350px] h-[200px]  relative">
+            <div className="2xl:h-[550px] xl:h-[450px] md:h-[350px] h-[200px]  relative">
               <Image
                 src={apiBaseUrl + banner.image || ""}
                 alt="Banner"
@@ -43,7 +43,6 @@ const BannerSlider: React.FC<BannerProps> = ({ banners }) => {
           </SwiperSlide>
         ))}
       </Swiper>
-
       {/* Custom Navigation Buttons */}
       <button
         className="custom-prev cursor-pointer absolute left-8 top-1/2 transform -translate-y-1/2  z-10"
