@@ -17,6 +17,7 @@ import { WhyChooseUs } from "@/components/pages/landing_pages/WhyChooseUs/WhyCho
 import { Testimonial } from "@/components/pages/landing_pages/Testimonial/Testimonial";
 import { Subscribe } from "@/components/pages/landing_pages/Subscribe/Subscribe";
 import { getAllOffers } from "@/services/offer";
+import { LocationModalWrapper } from "@/components/kocation/LocationModalWrapper";
 
 
 // import { getCartProducts } from "@/services/cart";
@@ -53,6 +54,7 @@ const page = async () => {
     <>
       {/* <NavBar userCartProducts={products?.data} /> */}
       <div className="">
+        <LocationModalWrapper/>
         <Banner banners={[]} />
         <div
           // style={{

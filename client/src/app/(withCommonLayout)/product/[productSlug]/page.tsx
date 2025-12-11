@@ -29,8 +29,7 @@ const Page = async ({ params }: PageProps) => {
   const { data: product } = await getSingleProductBySlug(
     resolvedParams.productSlug
   );
-console.log("product===========>",product);
-console.log("resolvedParams===========>",resolvedParams);
+
 
   const user = await getUser();
   const userRef = user?.id;
@@ -44,7 +43,7 @@ console.log("resolvedParams===========>",resolvedParams);
   // const userCartProducts = await getCartProducts(userRef, coupon);
 
   return (
-    <div className="">
+    <div className="max-w-6xl mx-auto mt-20">
       {/* <NavBar userCartProducts={userCartProducts?.data} /> */}
       <ProductDetails product={product} />
       <ProductReview userRef={userRef} productRef={productId} />

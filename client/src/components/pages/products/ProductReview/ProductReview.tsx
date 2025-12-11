@@ -19,7 +19,7 @@ const ProductReview = async ({ userRef, productRef }: ProductReviewProps) => {
 
 
   return (
-    <div className="mt-12 Container">
+    <div className=" Container">
       <h2
         className={`text-xl font-semibold border-b pb-3 ${rajdhani.className}`}
       >
@@ -45,7 +45,7 @@ const ProductReview = async ({ userRef, productRef }: ProductReviewProps) => {
                     <p className="font-semibold md:text-base text-sm capitalize">
                       {review.name}
                     </p>
-                    <div className="flex items-center gap-1 text-[#FFA500] md:text-base text-sm">
+                    <div className="flex items-center gap-1 text-primary md:text-base text-sm">
                       {Array.from({ length: 5 }, (_, i) => {
                         const fullStars = Math.floor(review.rating);
                         const hasHalfStar = review.rating - fullStars >= 0.5;

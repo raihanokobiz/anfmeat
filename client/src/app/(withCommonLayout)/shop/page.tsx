@@ -7,7 +7,6 @@ import { getCartProducts } from "@/services/cart";
 // import NavBar from "@/components/pages/header/NavBar/NavBar";
 import CartSideBar from "@/components/pages/cartSideBar/CartSideBar";
 import React from "react";
-import UpcomingSideBanner from "@/components/pages/UpcomingSideBanner/UpcomingSideBanner";
 import { getAllBanners } from "@/services/banners";
 import { Metadata } from "next";
 
@@ -57,11 +56,12 @@ export default async function ShopPage({
   return (
     <>
       {/* <NavBar userCartProducts={cartProducts?.data} /> */}
-      <div className=" max-w-7xl mx-auto Container mt-20">
-        <div className="w-full mb-5">
+      <div className="max-w-6xl mx-auto Container mt-20">
+        <div className="w-full mb-8">
           <ShopProductsCategories shopSideBar={shopSideBar} />
         </div>
-        <div className="">
+        <div className=""
+        >
           <ShopProducts
             products={sortedData}
             pagination={products.pagination}

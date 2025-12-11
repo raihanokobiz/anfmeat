@@ -82,7 +82,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ userRef, productRef }) => {
                 key={star}
                 className={`w-5 h-5 cursor-pointer ${
                   selectedRating >= star
-                    ? "fill-[#FFA500] stroke-[#FFA500]"
+                    ? "fill-primary stroke-primary"
                     : "stroke-gray-400"
                 }`}
                 onClick={() => handleStarClick(star)}
@@ -96,7 +96,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ userRef, productRef }) => {
           />
 
           {errors.rating && (
-            <span className="text-red-500 text-sm">
+            <span className="text-primary text-sm">
               {String(errors.rating.message)}
             </span>
           )}
@@ -109,7 +109,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ userRef, productRef }) => {
           placeholder="Your Name.."
         />
         {errors.name && (
-          <span className="text-red-500 text-sm">
+          <span className="text-primary text-sm">
             {String(errors.name.message)}
           </span>
         )}
@@ -122,7 +122,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ userRef, productRef }) => {
           rows={10}
         />
         {errors.comment && (
-          <span className="text-red-500 text-sm">
+          <span className="text-primary text-sm">
             {String(errors.comment.message)}
           </span>
         )}
@@ -130,7 +130,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ userRef, productRef }) => {
         <input
           type="submit"
           value="Add Review"
-          className="py-2 rounded bg-[#FF6C0C] text-white mt-2 cursor-pointer"
+          className="py-2 rounded bg-primary text-white mt-2 cursor-pointer"
         />
       </form>
     </div>

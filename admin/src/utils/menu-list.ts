@@ -22,6 +22,7 @@ import {
   Images,
   ShoppingBasket,
   Star,
+  Store,
 } from "lucide-react";
 
 export function getMenuList(pathname: string): Group[] {
@@ -82,7 +83,7 @@ export function getMenuList(pathname: string): Group[] {
           href: "/offer",
           label: "Offer",
           active: pathname.includes("/offer"),
-          icon: Shapes,
+          icon: Tag,
           submenus: [],
         },
         {
@@ -90,6 +91,13 @@ export function getMenuList(pathname: string): Group[] {
           label: "Products",
           active: pathname.includes("/products"),
           icon: Package2,
+          submenus: [],
+        },
+          {
+          href: "/outlet",
+          label: "Outlet",
+          active: pathname.includes("/outlet"),
+          icon: Store,
           submenus: [],
         },
         {

@@ -177,7 +177,7 @@ const ProductDetails: React.FC<Props> = ({ product }) => {
                             setSelectedColor(null);
                             setLevelError(false);
                           }}
-                          className={`w-[40px] h-[30px] border border-[#FF6C0C] hover:text-[#FF6C0C] duration-300 cursor-pointer rounded text-center flex items-center justify-center uppercase ${level === size.level ? "bg-primary text-white" : "border-primary"
+                          className={`w-[40px] h-[30px] border border-primary hover:text-primary duration-300 cursor-pointer rounded text-center flex items-center justify-center uppercase ${level === size.level ? "bg-primary text-white" : "border-primary"
                             }`}
                         >
                           {size.level}
@@ -229,7 +229,7 @@ const ProductDetails: React.FC<Props> = ({ product }) => {
                     ))}
                 </div>
                 {colorError && (
-                  <p className="text-red-500 text-sm mt-1">
+                  <p className="text-primary text-sm mt-1">
                     Please select color.
                   </p>
                 )}
@@ -237,9 +237,9 @@ const ProductDetails: React.FC<Props> = ({ product }) => {
             ) : null}
           </div>
 
-          <div className="border-b-2 pb-4 border-[#FF6C0C]">
+          <div className="border-b-2 pb-4 border-primary">
             <div className="mt-4 flex items-center gap-2 ">
-              <div className="flex items-center justify-between border border-[#FF6C0C] rounded px-3 py-[7px] md:w-[25%] w-[30%]">
+              <div className="flex items-center justify-between border border-primary rounded px-3 py-[7px] md:w-[25%] w-[30%]">
                 <p onClick={handleDecrement} className="cursor-pointer">
                   <FiMinus />
                 </p>
@@ -251,7 +251,7 @@ const ProductDetails: React.FC<Props> = ({ product }) => {
               <div className="w-full cursor-pointer">
                 <button
                   onClick={handleAddToCart}
-                  className="bg-[#FF6C0C] flex items-center gap-1 px-6 py-2.5 font-semibold text-sm  rounded text-[#fff] cursor-pointer"
+                  className="bg-primary flex items-center gap-1 px-6 py-2.5 font-semibold text-sm  rounded text-[#fff] cursor-pointer"
                 >
                   <span>
                     <FiPlus />

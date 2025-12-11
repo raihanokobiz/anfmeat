@@ -112,7 +112,7 @@ export const DetailsSheet: React.FC<Props> = ({ item }) => {
     try {
       await updateFormAction(String(item._id), data);
       toast({
-        title: "Coupon updated successfully",
+        title: "Outlet updated successfully",
       });
       setSheetOpen(false);
     } catch (error: any) {

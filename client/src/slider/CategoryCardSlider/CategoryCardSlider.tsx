@@ -46,7 +46,7 @@ const CategoryCardSlider: React.FC<CategoryProps> = ({ categoriesList }) => {
             spaceBetween: 16,
           },
           1024: {
-            slidesPerView: 6,
+            slidesPerView: 5,
             spaceBetween: 24,
           },
         }}

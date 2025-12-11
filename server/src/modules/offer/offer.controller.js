@@ -5,7 +5,6 @@ const OfferService = require("./offer.service.js");
 
 class OfferController {
   createOffer = withTransaction(async (req, res, next, session) => {
-
     try {
       const payloadFiles = {
         files: req.files,
@@ -65,9 +64,7 @@ class OfferController {
 
   getSingleOfferWithSlug = catchError(async (req, res, next) => {
     const slug = req.params.slug;
-    const OfferResult = await OfferService.getSingleOfferWithSlug(
-      slug
-    );
+    const OfferResult = await OfferService.getSingleOfferWithSlug(slug);
     const resDoc = responseHandler(
       201,
       "Single Offer successfully",
@@ -119,15 +116,12 @@ class OfferController {
   updateOfferStatus = catchError(async (req, res, next) => {
     const id = req.params.id;
     const { status } = req.body;
-    
+
     if (status === undefined) {
       throw new Error("Status is required");
     }
 
-    const OfferResult = await OfferService.updateOfferStatus(
-      id,
-      status
-    );
+    const OfferResult = await OfferService.updateOfferStatus(id, status);
     const resDoc = responseHandler(201, "Offer Status Update successfully");
     res.status(resDoc.statusCode).json(resDoc);
   });

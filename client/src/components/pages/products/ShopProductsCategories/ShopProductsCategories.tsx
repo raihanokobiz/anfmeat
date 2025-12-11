@@ -3,6 +3,12 @@
 import { TChildCategory, TShopSideBar, TSubCategory } from "@/types";
 import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import Image from "next/image";
+import { apiBaseUrl } from "@/config/config";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Autoplay } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
 
 interface ShopProductsCategoriesProps {
   shopSideBar: TShopSideBar[];
@@ -46,64 +52,66 @@ const ShopProductsCategories: React.FC<ShopProductsCategoriesProps> = ({ shopSid
   };
 
   return (
-    <div className="px-4 pt-2 sticky top-0 h-screen overflow-y-scroll custom-scroll">
-      <div className="space-y-3">
+    <div className="max-w-5xl mx-auto">
+      <Swiper
+        modules={[Navigation, Autoplay]}
+        spaceBetween={16}
+        slidesPerView={2}
+        navigation={{
+          prevEl: '.swiper-button-prev-shop',
+          nextEl: '.swiper-button-next-shop',
+        }}
+        autoplay={{
+          delay: 3000,
+          disableOnInteraction: false,
+        }}
+        loop={true}
+        breakpoints={{
+          640: { slidesPerView: 2, spaceBetween: 16 },
+          768: { slidesPerView: 3, spaceBetween: 16 },
+          1024: { slidesPerView: 5, spaceBetween: 20 },
+        }}
+        className="shop-category-swiper"
+      >
         {shopSideBar?.map((cat) => (
-          <div key={cat.slug} className="bg-white rounded-lg shadow-sm border border-orange-200 overflow-hidden hover:shadow-md transition-shadow">
-            {/* Main Category Card */}
-            <div className="p-4">
-              <label className="flex items-center gap-3 cursor-pointer group">
-                <input
-                  type="checkbox"
-                  onChange={() => updateParams("category", cat.slug)}
-                  checked={selectedCategories.includes(cat.slug)}
-                  className="w-4 h-4 rounded border-gray-300 text-[#495588] focus:ring-[#495588] focus:ring-offset-0 cursor-pointer"
-                />
-                <span className="font-semibold text-gray-800 group-hover:text-[#495588] transition-colors">
-                  {cat.name}
-                </span>
-              </label>
-              
-              {/* SubCategories */}
-              {Array.isArray(cat.subCategories) && cat.subCategories.length > 0 && (
-                <div className="mt-3 pt-3 border-t border-gray-100 space-y-2">
-                  {cat.subCategories.map((subCat: TSubCategory) => (
-                    <div key={subCat.slug} className="pl-2 cursor-pointer">
-                      <label className="flex items-center gap-2 cursor-pointer group">
-                        <input
-                          type="checkbox"
-                          onChange={() => updateParams("subCategory", subCat.slug)}
-                          className="w-3.5 h-3.5 rounded border-gray-300 text-[#495588] focus:ring-2 focus:ring-[#495588] focus:ring-offset-0 cursor-pointer"
-                        />
-                        <span className="text-sm text-gray-700 group-hover:text-[#495588] transition-colors">
-                          {subCat.name}
-                        </span>
-                      </label>
-                      {/* Child Categories */}
-                      {Array.isArray(subCat.childCategories) && subCat.childCategories.length > 0 && (
-                        <div className="mt-2 ml-4 space-y-1.5 pl-3 border-l-2 border-gray-200">
-                          {subCat.childCategories.map((childCat: TChildCategory) => (
-                            <label key={childCat.slug} className="flex items-center gap-2 cursor-pointer group">
-                              <input
-                                type="checkbox"
-                                onChange={() => updateParams("childCategory", childCat.slug)}
-                                className="w-3 h-3 rounded border-gray-300 text-[#495588] focus:ring-2 focus:ring-[#495588] focus:ring-offset-0 cursor-pointer"
-                              />
-                              <span className="text-xs text-gray-600 group-hover:text-[#495588] transition-colors">
-                                {childCat.name}
-                              </span>
-                            </label>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  ))}
+          <SwiperSlide key={cat.slug}>
+            <div
+              onClick={() => updateParams("category", cat.slug)}
+              className={`group relative h-36 w-36 rounded-md overflow-hidden 
+              transition-all duration-300 cursor-pointer flex flex-col shadow-sm
+              ${selectedCategories.includes(cat.slug) ? "bg-[#1e6a39] scale-105" : "bg-[#f5f7f9]"} 
+              ${!selectedCategories.includes(cat.slug) && "hover:bg-[#1e6a39] hover:scale-105"}
+              `}
+            >
+              {cat.image && (
+                <div className="relative w-full flex-1 flex items-center justify-center">
+                  <div className="relative w-20 h-20">
+                    <Image src={apiBaseUrl + cat.image} alt={cat.name} fill className="object-contain" />
+                  </div>
                 </div>
               )}
+              <div className="pb-2 px-2 text-center -mt-4">
+                <p className={`text-sm font-semibold transition-colors duration-300 capitalize
+              ${selectedCategories.includes(cat.slug) ? "text-white" : "text-gray-700 group-hover:text-white"}`}>
+                  {cat.name}
+                </p>
+              </div>
             </div>
-          </div>
+          </SwiperSlide>
         ))}
-      </div>
+      </Swiper>
+
+      {/* Navigation Buttons */}
+      <button className="swiper-button-prev-shop absolute left-0 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-white border-2 border-gray-200 hover:border-[#1e6a39] hover:bg-[#1e6a39] hover:text-white transition-all shadow-md">
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
+      <button className="swiper-button-next-shop absolute right-0 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-white border-2 border-gray-200 hover:border-[#1e6a39] hover:bg-[#1e6a39] hover:text-white transition-all shadow-md">
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
     </div>
   );
 };

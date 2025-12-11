@@ -4,6 +4,7 @@ import { lato } from "./font";
 import NextTopLoader from "nextjs-toploader";
 import { LanguageProvider } from "@/context/LanguageContext";
 
+
 export const metadata: Metadata = {
   title: "ANF Meat | Best E-commerce Platform in BD",
   description: "Best E-commerce Platform in BD",
@@ -20,8 +21,7 @@ export default function RootLayout({
         <NextTopLoader showSpinner={false} color="#1e6a39" />
         <LanguageProvider>
           {children}
-          </LanguageProvider>
-       
+        </LanguageProvider>
       </body>
     </html>
   );
