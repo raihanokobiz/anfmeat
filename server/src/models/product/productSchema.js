@@ -117,9 +117,8 @@ const Productschema = new Schema(
       default: false,
     },
     totalSales: { type: Number, default: 0 },
-totalOrders: { type: Number, default: 0 },
-totalStockValue: { type: Number, default: 0 },
-
+    totalOrders: { type: Number, default: 0 },
+    totalStockValue: { type: Number, default: 0 },
   },
   { timestamps: true }
 );
@@ -143,7 +142,6 @@ Productschema.pre("save", async function (next) {
   this.slug = slug;
   next();
 });
-
 
 const ProductSchema = mongoose.model("product", Productschema);
 module.exports = { ProductSchema };

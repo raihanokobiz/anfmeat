@@ -8,12 +8,14 @@ import { TProduct } from "@/types";
 import { motion, useAnimation } from "framer-motion";
 import Lottie from "lottie-react";
 import cardImageLoading from "@/assets/animation/card-loading.json";
+import { TbWeight } from "react-icons/tb";
 
 interface Product {
   product: TProduct;
 }
 
 const ShopProductCard: React.FC<Product> = ({ product }) => {
+
   const {
     name,
     price,
@@ -31,6 +33,7 @@ const ShopProductCard: React.FC<Product> = ({ product }) => {
     back: false,
     front: false,
   });
+  const hasDiscount = product.discount > 0;
 
   const handleHoverStart = () => {
     controls.start({ x: "100%", opacity: 0.5 });
@@ -46,9 +49,9 @@ const ShopProductCard: React.FC<Product> = ({ product }) => {
       onMouseEnter={handleHoverStart}
       onMouseLeave={handleHoverEnd}
     >
-      <div className="relative w-full overflow-hidden aspect-square">
+      <div className="relative w-full lg:h-72 md:h-48 h-32 overflow-hidden aspect-square">
         <Link href={`product/${slug}`}>
-          <div className="relative w-full h-full">
+          <div className="relative lg:h-72 md:h-48 h-32">
             {/* Lottie loader until both images loaded */}
             {(thumbnailImage && backViewImage) ?
               (!imageLoaded.back || !imageLoaded.front) && (
@@ -67,16 +70,17 @@ const ShopProductCard: React.FC<Product> = ({ product }) => {
             }
 
             {backViewImage && (
-              <Image
-                src={apiBaseUrl + backViewImage}
-                alt={`${name} backViewImage`}
-                width={500}
-                height={500}
-                onLoad={() =>
-                  setImageLoaded((prev) => ({ ...prev, back: true }))
-                }
-                className="w-full h-full object-center"
-              />
+              <div className="w-[160px] h-[300px]">
+                <Image
+                  src={apiBaseUrl + backViewImage}
+                  alt={`${name} backViewImage`}
+                  fill
+                  onLoad={() =>
+                    setImageLoaded((prev) => ({ ...prev, back: true }))
+                  }
+                  className=" object-center"
+                />
+              </div>
             )}
 
             {(thumbnailImage && backViewImage) ? (
@@ -86,59 +90,65 @@ const ShopProductCard: React.FC<Product> = ({ product }) => {
                 animate={controls}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
               >
-                <Image
-                  src={apiBaseUrl + thumbnailImage}
-                  alt={`${name} thumbnailImage`}
-                  width={500}
-                  height={500}
-                  onLoad={() =>
-                    setImageLoaded((prev) => ({ ...prev, front: true }))
-                  }
-                  className="w-full h-full object-center "
-                />
+                <div className="w-[160px] h-[300px]">
+                  <Image
+                    src={apiBaseUrl + thumbnailImage}
+                    alt={`${name} thumbnailImage`}
+                    fill
+                    onLoad={() =>
+                      setImageLoaded((prev) => ({ ...prev, front: true }))
+                    }
+                    className="object-center "
+                  />
+                </div>
               </motion.div>
-            ) : <Image
+            ) : <div className="w-[160px] h-[300px]"> <Image
               src={apiBaseUrl + thumbnailImage}
               alt={`${name} thumbnailImage`}
-              width={500}
-              height={500}
+              fill
               onLoad={() =>
                 setImageLoaded((prev) => ({ ...prev, front: true }))
               }
-              className="w-full h-full object-cover"
+              className=" object-cover"
             />
+            </div>
             }
           </div>
         </Link>
       </div>
 
-      <div className="flex flex-col justify-between h-36">
+      <div className="flex flex-col justify-between">
         <Link href={`product/${slug}`}>
-          <div className="p-4 text-center flex flex-col items-center justify-center">
-            <h2 className="text-base font-semibold line-clamp-2">{name}</h2>
-            <div className="flex gap-2 mt-2">
-              <p className="flex items-center gap-1">
-                <span>৳</span> <span>{Number(price).toFixed(2)}</span>
+          <div className="p-4 flex flex-col grow">
+            <h3 className="font-semibold text-gray-800 mb-3 line-clamp-2 text-lg leading-tight">
+              {product.name}
+            </h3>
+            <div className='flex justify-between gap-4'>
+              <p className='text-base font-bold text-gray-900 bg-gray-200 rounded-2xl px-6 flex items-center'>
+                <TbWeight className='text-xl' />
+                {product?.inventoryRef?.[0]?.level}
               </p>
-              {Number(price) !== Number(mrpPrice) && (
-                <p className="line-through text-[#262626]/60 flex items-center gap-1">
-                  <span>৳</span> <span>{Number(mrpPrice).toFixed(2)}</span>
-                </p>
-              )}
+              <div className="flex items-center gap-1 flex-wrap">
+                <span className="text-base font-bold text-gray-900 bg-gray-200 rounded-2xl py-1 px-6">৳{product.price}</span>
+                {hasDiscount && (
+                  <>
+                    <span className="text-[10px] text-gray-400 bg-gray-200 rounded-2xl px-6">৳{product.mrpPrice}</span>
+                  </>
+                )}
+              </div>
+              <div>
+                <ProductDialog
+                  name={name}
+                  price={price}
+                  productRef={_id}
+                  thumbnailImage={thumbnailImage}
+                  inventoryRef={inventoryRef}
+                  inventoryType={inventoryType}
+                />
+              </div>
             </div>
           </div>
         </Link>
-
-        <div>
-          <ProductDialog
-            name={name}
-            price={price}
-            productRef={_id}
-            thumbnailImage={thumbnailImage}
-            inventoryRef={inventoryRef}
-            inventoryType={inventoryType}
-          />
-        </div>
       </div>
     </div>
   );

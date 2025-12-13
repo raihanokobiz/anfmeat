@@ -6,7 +6,7 @@ import logo from "@/assets/logo/logo.png";
 // import SearchForm from "../SearchForm/SearchForm";
 import Link from "next/link";
 import { BsCart2 } from "react-icons/bs";
-import { FiUser, FiPhone } from "react-icons/fi";
+import { FiUser, FiPhone, FiMapPin } from "react-icons/fi";
 import { RiCloseFill, RiMenuAddFill } from "react-icons/ri";
 import { IoSearchOutline } from "react-icons/io5";
 import { AnimatePresence, motion } from "framer-motion";
@@ -18,6 +18,8 @@ import { getShopSidebar } from "@/services/shopSidebar";
 import { getUser, setCorrelation } from "@/services/auth";
 import UserPopover from "@/shared/UserPopover/UserPopover";
 import { TUser } from "@/types";
+import { openLocationModal } from "@/components/kocation/LocationModalWrapper";
+
 // import { usePathname } from "next/navigation";
 
 interface NavBarProps {
@@ -35,6 +37,9 @@ const NavBar: React.FC<NavBarProps> = ({ userCartProducts }) => {
   const [categories, setCategories] = useState<any[]>([]);
   const [usersId, setUsersId] = useState<TUser | null>(null);
   const [placeholderIndex, setPlaceholderIndex] = useState(0);
+  // location
+  const [selectedLocation, setSelectedLocation] = useState({ city: "", area: "" })
+  const [showLocationModal, setShowLocationModal] = useState(false)
 
   // const pathname = usePathname();
   // const isShopPage = pathname === "/shop";
@@ -89,6 +94,33 @@ const NavBar: React.FC<NavBarProps> = ({ userCartProducts }) => {
     };
     setCorrelationAsync();
   }, []);
+
+
+
+
+  // Load location from localStorage
+  useEffect(() => {
+    const city = localStorage.getItem('selectedCity') || ""
+    const area = localStorage.getItem('selectedArea') || ""
+    setSelectedLocation({ city, area })
+  }, [])
+
+  // Listen for location changes
+  useEffect(() => {
+    const handleStorageChange = () => {
+      const city = localStorage.getItem('selectedCity') || ""
+      const area = localStorage.getItem('selectedArea') || ""
+      setSelectedLocation({ city, area })
+    }
+
+    window.addEventListener('storage', handleStorageChange)
+    window.addEventListener('locationChanged', handleStorageChange)
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange)
+      window.removeEventListener('locationChanged', handleStorageChange)
+    }
+  }, [])
 
   return (
     <>
@@ -146,6 +178,22 @@ const NavBar: React.FC<NavBarProps> = ({ userCartProducts }) => {
 
           {/* Right Side Icons */}
           <div className="flex items-center lg:gap-2.5 gap-1 ">
+            {/* Location Display - Desktop */}
+            <div
+              onClick={() => openLocationModal()}
+              className="hidden lg:flex items-center gap-2 px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-lg cursor-pointer transition-colors"
+            >
+              <FiMapPin className="text-primary text-lg" />
+              <div className="flex flex-col">
+                <span className="text-xs text-gray-500">Deliver to</span>
+                <span className="text-xs font-semibold text-gray-700">
+                  {selectedLocation.city && selectedLocation.area
+                    ? `${selectedLocation.area}, ${selectedLocation.city}`
+                    : "Select Location"
+                  }
+                </span>
+              </div>
+            </div>
             {/* Contact Number */}
             <div className="hidden lg:flex items-center gap-2 px-3 py-1.5 bg-gray-100 rounded-lg">
               <FiPhone className="text-primary text-lg" />
@@ -196,7 +244,7 @@ const NavBar: React.FC<NavBarProps> = ({ userCartProducts }) => {
       </div>
 
       {/* Secondary Navbar - Categories (Smaller) */}
-      <div className="hidden lg:block w-full  bg-primary text-white sticky top-[80px] z-30 shadow-sm backdrop-blur-lg">
+      {/* <div className="hidden lg:block w-full  bg-primary text-white sticky top-[80px] z-30 shadow-sm backdrop-blur-lg">
         <div className="lg:px-[220px] px-4 py-2">
           <div className="flex items-center justify-center gap-6">
             {categories?.map((category, index) => (
@@ -216,7 +264,6 @@ const NavBar: React.FC<NavBarProps> = ({ userCartProducts }) => {
                   </motion.div>
                 </Link>
 
-                {/* Show dropdown if category has subcategories */}
                 {category.subCategories &&
                   category.subCategories.length > 0 &&
                   activeCategory === (category.id || category.name) && (
@@ -248,7 +295,7 @@ const NavBar: React.FC<NavBarProps> = ({ userCartProducts }) => {
             ))}
           </div>
         </div>
-      </div>
+      </div> */}
 
       <AnimatePresence>
         {showSearch && (

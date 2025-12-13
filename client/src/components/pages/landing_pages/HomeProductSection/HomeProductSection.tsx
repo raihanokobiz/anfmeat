@@ -1,6 +1,5 @@
 import { TProduct } from "@/types";
 
-import { addToCart } from "@/services/cart";
 // import MainProduct from "../../products/ProductCard/ProductCard";
 import HomeProductSection from "../../products/ProductCard/ProductCard";
 import { getUser } from "@/services/auth";
@@ -16,7 +15,7 @@ interface ProductsProps {
 
 const HomeProducts = async ({ products }: ProductsProps) => {
   const user = await getUser();
-  console.log("HomeProducts products:", products);
+
   return (
     <div className="max-w-6xl mx-auto px-4 md:px-0 py-6 md:py-10  lg:py-12">
       <div className="flex items-center justify-between mb-6 px-4 pb-4 border-b-2 border-gray-200">
@@ -32,11 +31,7 @@ const HomeProducts = async ({ products }: ProductsProps) => {
           <ChevronRight className="w-5 h-5" />
         </Link>
       </div>
-      <HomeProductSection
-        products={products}
-        userRef={user?.id}
-        onAddToCart={addToCart}
-      />
+      <HomeProductSection products={products} userRef={user?.id} />
     </div>
   );
 };

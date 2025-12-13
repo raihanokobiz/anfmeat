@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { apiBaseUrl } from '@/config/config';
 import Link from 'next/link';
 import { toast } from 'react-toastify';
+import { addToCart } from '@/services/cart';
 import { TbWeight } from 'react-icons/tb';
 
 interface InventoryItem {
@@ -45,7 +46,6 @@ interface HomeProductSectionProps {
     result: TProduct[];
   };
   userRef?: string;
-  onAddToCart: (data: any) => Promise<any>;
 }
 
 // Product Card Component
@@ -280,9 +280,10 @@ const AddToCartModal: React.FC<{
         <div className="p-4">
           <div className="flex gap-3 mb-4 bg-gray-50 p-3 rounded-lg">
             <div className="w-24 h-24 shrink-0 bg-white rounded-lg overflow-hidden shadow-md">
-              <img
+              <Image
                 src={apiBaseUrl + modalImage}
                 alt={product.name}
+                fill
                 className="w-full h-full object-cover"
               />
             </div>
@@ -463,7 +464,7 @@ const AddToCartModal: React.FC<{
 };
 
 // Main Component
-const HomeProductSection: React.FC<HomeProductSectionProps> = ({ products, userRef, onAddToCart }) => {
+const HomeProductSection: React.FC<HomeProductSectionProps> = ({ products, userRef }) => {
   const [selectedProduct, setSelectedProduct] = useState<TProduct | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -486,7 +487,7 @@ const HomeProductSection: React.FC<HomeProductSectionProps> = ({ products, userR
         inventoryRef: inventoryRef || null
       };
 
-      await onAddToCart(cartData);
+      await addToCart(cartData);
 
       setIsModalOpen(false);
       toast.success('Product added to cart successfully!');
@@ -518,7 +519,6 @@ const HomeProductSection: React.FC<HomeProductSectionProps> = ({ products, userR
               key={product._id}
               product={product}
               onQuickAdd={handleQuickAdd} onViewDetails={function (product: TProduct): void {
-                console.log(product)
                 throw new Error('Function not implemented.');
               }} />
           ))}

@@ -26,6 +26,7 @@ const WarehouseTransferRoute = require("./routes/warehouseTransfer.route.js");
 const OrderBulkRoute = require("./routes/order.bulk.route.js");
 const Payment = require("./routes/payment.route.js");
 const OfferRoute = require("./routes/offer.route.js");
+const OutletsRoute = require("./routes/outlets.route.js");
 
 const { Router } = require("express");
 const CampaignRoute = require("./routes/campaign.route.js");
@@ -62,5 +63,6 @@ rootRouter.use("/warehouse", WarehouseRoute);
 rootRouter.use("/warehouse-transfer", WarehouseTransferRoute);
 rootRouter.use("/order-bulk", OrderBulkRoute);
 rootRouter.use("/campaign", CampaignRoute );
+rootRouter.use("/outlet", OutletsRoute );
 
 module.exports = rootRouter;

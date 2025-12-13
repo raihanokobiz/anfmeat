@@ -47,7 +47,7 @@ const Footer: React.FC<FooterProps> = ({ userCartProducts }) => {
   ];
 
   return (
-    <div className="relative max-w-7xl mx-auto">
+    <div className="relative max-w-6xl mx-auto">
       {/* <div className="Container bg-[#F3F3F3]">
         <div className="max-w-6xl grid grid-cols-2 lg:grid-cols-4 lg:justify-center mx-auto py-5 lg:py-10 px-1 gap-y-4 gap-x-2">
           <div className="flex items-center space-x-2 lg:space-x-4">
@@ -97,7 +97,7 @@ const Footer: React.FC<FooterProps> = ({ userCartProducts }) => {
         </div>
       </div> */}
 
-      <div className="Container bg-[#D9D9D9] py-10 lg:py-16">
+      <div className="Container max-w-6xl bg-[#D9D9D9] py-10 lg:py-16">
         <div className=" flex flex-col lg:flex-row justify-between space-y-5">
           <div>
             <div className="text-black font-semibold mb-5 text-xl">
