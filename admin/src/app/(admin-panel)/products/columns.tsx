@@ -10,6 +10,7 @@ import { upperCase, upperFirst } from "lodash";
 import TruncatedHtml from "@/components/utils/truncated-html";
 import Barcode from "react-barcode";
 import { BASE_URL } from "@/config/config";
+import { ProductStatusDropdown } from "@/components/admin-panel/product-status-dropdown";
 
 export const columns: ColumnDef<TProduct>[] = [
   {
@@ -262,6 +263,20 @@ export const columns: ColumnDef<TProduct>[] = [
         <div>
           <p>{upperFirst(row.original.childCategoryRef?.name)}</p>
         </div>
+      );
+    },
+  },
+  {
+    accessorKey: "status",
+    header: "Status",
+    cell: ({ row }) => {
+
+
+      return (
+        <ProductStatusDropdown
+          productId={row.original._id}
+          currentStatus={row.original.status}
+        />
       );
     },
   },

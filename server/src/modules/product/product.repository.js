@@ -539,8 +539,15 @@ class ProductRepository extends BaseRepository {
     );
     return data;
   }
-  async addProductInventory(id, productRef, session) {
 
+  async updateProductStatus(id, payload) {
+    return await this.#model.findByIdAndUpdate(
+      id,
+      { $set: payload },
+      { new: true }
+    );
+  }
+  async addProductInventory(id, productRef, session) {
     const data = await this.#model.findByIdAndUpdate(
       productRef,
       { $push: { inventoryRef: id } },
@@ -563,7 +570,7 @@ class ProductRepository extends BaseRepository {
 
   async getRelatedProduct(payload) {
     const { id } = payload;
-  
+
     const product = await this.#model.findById(id).populate("categoryRef");
     const relatedProducts = await this.#model
       .find({
@@ -577,7 +584,6 @@ class ProductRepository extends BaseRepository {
 
   async getSearchProduct(payload) {
     const { search } = payload;
-
 
     let query = {};
 
@@ -595,7 +601,7 @@ class ProductRepository extends BaseRepository {
   }
 
   async togglePriority(id) {
-    const product = await this.#model.findById(id);    
+    const product = await this.#model.findById(id);
     if (!product) throw new Error("Product not found");
 
     const updatedProduct = await this.#model.findByIdAndUpdate(

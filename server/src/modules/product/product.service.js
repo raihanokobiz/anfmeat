@@ -622,8 +622,8 @@ class ProductService extends BaseService {
 
 
   async updateProductStatus(id, status) {
+    
     if (!status) throw new NotFoundError("Status is required");
-    status = status === "true";
     const product = await this.#repository.updateProductStatus(id, {
       status: status,
     });

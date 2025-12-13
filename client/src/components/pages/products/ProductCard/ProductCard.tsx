@@ -80,8 +80,8 @@ const ProductCard: React.FC<{ product: TProduct; onQuickAdd: (product: TProduct)
 
 
   return (
-    <div className="bg-white w-full h-full rounded-md overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 group border border-gray-100 flex flex-col max-h-96">
-      <div className="relative overflow-hidden lg:h-[400px] md:h-48 h-32">
+    <div className="bg-white rounded-md overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 group border border-gray-100 flex flex-col max-h-80">
+      <div className="relative overflow-hidden lg:h-52 md:h-48 h-32">
         <Link href={`/product/${product.slug}`} className="absolute inset-0 z-0">
           {imageError ? (
             <div className="w-full h-full bg-linear-to-br from-gray-100 to-gray-200 flex items-center justify-center">
@@ -94,9 +94,10 @@ const ProductCard: React.FC<{ product: TProduct; onQuickAdd: (product: TProduct)
             <Image
               src={apiBaseUrl + displayImage}
               alt={product.name}
-              fill
+              width={160}
+              height={200}
               onError={handleImageError}
-              className="object-cover transition-transform duration-700 group-hover:scale-105 w-full h-full"
+              className="w-full h-full object-fill transition-transform duration-700 group-hover:scale-110"
             />
           )}
         </Link>
@@ -279,9 +280,10 @@ const AddToCartModal: React.FC<{
         <div className="p-4">
           <div className="flex gap-3 mb-4 bg-gray-50 p-3 rounded-lg">
             <div className="w-24 h-24 shrink-0 bg-white rounded-lg overflow-hidden shadow-md">
-              <img
+              <Image
                 src={apiBaseUrl + modalImage}
                 alt={product.name}
+                fill
                 className="w-full h-full object-cover"
               />
             </div>
@@ -502,8 +504,8 @@ const HomeProductSection: React.FC<HomeProductSectionProps> = ({ products, userR
   return (
 
     <div>
-      <div className="w-full h-full">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6  mt-4">
           {/* Category Banner - Takes 2 columns and 2 rows on lg */}
           {/* <div className="col-span-2 row-span-2 min-h-[300px] lg:min-h-[400px]">
           {products?.category && (
