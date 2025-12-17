@@ -6,18 +6,15 @@ const OfferService = require("./offer.service.js");
 class OfferController {
   createOffer = withTransaction(async (req, res, next, session) => {
     try {
-      const payloadFiles = {
-        files: req.files,
-      };
+      
       const payload = {
         name: req.body.name,
         slug: req.body.slug,
+        image: req.body.image,
+        imagePublicId: req.body.imagePublicId,
       };
-      const OfferResult = await OfferService.createOffer(
-        payloadFiles,
-        payload,
-        session
-      );
+
+      const OfferResult = await OfferService.createOffer(payload, session);
       const resDoc = responseHandler(
         201,
         "Offer Created successfully",
@@ -86,21 +83,14 @@ class OfferController {
   updateOffer = catchError(async (req, res, next) => {
     try {
       const id = req.params.id;
-      const payloadFiles = {
-        files: req?.files,
-      };
+
       const payload = {
         name: req.body.name,
         slug: req.body.slug,
-        // subOfferRef: req.body.subOfferRef,
-        status: req.body.status,
-        colorCode: req.body.colorCode,
+        image: req.body.image,
+        imagePublicId: req.body.imagePublicId,
       };
-      const OfferResult = await OfferService.updateOffer(
-        id,
-        payloadFiles,
-        payload
-      );
+      await OfferService.updateOffer(id, payload);
       const resDoc = responseHandler(201, "Offer Update successfully");
       res.status(resDoc.statusCode).json(resDoc);
     } catch (error) {

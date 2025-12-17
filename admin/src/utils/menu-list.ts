@@ -133,6 +133,13 @@ export function getMenuList(pathname: string): Group[] {
           icon: Star,
           submenus: [],
         },
+        {
+          href: "/subscribe",
+          label: "Subscribe Email",
+          active: pathname.includes("/subscribe"),
+          icon: Star,
+          submenus: [],
+        },
       ],
     },
     // {

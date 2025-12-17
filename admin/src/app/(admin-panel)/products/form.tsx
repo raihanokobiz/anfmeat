@@ -38,6 +38,7 @@ import { getAllChildCategory } from "@/services/child-category";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useRouter } from "next/navigation";
+import { uploadImageToCloudinary } from "@/services/cloudinary/cloudinary";
 
 const defaultValues = {
   name: "",
@@ -185,8 +186,73 @@ export const CreateProductForm: React.FC = () => {
   const onSubmit = async (values: z.infer<typeof productFormSchema>) => {
     setLoading(true);
     const formData = makeFormData(values);
- 
+
     try {
+
+      // Thumbnail Image 
+      let thumbnailUrl = "";
+      let thumbnailPublicId = "";
+      if (values.thumbnailImage && values.thumbnailImage.length > 0) {
+        const result = await uploadImageToCloudinary(values.thumbnailImage[0], "products/thumbnails");
+        thumbnailUrl = result.secure_url;
+        thumbnailPublicId = result.public_id;
+      }
+
+      // Back View Image 
+      let backViewUrl = "";
+      let backViewPublicId = "";
+      if (values.backViewImage && values.backViewImage.length > 0) {
+        const result = await uploadImageToCloudinary(values.backViewImage[0], "products/backview");
+        backViewUrl = result.secure_url;
+        backViewPublicId = result.public_id;
+      }
+
+      // Size Chart Image 
+      let sizeChartUrl = "";
+      let sizeChartPublicId = "";
+      if (values.sizeChartImage && values.sizeChartImage.length > 0) {
+        const result = await uploadImageToCloudinary(values.sizeChartImage[0], "products/sizechart");
+        sizeChartUrl = result.secure_url;
+        sizeChartPublicId = result.public_id;
+      }
+
+      // Optional Images 
+      const imageUrls: string[] = [];
+      const imagePublicIds: string[] = [];
+      if (values.images && values.images.length > 0) {
+        for (const image of values.images) {
+          const result = await uploadImageToCloudinary(image, "products/gallery");
+          imageUrls.push(result.secure_url);
+          imagePublicIds.push(result.public_id);
+        }
+      }
+
+      // FormData 
+      const formData = new FormData();
+      formData.append("name", values.name);
+      formData.append("description", values.description);
+      formData.append("mrpPrice", values.mrpPrice);
+      formData.append("freeShipping", values.freeShipping);
+      formData.append("discountType", values.discountType);
+      formData.append("discount", values.discount);
+      formData.append("categoryRef", values.categoryRef);
+      formData.append("subCategoryRef", values.subCategoryRef);
+      formData.append("inventoryType", values.inventoryType);
+
+
+      // Image URLs and Public IDs 
+      formData.append("thumbnailImage", thumbnailUrl);
+      formData.append("thumbnailImagePublicId", thumbnailPublicId);
+      formData.append("backViewImage", backViewUrl);
+      formData.append("backViewImagePublicId", backViewPublicId);
+      formData.append("sizeChartImage", sizeChartUrl);
+      formData.append("sizeChartImagePublicId", sizeChartPublicId);
+      formData.append("images", JSON.stringify(imageUrls));
+      formData.append("imagePublicIds", JSON.stringify(imagePublicIds));
+
+      // Inventories 
+      formData.append("inventories", JSON.stringify(values.inventories));
+
       await createFormAction(formData);
       form.reset();
       toast({
@@ -505,67 +571,67 @@ export const CreateProductForm: React.FC = () => {
                 >
                   {(selectedInventoryType === "colorInventory" ||
                     selectedInventoryType === "colorLevelInventory") && (
-                    <Controller
-                      control={control}
-                      name={`inventories.${index}.color`}
-                      render={({ field }) => (
-                        <FormItem className="flex flex-col">
-                          <FormLabel>Color</FormLabel>
-                          <FormControl>
-                            <ColorPicker
-                              value={field.value || "#1677ff"}
-                              showText
-                              allowClear
-                              onChange={(color) =>
-                                field.onChange(color.toHexString())
+                      <Controller
+                        control={control}
+                        name={`inventories.${index}.color`}
+                        render={({ field }) => (
+                          <FormItem className="flex flex-col">
+                            <FormLabel>Color</FormLabel>
+                            <FormControl>
+                              <ColorPicker
+                                value={field.value || "#1677ff"}
+                                showText
+                                allowClear
+                                onChange={(color) =>
+                                  field.onChange(color.toHexString())
+                                }
+                              />
+                            </FormControl>
+                            <FormDescription className="text-red-400 text-xs min-h-4">
+                              {
+                                formState.errors?.inventories?.[index]?.color
+                                  ?.message
                               }
-                            />
-                          </FormControl>
-                          <FormDescription className="text-red-400 text-xs min-h-4">
-                            {
-                              formState.errors?.inventories?.[index]?.color
-                                ?.message
-                            }
-                          </FormDescription>
-                        </FormItem>
-                      )}
-                    />
-                  )}
+                            </FormDescription>
+                          </FormItem>
+                        )}
+                      />
+                    )}
 
                   {(selectedInventoryType === "colorInventory" ||
                     selectedInventoryType === "colorLevelInventory") && (
-                    <FormItem>
-                      <FormLabel>Color Name</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="Enter color name"
-                          {...register(`inventories.${index}.colorName`)}
-                        />
-                      </FormControl>
-                      <FormDescription className="text-red-400 text-xs min-h-4">
-                        {
-                          formState.errors?.inventories?.[index]?.colorName
-                            ?.message
-                        }
-                      </FormDescription>
-                    </FormItem>
-                  )}
+                      <FormItem>
+                        <FormLabel>Color Name</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="Enter color name"
+                            {...register(`inventories.${index}.colorName`)}
+                          />
+                        </FormControl>
+                        <FormDescription className="text-red-400 text-xs min-h-4">
+                          {
+                            formState.errors?.inventories?.[index]?.colorName
+                              ?.message
+                          }
+                        </FormDescription>
+                      </FormItem>
+                    )}
 
                   {(selectedInventoryType === "levelInventory" ||
                     selectedInventoryType === "colorLevelInventory") && (
-                    <FormItem>
-                      <FormLabel>Size</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="Enter size"
-                          {...register(`inventories.${index}.size`)}
-                        />
-                      </FormControl>
-                      <FormDescription className="text-red-400 text-xs min-h-4">
-                        {formState.errors?.inventories?.[index]?.size?.message}
-                      </FormDescription>
-                    </FormItem>
-                  )}
+                      <FormItem>
+                        <FormLabel>Size</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="Enter size"
+                            {...register(`inventories.${index}.size`)}
+                          />
+                        </FormControl>
+                        <FormDescription className="text-red-400 text-xs min-h-4">
+                          {formState.errors?.inventories?.[index]?.size?.message}
+                        </FormDescription>
+                      </FormItem>
+                    )}
 
                   {selectedInventoryType !== "" && (
                     <FormItem>

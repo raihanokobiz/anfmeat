@@ -44,9 +44,8 @@ export default function CreateForm() {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setLoading(true);
-    // const formData = makeFormData(values);
     try {
-      await createFormAction(values);
+      await createFormAction(values as any);
       form.reset();
       toast({
         title: "Success",

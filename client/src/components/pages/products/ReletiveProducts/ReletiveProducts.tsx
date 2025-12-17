@@ -9,9 +9,9 @@ interface Products {
   relativeProducts: TProduct[];
 }
 
-const ReletiveProducts: React.FC<Products> = async ({ relativeProducts }) => {
+const ReletiveProducts: React.FC<Products> = ({ relativeProducts }) => {
   return (
-    <div className="">
+    <div  className="">
       <h2
         className={`text-xl font-semibold border-b pb-3 ${rajdhani.className}`}
       >
@@ -20,7 +20,7 @@ const ReletiveProducts: React.FC<Products> = async ({ relativeProducts }) => {
 
       <div className="mt-8 gap-4 mt-8 gap-4 w-full grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
         {relativeProducts?.slice(0, 12).map((product) => (
-          <ProductCard key={product._id} products={{ category: product, result: [product] }} onAddToCart={async () => { }} />
+          <ProductCard key={product._id} products={[product]} />
         ))}
       </div>
     </div>

@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link";
-import { ChevronRight, Quote, TrendingUp } from "lucide-react";
+import { ChevronRight, Quote } from "lucide-react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";

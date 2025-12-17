@@ -12,6 +12,7 @@ ProductRoute.route("/")
   .post(upload.any(), controller.createProduct)
   .get(controller.getAllProduct);
 
+
 ProductRoute.get("/search", controller.getSearchProduct);
 ProductRoute.get("/related-product/:id", controller.getRelatedProduct);
 ProductRoute.get("/view-type", controller.getAllProductForHomePage);

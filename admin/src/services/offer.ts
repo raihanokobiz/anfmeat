@@ -7,15 +7,15 @@ import {
   SingleCategoryResponse,
   TCategory,
 } from "@/types/shared";
+import {
+  deleteImageFromCloudinary,
+  uploadImageToCloudinary,
+} from "./cloudinary/cloudinary";
 
 export async function createOffer(data: any) {
   const response = await fetch(`${BASE_URL}/offer`, {
-    // headers: {
-    //   "Content-Type": "application/json",
-    // },
     method: "POST",
     body: data,
-    // body: JSON.stringify(data),
   });
   if (!response.ok) {
     throw new Error(`Error: ${response.status} - ${response.statusText}`);
@@ -51,7 +51,9 @@ export async function getOfferWithPagination(
   return response.json();
 }
 
-export async function getOfferById(id: string): Promise<SingleCategoryResponse> {
+export async function getOfferById(
+  id: string
+): Promise<SingleCategoryResponse> {
   const response = await fetch(`${BASE_URL}/offer/${id}`);
   if (!response.ok) {
     throw new Error(`Error: ${response.status} - ${response.statusText}`);
@@ -59,11 +61,51 @@ export async function getOfferById(id: string): Promise<SingleCategoryResponse> 
   return response.json();
 }
 
-export async function updateOffer(id: string, data: any) {
+export async function updateOffer(id: string, formData: FormData) {
+  const imageFiles = formData.getAll("image") as File[];
+  let imageUrl = "";
+  let imagePublicId = "";
+
+  // old image delete
+  if (imageFiles && imageFiles.length > 0 && imageFiles[0].size > 0) {
+    const oldPublicId = formData.get("currentImagePublicId") as string;
+    // old image delete
+    if (oldPublicId) {
+      try {
+        await deleteImageFromCloudinary(oldPublicId);
+      } catch (error) {
+        console.error("Old image delete failed:", error);
+      }
+    }
+
+    // new image upload
+    try {
+      const uploadResult = await uploadImageToCloudinary(
+        imageFiles[0],
+        "offers"
+      );
+      imageUrl = uploadResult.secure_url;
+      imagePublicId = uploadResult.public_id;
+    } catch (error) {
+      throw new Error("Image upload failed");
+    }
+  }
+
+  const payload: any = {
+    name: formData.get("name"),
+  };
+
+  if (imageUrl && imagePublicId) {
+    payload.image = imageUrl;
+    payload.imagePublicId = imagePublicId;
+  }
+
   const response = await fetch(`${BASE_URL}/offer/${id}`, {
     method: "PUT",
-    body: data,
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
   });
+
   if (!response.ok) {
     throw new Error(`Error: ${response.status} - ${response.statusText}`);
   }

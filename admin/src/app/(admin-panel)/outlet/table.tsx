@@ -16,12 +16,14 @@ import {
 } from "@/components/ui/table";
 import { Label } from "@radix-ui/react-label";
 import { Card } from "@/components/ui/card";
-import { TCategory } from "@/types/shared";
 import { DataTablePagination } from "@/components/ui/data-table-pagination";
-import  {columns} from "./columns"
+import { columns } from "./columns"
+import { Outlet } from "./type";
+
+
 
 interface Props {
-  data: TCategory[];
+  data: Outlet[];
   pagination: {
     page: number;
     limit: number;

@@ -1,23 +1,24 @@
 import Banner from "@/components/pages/landing_pages/Banner/Banner";
 import Category from "@/components/pages/landing_pages/Category/Category";
-import SubCategory from "@/components/pages/landing_pages/SubCategory/SubCategory";
+// import SubCategory from "@/components/pages/landing_pages/SubCategory/SubCategory";
 import React from "react";
 import HomeProductSection from "@/components/pages/landing_pages/HomeProductSection/HomeProductSection";
-import TopChildCategory from "@/components/pages/landing_pages/TopChildCategory/TopChildCategory";
-import { getHomePageSubCategoryProducts } from "@/services/products";
-import MiddleChildCategory from "@/components/pages/landing_pages/MiddleChildCategory/MiddleChildCategory";
-import LowerMiddleChildCategory from "@/components/pages/landing_pages/LowerMiddleChildCategory/LowerMiddleChildCategory";
-import { getAllChildCategorys } from "@/services/childCategorys";
-import ButtomChildCategory from "@/components/pages/landing_pages/ButtomChildCategory/ButtomChildCategory";
+// import TopChildCategory from "@/components/pages/landing_pages/TopChildCategory/TopChildCategory";
+import { getAllProductsForShop } from "@/services/products";
+// import MiddleChildCategory from "@/components/pages/landing_pages/MiddleChildCategory/MiddleChildCategory";
+// import LowerMiddleChildCategory from "@/components/pages/landing_pages/LowerMiddleChildCategory/LowerMiddleChildCategory";
+// import { getAllChildCategorys } from "@/services/childCategorys";
+// import ButtomChildCategory from "@/components/pages/landing_pages/ButtomChildCategory/ButtomChildCategory";
 import Campaign from "@/components/pages/landing_pages/Campaign/Campaign";
 import { getCampaign } from "@/services/campaign";
 import Offer from "@/components/pages/landing_pages/offer/Offer";
-import Text1 from "../../assets/texture/Text1.jpg";
+// import Text1 from "../../assets/texture/Text2.jpg";
 import { WhyChooseUs } from "@/components/pages/landing_pages/WhyChooseUs/WhyChooseUs";
-import { Testimonial } from "@/components/pages/landing_pages/Testimonial/Testimonial";
+// import { Testimonial } from "@/components/pages/landing_pages/Testimonial/Testimonial";
 import { Subscribe } from "@/components/pages/landing_pages/Subscribe/Subscribe";
 import { getAllOffers } from "@/services/offer";
 import { LocationModalWrapper } from "@/components/kocation/LocationModalWrapper";
+import { PopularItems } from "@/components/pages/landing_pages/PopularItems/PopularItems";
 
 
 // import { getCartProducts } from "@/services/cart";
@@ -26,18 +27,18 @@ import { LocationModalWrapper } from "@/components/kocation/LocationModalWrapper
 // import { getUser } from "@/services/auth";
 
 const page = async () => {
-  const topRes = await getHomePageSubCategoryProducts("top");
-  const middleRes = await getHomePageSubCategoryProducts("middle");
-  const lowerMiddleRes = await getHomePageSubCategoryProducts("lowerMiddle");
-  const buttomRes = await getHomePageSubCategoryProducts("buttom");
+  // const topRes = await getHomePageSubCategoryProducts("top");
+  // const middleRes = await getHomePageSubCategoryProducts("middle");
+  // const lowerMiddleRes = await getHomePageSubCategoryProducts("lowerMiddle");
+  // const buttomRes = await getHomePageSubCategoryProducts("buttom");
 
-  const topChildCategoriesList = await getAllChildCategorys("top");
+  // const topChildCategoriesList = await getAllChildCategorys("top");
 
-  const middleChildCategoriesList = await getAllChildCategorys("middle");
-  const lowerMiddleChildCategoriesList = await getAllChildCategorys(
-    "lowerMiddle"
-  );
-  const buttomChildCategoriesList = await getAllChildCategorys("buttom");
+  // const middleChildCategoriesList = await getAllChildCategorys("middle");
+  // const lowerMiddleChildCategoriesList = await getAllChildCategorys(
+  //   "lowerMiddle"
+  // );
+  // const buttomChildCategoriesList = await getAllChildCategorys("buttom");
 
   // ------for campaign----
 
@@ -50,37 +51,53 @@ const page = async () => {
   // const products = await getCartProducts(userId, coupon);
   // ksdfj
 
+  const data = await getAllProductsForShop()
+
+  const allProducts = data?.data?.result || [];
+
+  const bestDealProducts = allProducts.filter(
+    (item: any) => item.status === "bestDeal"
+  );
+
+  const bestSellerProducts = allProducts.filter(
+    (item: any) => item.status === "bestSeller"
+  );
+
+  const popularProducts = allProducts.filter(
+    (item: any) => item.status === "popular"
+  );  
+
+
+
   return (
     <>
       {/* <NavBar userCartProducts={products?.data} /> */}
       <div className="">
-        <LocationModalWrapper/>
+        <LocationModalWrapper />
         <Banner banners={[]} />
         <div
-          // style={{
-          //   backgroundImage: `url(${Text1.src})`,
-          //   backgroundRepeat: "no-repeat",
-          //   backgroundSize: "cover",
-          //   backgroundPosition: "center",
-          // }}
+        // style={{
+        //   backgroundImage: `url(${Text1.src})`,
+        //   backgroundRepeat: "no-repeat",
+        //   backgroundSize: "cover",
+        //   backgroundPosition: "center",
+        // }}
         >
           <Category />
           <Offer offrs={offrs} />
         </div>
         {/* <SubCategory /> */}
         {/* <ChildCategory />   */}
-        <TopChildCategory childCategoriesList={topChildCategoriesList?.data} />
-        {topRes?.status === "success" && (
-          <HomeProductSection products={topRes?.data} />
-        )}
-        
-        <TopChildCategory childCategoriesList={topChildCategoriesList?.data} />
-        {topRes?.status === "success" && (
-          <HomeProductSection products={topRes?.data} />
-        )}
-        <WhyChooseUs/>
+
+        <HomeProductSection  title="Best Deals" products={bestDealProducts} />
+
+        <HomeProductSection title="Best Sellers" products={bestSellerProducts} />
+
+        <PopularItems products={popularProducts} />
+
+        <WhyChooseUs />
         {/* <Testimonial/> */}
-        <Subscribe/>
+        <Subscribe />
         {/* <MiddleChildCategory
           childCategoriesList={middleChildCategoriesList?.data}
         />

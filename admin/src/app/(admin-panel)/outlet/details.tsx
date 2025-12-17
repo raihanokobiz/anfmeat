@@ -35,9 +35,13 @@ import { formSchema } from "./form-schema";
 import { makeFormData } from "@/utils/helpers";
 import Image from "next/image";
 import { Label } from "@/components/ui/label";
+import { Outlet } from "./type";
+
+
+
 
 interface Props {
-  item: TCategory;
+  item: Outlet;
 }
 
 export const DetailsSheet: React.FC<Props> = ({ item }) => {
@@ -55,8 +59,8 @@ export const DetailsSheet: React.FC<Props> = ({ item }) => {
       city: item?.city || "",
       area: item?.area || "",
       address: item?.address || "",
-      mobile: item?.mobile?.toString() || "",
-      mapLink: item?.mapLink
+      mobile: item?.mobile || 0,
+      mapLink: item?.mapLink || ""
     },
   });
 

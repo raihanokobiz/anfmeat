@@ -19,7 +19,7 @@ const ShopProductCard: React.FC<Product> = ({ product }) => {
   const {
     name,
     price,
-    mrpPrice,
+    // mrpPrice,
     thumbnailImage,
     backViewImage,
     inventoryRef,
@@ -45,13 +45,13 @@ const ShopProductCard: React.FC<Product> = ({ product }) => {
 
   return (
     <div
-      className="rounded overflow-hidden shadow transition group"
+      className="rounded overflow-hidden shadow transition group p-4"
       onMouseEnter={handleHoverStart}
       onMouseLeave={handleHoverEnd}
     >
-      <div className="relative w-full lg:h-72 md:h-48 h-32 overflow-hidden aspect-square">
+      <div className="relative w-full h-64 sm:h-64 md:h-64 lg:h-64 overflow-hidden">
         <Link href={`product/${slug}`}>
-          <div className="relative lg:h-72 md:h-48 h-32">
+          <div className="relative w-full h-full">
             {/* Lottie loader until both images loaded */}
             {(thumbnailImage && backViewImage) ?
               (!imageLoaded.back || !imageLoaded.front) && (
@@ -70,7 +70,7 @@ const ShopProductCard: React.FC<Product> = ({ product }) => {
             }
 
             {backViewImage && (
-              <div className="w-[160px] h-[300px]">
+              <div className=" relative w-full h-full">
                 <Image
                   src={apiBaseUrl + backViewImage}
                   alt={`${name} backViewImage`}
@@ -78,7 +78,7 @@ const ShopProductCard: React.FC<Product> = ({ product }) => {
                   onLoad={() =>
                     setImageLoaded((prev) => ({ ...prev, back: true }))
                   }
-                  className=" object-center"
+                  className=" object-cover"
                 />
               </div>
             )}
@@ -90,7 +90,7 @@ const ShopProductCard: React.FC<Product> = ({ product }) => {
                 animate={controls}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
               >
-                <div className="w-[160px] h-[300px]">
+                <div className="relative w-full h-full">
                   <Image
                     src={apiBaseUrl + thumbnailImage}
                     alt={`${name} thumbnailImage`}
@@ -98,11 +98,11 @@ const ShopProductCard: React.FC<Product> = ({ product }) => {
                     onLoad={() =>
                       setImageLoaded((prev) => ({ ...prev, front: true }))
                     }
-                    className="object-center "
+                    className="object-cover "
                   />
                 </div>
               </motion.div>
-            ) : <div className="w-[160px] h-[300px]"> <Image
+            ) : <div className="relative w-full h-full"> <Image
               src={apiBaseUrl + thumbnailImage}
               alt={`${name} thumbnailImage`}
               fill

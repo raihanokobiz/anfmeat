@@ -25,7 +25,7 @@ export const columns: ColumnDef<TProduct>[] = [
         <div>
           {row.original.thumbnailImage && (
             <Image
-              src={fileUrlGenerator(row.original.thumbnailImage)}
+              src={row.original.thumbnailImage}
               alt={row.original.name || ""}
               width={600}
               height={200}
@@ -44,7 +44,7 @@ export const columns: ColumnDef<TProduct>[] = [
         <div>
           {row.original.backViewImage && (
             <Image
-              src={fileUrlGenerator(row.original.backViewImage)}
+              src={row.original.backViewImage}
               alt={row.original.name || ""}
               width={600}
               height={200}
@@ -63,7 +63,7 @@ export const columns: ColumnDef<TProduct>[] = [
         <div>
           {row.original.sizeChartImage && (
             <Image
-              src={fileUrlGenerator(row.original.sizeChartImage)}
+              src={row.original.sizeChartImage}
               alt={row.original.name || ""}
               width={600}
               height={200}
@@ -83,7 +83,7 @@ export const columns: ColumnDef<TProduct>[] = [
           {row.original.images &&
             row.original.images.map((img) => (
               <Image
-                src={fileUrlGenerator(img)}
+                src={img}
                 alt={row.original.name || ""}
                 width={600}
                 height={200}
@@ -270,16 +270,14 @@ export const columns: ColumnDef<TProduct>[] = [
     accessorKey: "status",
     header: "Status",
     cell: ({ row }) => {
-
-
       return (
         <ProductStatusDropdown
           productId={row.original._id}
-          currentStatus={row.original.status}
+           currentStatus={row.original.status ?? null}
         />
       );
     },
-  },
+  }, 
   {
     header: "Action",
     cell: ({ row }) => {

@@ -1,6 +1,6 @@
 "use client";
 
-import { TChildCategory, TShopSideBar, TSubCategory } from "@/types";
+import { TShopSideBar } from "@/types";
 import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
@@ -52,7 +52,7 @@ const ShopProductsCategories: React.FC<ShopProductsCategoriesProps> = ({ shopSid
   };
 
   return (
-    <div className="max-w-5xl mx-auto">
+    <div className="max-w-5xl relative mx-auto px-12">
       <Swiper
         modules={[Navigation, Autoplay]}
         spaceBetween={16}
@@ -77,7 +77,7 @@ const ShopProductsCategories: React.FC<ShopProductsCategoriesProps> = ({ shopSid
           <SwiperSlide key={cat.slug}>
             <div
               onClick={() => updateParams("category", cat.slug)}
-              className={`group relative h-36 w-36 rounded-md overflow-hidden 
+              className={`group relative h-36 w-32 rounded-md overflow-hidden 
               transition-all duration-300 cursor-pointer flex flex-col shadow-sm
               ${selectedCategories.includes(cat.slug) ? "bg-[#1e6a39] scale-105" : "bg-[#f5f7f9]"} 
               ${!selectedCategories.includes(cat.slug) && "hover:bg-[#1e6a39] hover:scale-105"}
@@ -102,12 +102,12 @@ const ShopProductsCategories: React.FC<ShopProductsCategoriesProps> = ({ shopSid
       </Swiper>
 
       {/* Navigation Buttons */}
-      <button className="swiper-button-prev-shop absolute left-0 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-white border-2 border-gray-200 hover:border-[#1e6a39] hover:bg-[#1e6a39] hover:text-white transition-all shadow-md">
+      <button className="swiper-button-prev-shop absolute left-0 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-white border-2 border-gray-200 hover:border-[#1e6a39] hover:bg-[#1e6a39] hover:text-white transition-all shadow-md cursor-pointer ">
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
         </svg>
       </button>
-      <button className="swiper-button-next-shop absolute right-0 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-white border-2 border-gray-200 hover:border-[#1e6a39] hover:bg-[#1e6a39] hover:text-white transition-all shadow-md">
+      <button className="swiper-button-next-shop absolute right-0 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-white border-2 border-gray-200 hover:border-[#1e6a39] hover:bg-[#1e6a39] hover:text-white transition-all shadow-md cursor-pointer">
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
         </svg>

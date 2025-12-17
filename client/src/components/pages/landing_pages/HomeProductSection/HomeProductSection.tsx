@@ -6,14 +6,12 @@ import { getUser } from "@/services/auth";
 import Link from "next/link";
 import { ChevronRight, TrendingUp } from "lucide-react";
 interface ProductsProps {
-  products: {
-    category: TProduct;
-    result: TProduct[];
-  };
+  title?: string;
+  products: TProduct[];
 }
 
 
-const HomeProducts = async ({ products }: ProductsProps) => {
+const HomeProducts = async ({ title, products }: ProductsProps) => {
   const user = await getUser();
 
   return (
@@ -21,7 +19,7 @@ const HomeProducts = async ({ products }: ProductsProps) => {
       <div className="flex items-center justify-between mb-6 px-4 pb-4 border-b-2 border-gray-200">
         <h2 className="text-2xl md:text-3xl font-bold text-gray-800 flex items-center gap-2">
           <TrendingUp className="w-7 h-7 text-[#1e6a39]" />
-          Best Sellers
+          {title}
         </h2>
         <Link
           href="/shop"

@@ -39,6 +39,7 @@ import { Upload, UploadFile } from "antd";
 import { fileUrlGenerator, humanFileSize, makeFormData } from "@/utils/helpers";
 import { UploadOutlined } from "@ant-design/icons";
 import Image from "next/image";
+import { deleteImageFromCloudinary, uploadImageToCloudinary } from "@/services/cloudinary/cloudinary";
 
 interface Props {
   banner: TBanner;
@@ -55,7 +56,7 @@ export const BannerDetailsSheet: React.FC<Props> = ({ banner }) => {
       uid: "-1",
       name: String(banner.image).split("/").pop() || "",
       status: "done",
-      url: fileUrlGenerator(banner.image || ""),
+      url: banner.image,
     },
   ]);
   const [selectedImageUrl, setSelectedImageUrl] = React.useState(
@@ -77,9 +78,6 @@ export const BannerDetailsSheet: React.FC<Props> = ({ banner }) => {
   const form = useForm<z.infer<typeof bannerFormSchema>>({
     resolver: zodResolver(bannerFormSchema),
     defaultValues: {
-      // title: banner.title,
-      // details: banner.details,
-      // bannerCategory: banner.bannerCategory,
       type: banner.type,
       image: [],
     },
@@ -87,9 +85,32 @@ export const BannerDetailsSheet: React.FC<Props> = ({ banner }) => {
 
   const onSubmitUpdate = async (values: z.infer<typeof bannerFormSchema>) => {
     setUpdating(true);
-    const data = await makeFormData(values);
     try {
-      await updateFormAction(String(banner._id), data);
+
+      let imageUrl = banner.image;
+      let imagePublicId = banner.imagePublicId;
+
+      // new image upload 
+      if (values.image && values.image.length > 0) {
+        // old image delete 
+        if (banner.imagePublicId) {
+          await deleteImageFromCloudinary(banner.imagePublicId);
+        }
+
+        // new image upload 
+        const file = values.image[0];
+        const uploadResult = await uploadImageToCloudinary(file, "banners");
+        imageUrl = uploadResult.secure_url;
+        imagePublicId = uploadResult.public_id;
+      }
+
+      // FormData 
+      const formData = new FormData();
+      formData.append("type", values.type);
+      formData.append("image", imageUrl);
+      formData.append("imagePublicId", imagePublicId);
+
+      await updateFormAction(String(banner._id), formData);
       toast({
         title: "Banner updated successfully",
       });
@@ -108,6 +129,9 @@ export const BannerDetailsSheet: React.FC<Props> = ({ banner }) => {
   const handleDeleteClick = async () => {
     if (await confirmation("Are you sure you want to delete this banner?")) {
       setDeleting(true);
+      if (banner.imagePublicId) {
+        await deleteImageFromCloudinary(banner.imagePublicId);
+      }
       const deleted = await deleteBannerAction(String(banner._id));
       if (deleted) {
         toast({
@@ -140,61 +164,6 @@ export const BannerDetailsSheet: React.FC<Props> = ({ banner }) => {
             onSubmit={form.handleSubmit(onSubmitUpdate)}
             className="grid grid-cols-2 gap-2 items-end py-2"
           >
-            {/* <div className="col-span-2">
-              {" "}
-              <FormField
-                control={form.control}
-                name="title"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      Banner Title <b className="text-red-500">*</b>
-                    </FormLabel>
-                    <FormControl>
-                      <Input placeholder="Enter banner title" {...field} />
-                    </FormControl>
-                    <FormDescription className="text-red-400 text-xs min-h-4">
-                      {form.formState.errors.title?.message}
-                    </FormDescription>
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="details"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Banner Details</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Enter banner details" {...field} />
-                    </FormControl>
-                    <FormDescription className="text-red-400 text-xs min-h-4">
-                      {form.formState.errors.details?.message}
-                    </FormDescription>
-                  </FormItem>
-                )}
-              />
-            </div>
-
-            <FormField
-              control={form.control}
-              name="bannerCategory"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Banner Category</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Enter bannerCategory number"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormDescription className="text-red-400 text-xs min-h-4">
-                    {form.formState.errors.bannerCategory?.message}
-                  </FormDescription>
-                </FormItem>
-              )}
-            /> */}
-
             <FormField
               control={form.control}
               name="type"

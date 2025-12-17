@@ -56,29 +56,28 @@ import "react-quill/dist/quill.snow.css";
 import { discountTypes, inventoryTypes } from "./form";
 import { Label } from "@/components/ui/label";
 import { upperCase, upperFirst } from "lodash";
+import { deleteImageFromCloudinary, uploadImageToCloudinary } from "@/services/cloudinary/cloudinary";
 
 interface Props {
   product: TProduct;
 }
 
 export const ProductDetailsSheet: React.FC<Props> = ({ product }) => {
-
-  const { toast } = useToast();
-
+  const { toast } = useToast()
   const [sheetOpen, setSheetOpen] = React.useState(false);
   const [updating, setUpdating] = React.useState(false);
   const [deleting, setDeleting] = React.useState(false);
+
+
   const [imageFileList, setImageFileList] = React.useState<UploadFile<any>[]>(
     product.images?.map((item, index) => ({
       uid: `-${index + 1}`,
       name: String(item).split("/").pop() || `image-${index + 1}`,
       status: "done",
-      url: fileUrlGenerator(item),
+      url: item,
     })) || []
   );
 
-  const imagesDemo = product.images?.map((data) => {});
-  
 
   const [thumbnailFileList, setThumbnailFileList] = React.useState<
     UploadFile<any>[]
@@ -87,13 +86,10 @@ export const ProductDetailsSheet: React.FC<Props> = ({ product }) => {
       uid: "-1",
       name: String(product.thumbnailImage).split("/").pop() || "",
       status: "done",
-      url: fileUrlGenerator(product.thumbnailImage || ""),
+      url: product.thumbnailImage,
     },
   ]);
-  console.log(
-    thumbnailFileList,
-    "thumbnail file list from details 44444444444444444444444"
-  );
+
 
   const [backViewFileList, setBackViewFileList] = React.useState<
     UploadFile<any>[]
@@ -102,7 +98,7 @@ export const ProductDetailsSheet: React.FC<Props> = ({ product }) => {
       uid: "-1",
       name: String(product.backViewImage).split("/").pop() || "",
       status: "done",
-      url: fileUrlGenerator(product.backViewImage || ""),
+      url: product.backViewImage,
     },
   ]);
 
@@ -113,7 +109,7 @@ export const ProductDetailsSheet: React.FC<Props> = ({ product }) => {
       uid: "-1",
       name: String(product.sizeChartImage).split("/").pop() || "",
       status: "done",
-      url: fileUrlGenerator(product.sizeChartImage || ""),
+      url: product.sizeChartImage,
     },
   ]);
 
@@ -143,11 +139,11 @@ export const ProductDetailsSheet: React.FC<Props> = ({ product }) => {
       sizeChartImage: [],
       inventories: product.inventoryRef?.length
         ? product.inventoryRef.map((item: any) => ({
-            quantity: String(item.quantity),
-            ...(item.color && { color: item.color }),
-            ...(item.name && { colorName: upperFirst(item.name) }),
-            ...(item.level && { size: upperCase(item.level) }),
-          }))
+          quantity: String(item.quantity),
+          ...(item.color && { color: item.color }),
+          ...(item.name && { colorName: upperFirst(item.name) }),
+          ...(item.level && { size: upperCase(item.level) }),
+        }))
         : [{ quantity: product.mainInventory }],
     },
   });
@@ -203,7 +199,7 @@ export const ProductDetailsSheet: React.FC<Props> = ({ product }) => {
   React.useEffect(() => {
     if (product.thumbnailImage) {
       const fetchExistingThumbnail = async () => {
-        const response = await fetch(fileUrlGenerator(product.thumbnailImage));
+        const response = await fetch(product.thumbnailImage);
         const blob = await response.blob();
         const file = new File([blob], product.thumbnailImage, {
           type: blob.type,
@@ -215,7 +211,7 @@ export const ProductDetailsSheet: React.FC<Props> = ({ product }) => {
           {
             uid: "-1",
             name: product.thumbnailImage,
-            url: fileUrlGenerator(product.thumbnailImage),
+            url: product.thumbnailImage,
           },
         ]);
       };
@@ -290,9 +286,138 @@ export const ProductDetailsSheet: React.FC<Props> = ({ product }) => {
 
   const onSubmitUpdate = async (values: z.infer<typeof productFormSchema>) => {
     setUpdating(true);
-    const data = makeFormData(values);
+    // const data = makeFormData(values);
     try {
-      await updateFormAction(String(product._id), data);
+
+      // Handle Thumbnail Image
+      let thumbnailUrl = product.thumbnailImage;
+      let thumbnailPublicId = product.thumbnailImagePublicId;
+
+      if (values.thumbnailImage && values.thumbnailImage.length > 0) {
+        const newFile = values.thumbnailImage[0];
+
+        // Check if it's a new file (not a URL string)
+        if (typeof newFile !== 'string') {
+          // Delete old image if exists
+          if (product.thumbnailImagePublicId) {
+            await deleteImageFromCloudinary(product.thumbnailImagePublicId);
+          }
+
+          // Upload new image
+          const result = await uploadImageToCloudinary(newFile, "products/thumbnails");
+          thumbnailUrl = result.secure_url;
+          thumbnailPublicId = result.public_id;
+        }
+      }
+
+      // Handle Back View Image
+      let backViewUrl = product.backViewImage;
+      let backViewPublicId = product.backViewImagePublicId;
+
+      if (values.backViewImage && values.backViewImage.length > 0) {
+        const newFile = values.backViewImage[0];
+
+        if (typeof newFile !== 'string') {
+          if (product.backViewImagePublicId) {
+            await deleteImageFromCloudinary(product.backViewImagePublicId);
+          }
+
+          const result = await uploadImageToCloudinary(newFile, "products/backview");
+          backViewUrl = result.secure_url;
+          backViewPublicId = result.public_id;
+        }
+      }
+
+      // Handle Size Chart Image
+      let sizeChartUrl = product.sizeChartImage;
+      let sizeChartPublicId = product.sizeChartImagePublicId;
+
+      if (values.sizeChartImage && values.sizeChartImage.length > 0) {
+        const newFile = values.sizeChartImage[0];
+
+        if (typeof newFile !== 'string') {
+          if (product.sizeChartImagePublicId) {
+            await deleteImageFromCloudinary(product.sizeChartImagePublicId);
+          }
+
+          const result = await uploadImageToCloudinary(newFile, "products/sizechart");
+          sizeChartUrl = result.secure_url;
+          sizeChartPublicId = result.public_id;
+        }
+      }
+
+      // Handle Optional Images
+      let imageUrls: string[] = [];
+      let imagePublicIds: string[] = [];
+
+      if (values.images && values.images.length > 0) {
+        // Separate existing URLs and new files
+        const existingUrls: string[] = [];
+        const existingPublicIds: string[] = [];
+        const newFiles: File[] = [];
+
+        values.images.forEach((item: any) => {
+          if (typeof item === 'string') {
+            // Existing URL
+            existingUrls.push(item);
+            // Find corresponding public_id from product.imagePublicIds
+            const index = product.images?.indexOf(item);
+            if (index !== -1 && product.imagePublicIds?.[index]) {
+              existingPublicIds.push(product.imagePublicIds[index]);
+            }
+          } else {
+            // New file
+            newFiles.push(item);
+          }
+        });
+
+        // Delete removed images from Cloudinary
+        if (product.imagePublicIds) {
+          for (const publicId of product.imagePublicIds) {
+            if (!existingPublicIds.includes(publicId)) {
+              await deleteImageFromCloudinary(publicId);
+            }
+          }
+        }
+
+        // Upload new files
+        for (const file of newFiles) {
+          const result = await uploadImageToCloudinary(file, "products/gallery");
+          existingUrls.push(result.secure_url);
+          existingPublicIds.push(result.public_id);
+        }
+
+        imageUrls = existingUrls;
+        imagePublicIds = existingPublicIds;
+      }
+
+      // Create FormData
+      const formData = new FormData();
+      formData.append("name", values.name);
+      formData.append("description", values.description);
+      formData.append("mrpPrice", values.mrpPrice);
+      formData.append("freeShipping", values.freeShipping);
+      formData.append("discountType", values.discountType);
+      formData.append("discount", values.discount);
+      formData.append("categoryRef", values.categoryRef);
+      formData.append("subCategoryRef", values.subCategoryRef || "");
+      formData.append("inventoryType", values.inventoryType);
+
+      // Image URLs and Public IDs
+      formData.append("thumbnailImage", thumbnailUrl);
+      formData.append("thumbnailImagePublicId", thumbnailPublicId || "");
+      formData.append("backViewImage", backViewUrl || "");
+      formData.append("backViewImagePublicId", backViewPublicId || "");
+      formData.append("sizeChartImage", sizeChartUrl || "");
+      formData.append("sizeChartImagePublicId", sizeChartPublicId || "");
+      formData.append("images", JSON.stringify(imageUrls));
+      formData.append("imagePublicIds", JSON.stringify(imagePublicIds));
+
+      // Inventories
+      formData.append("inventories", JSON.stringify(values.inventories));
+
+
+      await updateFormAction(String(product._id), formData);
       toast({
         title: "Product updated successfully",
       });
@@ -314,17 +439,46 @@ export const ProductDetailsSheet: React.FC<Props> = ({ product }) => {
 
   const handleDeleteClick = async () => {
     if (await confirmation("Are you sure you want to delete this product?")) {
-      setDeleting(true);
-      console.log(product._id, "product id from han dle delete......");
-      const deleted = await deleteProductAction(String(product._id));
-      if (deleted) {
+      try {
+        // Delete all images from Cloudinary
+        if (product.thumbnailImagePublicId) {
+          await deleteImageFromCloudinary(product.thumbnailImagePublicId);
+        }
+
+        if (product.backViewImagePublicId) {
+          await deleteImageFromCloudinary(product.backViewImagePublicId);
+        }
+
+        if (product.sizeChartImagePublicId) {
+          await deleteImageFromCloudinary(product.sizeChartImagePublicId);
+        }
+
+        if (product.imagePublicIds && product.imagePublicIds.length > 0) {
+          for (const publicId of product.imagePublicIds) {
+            await deleteImageFromCloudinary(publicId);
+          }
+        }
+
+        // Delete product from database
+        const deleted = await deleteProductAction(String(product._id));
+
+        if (deleted) {
+          toast({
+            title: "Product deleted successfully",
+          });
+          setSheetOpen(false);
+          window.location.reload();
+        }
+      } catch (error: any) {
         toast({
-          title: "Product deleted successfully",
+          title: "Failed to delete product",
+          description: error.message,
+          variant: "destructive",
         });
-        setSheetOpen(false);
+      } finally {
+        setDeleting(false);
       }
     }
-    setDeleting(false);
   };
 
   return (
@@ -645,70 +799,70 @@ export const ProductDetailsSheet: React.FC<Props> = ({ product }) => {
                   >
                     {(selectedInventoryType === "colorInventory" ||
                       selectedInventoryType === "colorLevelInventory") && (
-                      <Controller
-                        control={control}
-                        name={`inventories.${index}.color`}
-                        render={({ field }) => (
-                          <FormItem className="flex flex-col">
-                            <FormLabel>Color</FormLabel>
-                            <FormControl>
-                              <ColorPicker
-                                value={field.value || "#1677ff"}
-                                showText
-                                allowClear
-                                onChange={(color) =>
-                                  field.onChange(color.toHexString())
+                        <Controller
+                          control={control}
+                          name={`inventories.${index}.color`}
+                          render={({ field }) => (
+                            <FormItem className="flex flex-col">
+                              <FormLabel>Color</FormLabel>
+                              <FormControl>
+                                <ColorPicker
+                                  value={field.value || "#1677ff"}
+                                  showText
+                                  allowClear
+                                  onChange={(color) =>
+                                    field.onChange(color.toHexString())
+                                  }
+                                />
+                              </FormControl>
+                              <FormDescription className="text-red-400 text-xs min-h-4">
+                                {
+                                  formState.errors?.inventories?.[index]?.color
+                                    ?.message
                                 }
-                              />
-                            </FormControl>
-                            <FormDescription className="text-red-400 text-xs min-h-4">
-                              {
-                                formState.errors?.inventories?.[index]?.color
-                                  ?.message
-                              }
-                            </FormDescription>
-                          </FormItem>
-                        )}
-                      />
-                    )}
+                              </FormDescription>
+                            </FormItem>
+                          )}
+                        />
+                      )}
 
                     {(selectedInventoryType === "colorInventory" ||
                       selectedInventoryType === "colorLevelInventory") && (
-                      <FormItem>
-                        <FormLabel>Color Name</FormLabel>
-                        <FormControl>
-                          <Input
-                            placeholder="Enter color name"
-                            {...register(`inventories.${index}.colorName`)}
-                          />
-                        </FormControl>
-                        <FormDescription className="text-red-400 text-xs min-h-4">
-                          {
-                            formState.errors?.inventories?.[index]?.colorName
-                              ?.message
-                          }
-                        </FormDescription>
-                      </FormItem>
-                    )}
+                        <FormItem>
+                          <FormLabel>Color Name</FormLabel>
+                          <FormControl>
+                            <Input
+                              placeholder="Enter color name"
+                              {...register(`inventories.${index}.colorName`)}
+                            />
+                          </FormControl>
+                          <FormDescription className="text-red-400 text-xs min-h-4">
+                            {
+                              formState.errors?.inventories?.[index]?.colorName
+                                ?.message
+                            }
+                          </FormDescription>
+                        </FormItem>
+                      )}
 
                     {(selectedInventoryType === "levelInventory" ||
                       selectedInventoryType === "colorLevelInventory") && (
-                      <FormItem>
-                        <FormLabel>Size</FormLabel>
-                        <FormControl>
-                          <Input
-                            placeholder="Enter size"
-                            {...register(`inventories.${index}.size`)}
-                          />
-                        </FormControl>
-                        <FormDescription className="text-red-400 text-xs min-h-4">
-                          {
-                            formState.errors?.inventories?.[index]?.size
-                              ?.message
-                          }
-                        </FormDescription>
-                      </FormItem>
-                    )}
+                        <FormItem>
+                          <FormLabel>Size</FormLabel>
+                          <FormControl>
+                            <Input
+                              placeholder="Enter size"
+                              {...register(`inventories.${index}.size`)}
+                            />
+                          </FormControl>
+                          <FormDescription className="text-red-400 text-xs min-h-4">
+                            {
+                              formState.errors?.inventories?.[index]?.size
+                                ?.message
+                            }
+                          </FormDescription>
+                        </FormItem>
+                      )}
 
                     {selectedInventoryType !== "" && (
                       <FormItem>

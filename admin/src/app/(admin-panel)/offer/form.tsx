@@ -23,6 +23,7 @@ import { Label } from "@/components/ui/label";
 import { makeFormData } from "@/utils/helpers";
 import { createFormAction } from "./actions";
 import { useRouter } from "next/navigation";
+import { uploadImageToCloudinary } from "@/services/cloudinary/cloudinary";
 
 const defaultValues = {
   name: "",
@@ -55,8 +56,22 @@ export const CreateForm: React.FC = () => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setLoading(true);
-    const formData = makeFormData(values);
     try {
+
+      //Image upload
+      const file = values.image[0];
+      const uploadResult = await uploadImageToCloudinary(
+        file.originFileObj || file,
+        "offers"
+      );
+
+      // FormData create 
+      const formData = new FormData();
+      formData.append("name", values.name);
+      formData.append("image", uploadResult.secure_url);
+      formData.append("imagePublicId", uploadResult.public_id);
+
+
       await createFormAction(formData);
       form.reset();
       setFileList([]);
@@ -101,7 +116,7 @@ export const CreateForm: React.FC = () => {
                 </FormItem>
               )}
             />
-            
+
             {/* Image Upload */}
             <FormField
               control={form.control}

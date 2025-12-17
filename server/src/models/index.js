@@ -38,5 +38,6 @@ module.exports = {
   PaymentSchema: require("./payment/paymentSchema.js").PaymentSchema,
   OrderBulkSchema: require("./orderBulk/orderBulkSchema.js").OrderBulkSchema,
   CampaignSchema: require("./campaign/campaignSchema.js").CampaignSchema,
-  OutletSchema: require("./outlets/outletsSchema.js").OutletSchema
+  OutletSchema: require("./outlets/outletsSchema.js").OutletSchema,
+  SubscribeSchema: require("./subscribe/subscribeSchema.js").SubscribeSchema,
 };

@@ -30,6 +30,7 @@ import { createFormAction } from "./actions";
 import { Upload } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { Label } from "@/components/ui/label";
+import { uploadImageToCloudinary } from "@/services/cloudinary/cloudinary";
 
 const defaultValues = {
   // title: "",
@@ -42,7 +43,7 @@ const defaultValues = {
 
 export const bannerTypes = [
   { name: "MAIN BANNER", key: "main_banner" },
-  { name: "UPCOMING BANNER", key: "upcoming_banner" },
+  // { name: "UPCOMING BANNER", key: "upcoming_banner" },
   // { name: "CATEGORY BANNER", key: "category_banner" },
   // { name: "BEST SALE BANNER", key: "best_sale_banner" },
   // { name: "NEWSLETTER BANNER", key: "newsletter_banner" },
@@ -65,7 +66,7 @@ export const CreateBannerForm: React.FC = () => {
     // Sync with react-hook-form
     form.setValue("image", rawFiles);
   };
-  // console.log(fileList, "fileList................................");
+
 
   const form = useForm<z.infer<typeof bannerFormSchema>>({
     resolver: zodResolver(bannerFormSchema),
@@ -74,9 +75,22 @@ export const CreateBannerForm: React.FC = () => {
 
   const onSubmit = async (values: z.infer<typeof bannerFormSchema>) => {
     setLoading(true);
-    const formData = makeFormData(values);
-    // console.log(values, "values from form++++++++++++++++++++++++++");
+
     try {
+
+      // Image upload to Cloudinary
+      const file = values.image[0];
+      const uploadResult = await uploadImageToCloudinary(
+        file.originFileObj || file,
+        "banners" // folder name
+      );
+
+      // FormData create 
+      const formData = new FormData();
+      formData.append("type", values.type);
+      formData.append("image", uploadResult.secure_url);
+      formData.append("imagePublicId", uploadResult.public_id);
+
       await createFormAction(formData);
       form.reset();
       toast({
@@ -103,53 +117,6 @@ export const CreateBannerForm: React.FC = () => {
           onSubmit={form.handleSubmit(onSubmit)}
           className="grid grid-cols-4 gap-2 items-end py-2"
         >
-          {/* <FormField
-            control={form.control}
-            name="title"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>
-                  Banner Title <b className="text-red-500">*</b>
-                </FormLabel>
-                <FormControl>
-                  <Input placeholder="Enter banner title" {...field} />
-                </FormControl>
-                <FormDescription className="text-red-400 text-xs min-h-4">
-                  {form.formState.errors.title?.message}
-                </FormDescription>
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="details"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Banner Details</FormLabel>
-                <FormControl>
-                  <Input placeholder="Enter banner details" {...field} />
-                </FormControl>
-                <FormDescription className="text-red-400 text-xs min-h-4">
-                  {form.formState.errors.details?.message}
-                </FormDescription>
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="bannerCategory"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Banner Category</FormLabel>
-                <FormControl>
-                  <Input placeholder="Enter bannerCategory number" {...field} />
-                </FormControl>
-                <FormDescription className="text-red-400 text-xs min-h-4">
-                  {form.formState.errors.bannerCategory?.message}
-                </FormDescription>
-              </FormItem>
-            )}
-          /> */}
 
           <FormField
             control={form.control}

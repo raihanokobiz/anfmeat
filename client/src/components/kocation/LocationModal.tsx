@@ -16,6 +16,8 @@ interface Outlet {
 
 interface LocationModalProps {
     outlets: Outlet[]
+    isOpen?: boolean
+    onClose?: () => void
 }
 
 export function LocationModal({ outlets, isOpen: externalIsOpen, onClose }: LocationModalProps) {
@@ -51,9 +53,10 @@ export function LocationModal({ outlets, isOpen: externalIsOpen, onClose }: Loca
         onClose?.()
     }
 
-
     // Default Bangladesh map
-    const defaultBangladeshMap = `<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3652.0!2d90.4!3d23.8!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sBangladesh!5e0!3m2!1sen!2sbd" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>`
+    const defaultBangladeshMap = useMemo(() => {
+        return `<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3652.0!2d90.4!3d23.8!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sBangladesh!5e0!3m2!1sen!2sbd" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>`
+    }, [])
 
     // Extract unique cities
     const cities = useMemo(() => {
@@ -97,7 +100,7 @@ export function LocationModal({ outlets, isOpen: externalIsOpen, onClose }: Loca
             setIsOpen(true)
         }
 
-    }, [])
+    }, [defaultBangladeshMap])
 
     // Update map when selection changes
     useEffect(() => {

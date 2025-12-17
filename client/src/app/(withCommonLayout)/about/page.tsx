@@ -1,5 +1,5 @@
 import React from "react";
-import aboutImage from "@/assets/logo/logo_hd_large.png";
+import aboutImage from "@/assets/logo/logo.png";
 import Image from "next/image";
 // import NavBar from "@/components/pages/header/NavBar/NavBar";
 // import { getCartProducts } from "@/services/cart";

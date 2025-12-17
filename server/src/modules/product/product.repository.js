@@ -25,6 +25,7 @@ class ProductRepository extends BaseRepository {
   }
 
   async updateProduct(id, payload) {
+    
     const updatedProduct = await this.#model.findByIdAndUpdate(id, payload);
     if (!updatedProduct) {
       throw new Error("About Us not found");

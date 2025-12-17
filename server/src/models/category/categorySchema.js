@@ -14,7 +14,13 @@ const Categoryschema = new Schema(
     image: {
       type: String,
     },
+    imagePublicId: {
+      type: String,
+    },
     vectorImage: {
+      type: String,
+    },
+    vectorImagePublicId: {
       type: String,
     },
     colorCode: {

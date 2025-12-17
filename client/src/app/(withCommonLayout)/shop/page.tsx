@@ -7,7 +7,7 @@ import { getCartProducts } from "@/services/cart";
 // import NavBar from "@/components/pages/header/NavBar/NavBar";
 import CartSideBar from "@/components/pages/cartSideBar/CartSideBar";
 import React from "react";
-import { getAllBanners } from "@/services/banners";
+// import { getAllBanners } from "@/services/banners";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -48,7 +48,7 @@ export default async function ShopPage({
   const coupon = "";
   const cartProducts = await getCartProducts(userId, coupon);
 
-  const { data: banners } = await getAllBanners();
+  // const { data } = await getAllBanners();
 
   const sortedData = [...products.result].sort((a, b) => (a.priority === b.priority ? 0 : a.priority ? -1 : 1));
   

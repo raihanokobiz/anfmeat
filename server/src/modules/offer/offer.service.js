@@ -14,14 +14,7 @@ class OfferService extends BaseService {
     this.#repository = repository;
   }
 
-  async createOffer(payloadFiles, payload, session) {
-    const { files } = payloadFiles;
-    if (files?.length) {
-      const images = await ImgUploader(files);
-      for (const key in images) {
-        payload[key] = images[key];
-      }
-    }
+  async createOffer(payload, session) {
     const OfferData = await this.#repository.createOffer(payload, session);
     return OfferData;
   }
@@ -54,24 +47,8 @@ class OfferService extends BaseService {
     return navbarData;
   }
 
-  async updateOffer(id, payloadFiles, payload) {
-    const { files } = payloadFiles;
-    const { name, slug, subOfferRef, status, colorCode } = payload;
-    if (files?.length) {
-      const images = await ImgUploader(files);
-      for (const key in images) {
-        payload[key] = images[key];
-      }
-    }
-
-    // Update the database with the new data
+  async updateOffer(id, payload) {    
     const OfferData = await this.#repository.updateOffer(id, payload);
-
-    // Remove old files if they’re being replaced
-    if (files.length && OfferData) {
-      await removeUploadFile(OfferData?.image);
-    }
-
     return OfferData;
   }
 

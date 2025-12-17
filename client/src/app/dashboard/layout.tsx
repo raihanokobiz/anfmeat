@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import logo from "@/assets/logo/ChatGPT Image Nov 22, 2025, 12_55_12 PM.png";
+import logo from "@/assets/logo/logo.png";
 import { usePathname, useRouter } from "next/navigation";
 import { FaHome, FaSignOutAlt, FaBars, FaTimes } from "react-icons/fa";
 import { toast } from "react-toastify";

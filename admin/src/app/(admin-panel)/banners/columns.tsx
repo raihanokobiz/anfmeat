@@ -17,7 +17,7 @@ export const columns: ColumnDef<TBanner>[] = [
         <div>
           {row.original.image && (
             <Image
-              src={fileUrlGenerator(row.original.image)}
+              src={row.original.image}
               alt={row.original.title || ""}
               width={600}
               height={200}
@@ -27,18 +27,6 @@ export const columns: ColumnDef<TBanner>[] = [
         </div>
       );
     },
-  },
-  {
-    header: "Title",
-    accessorKey: "title",
-  },
-  {
-    header: "Details",
-    accessorKey: "details",
-  },
-  {
-    header: "Category",
-    accessorKey: "bannerCategory",
   },
   {
     header: "Banner Type",

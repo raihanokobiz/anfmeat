@@ -8,11 +8,11 @@ const nextConfig = {
         port: "8001",
         pathname: "/**",
       },
-      // {
-      //   protocol: "https",
-      //   hostname: "server..com",
-      //   pathname: "/**",
-      // },
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+        pathname: "/**",
+      },
     ],
   },
 };

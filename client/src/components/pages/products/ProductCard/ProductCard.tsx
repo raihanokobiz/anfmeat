@@ -1,13 +1,17 @@
 "use client";
 
 import React, { useState } from 'react';
-import { ShoppingCart, X, Plus, Minus, Eye, Check } from 'lucide-react';
+import { ShoppingCart, X, Plus, Minus, Check } from 'lucide-react';
 import Image from 'next/image';
 import { apiBaseUrl } from '@/config/config';
 import Link from 'next/link';
 import { toast } from 'react-toastify';
 import { addToCart } from '@/services/cart';
 import { TbWeight } from 'react-icons/tb';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, Navigation } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
 
 interface InventoryItem {
   _id?: string;
@@ -41,15 +45,12 @@ interface TProduct {
 }
 
 interface HomeProductSectionProps {
-  products: {
-    category: TProduct;
-    result: TProduct[];
-  };
+ products: TProduct[];
   userRef?: string;
 }
 
-// Product Card Component
-const ProductCard: React.FC<{ product: TProduct; onQuickAdd: (product: TProduct) => void; onViewDetails: (product: TProduct) => void; }> = ({ product, onQuickAdd, onViewDetails }) => {
+// Product Card Component onViewDetails
+const ProductCard: React.FC<{ product: TProduct; onQuickAdd: (product: TProduct) => void; onViewDetails?: (product: TProduct) => void; }> = ({ product, onQuickAdd }) => {
   const [imageError, setImageError] = useState(false);
   const hasDiscount = product.discount > 0;
   const isStockOut = product.mainInventory <= 0;
@@ -71,11 +72,11 @@ const ProductCard: React.FC<{ product: TProduct; onQuickAdd: (product: TProduct)
     }
   };
 
-  const handleViewDetailsClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    onViewDetails(product);
-  };
+  // const handleViewDetailsClick = (e: React.MouseEvent) => {
+  //   e.preventDefault();
+  //   e.stopPropagation();
+  //   onViewDetails(product);
+  // };
 
 
 
@@ -193,47 +194,47 @@ const ProductCard: React.FC<{ product: TProduct; onQuickAdd: (product: TProduct)
 };
 
 // Category Banner Card - Matches ProductBannerCard style
-const CategoryBannerCard: React.FC<{ product: TProduct }> = ({ product }) => {
-  const [imageError, setImageError] = useState(false);
+// const CategoryBannerCard: React.FC<{ product: TProduct }> = ({ product }) => {
+//   const [imageError, setImageError] = useState(false);
 
-  // Use bannerImage if available, otherwise fallback to images array or thumbnailImage
-  const displayImage = (product as any).bannerImage ||
-    (product.images && product.images.length > 0 ? product.images[0] : product.thumbnailImage);
+//   // Use bannerImage if available, otherwise fallback to images array or thumbnailImage
+//   const displayImage = (product as any).bannerImage ||
+//     (product.images && product.images.length > 0 ? product.images[0] : product.thumbnailImage);
 
-  return (
-    <div className="w-full h-full relative group overflow-hidden">
+//   return (
+//     <div className="w-full h-full relative group overflow-hidden">
 
-      <Link href={`/shop?subCategory=${product.slug || product._id}`} className="block h-full relative">
-        <div className="relative h-full rounded-lg overflow-hidden">
-          {imageError ? (
-            <div className="w-full h-full bg-linear-to-br from-orange-100 to-orange-200 flex items-center justify-center">
-              <div className="text-center p-4">
-                <ShoppingCart size={64} className="mx-auto text-orange-400 mb-3" />
-                <p className="text-lg font-semibold text-gray-700">{product.name}</p>
-              </div>
-            </div>
-          ) : (
-            <Image
-              src={apiBaseUrl + displayImage}
-              alt={product.name}
-              fill
-              onError={() => setImageError(true)}
-              className="object-cover rounded transition-transform duration-300 group-hover:scale-105"
-            />
-          )}
+//       <Link href={`/shop?subCategory=${product.slug || product._id}`} className="block h-full relative">
+//         <div className="relative h-full rounded-lg overflow-hidden">
+//           {imageError ? (
+//             <div className="w-full h-full bg-linear-to-br from-orange-100 to-orange-200 flex items-center justify-center">
+//               <div className="text-center p-4">
+//                 <ShoppingCart size={64} className="mx-auto text-orange-400 mb-3" />
+//                 <p className="text-lg font-semibold text-gray-700">{product.name}</p>
+//               </div>
+//             </div>
+//           ) : (
+//             <Image
+//               src={apiBaseUrl + displayImage}
+//               alt={product.name}
+//               fill
+//               onError={() => setImageError(true)}
+//               className="object-cover rounded transition-transform duration-300 group-hover:scale-105"
+//             />
+//           )}
 
-          {/* Overlay */}
-          <div className="absolute inset-0 bg-black/15 w-full rounded"></div>
+//           {/* Overlay */}
+//           <div className="absolute inset-0 bg-black/15 w-full rounded"></div>
 
-          {/* Bottom Title with hover effect */}
-          <div className="bottom-0 absolute w-full text-center group-hover:bg-[#99C9F7]/20 group-hover:border-t border-white/30 rounded-b text-white z-50 duration-300">
-            <h2 className="py-2 text-2xl capitalize font-semibold">{product.name}</h2>
-          </div>
-        </div>
-      </Link>
-    </div>
-  );
-};
+//           {/* Bottom Title with hover effect */}
+//           <div className="bottom-0 absolute w-full text-center group-hover:bg-[#99C9F7]/20 group-hover:border-t border-white/30 rounded-b text-white z-50 duration-300">
+//             <h2 className="py-2 text-2xl capitalize font-semibold">{product.name}</h2>
+//           </div>
+//         </div>
+//       </Link>
+//     </div>
+//   );
+// };
 
 // Modal Component
 const AddToCartModal: React.FC<{
@@ -499,31 +500,35 @@ const HomeProductSection: React.FC<HomeProductSectionProps> = ({ products, userR
     }
   };
 
-  const displayProducts = products?.result?.slice(0, 8) || [];
+  const displayProducts = products?.slice(0, 8) || [];
+
 
   return (
 
-    <div>
-      <div className="">
-        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6  mt-4">
-          {/* Category Banner - Takes 2 columns and 2 rows on lg */}
-          {/* <div className="col-span-2 row-span-2 min-h-[300px] lg:min-h-[400px]">
-          {products?.category && (
-            <CategoryBannerCard product={products.category} />
-          )}
-        </div> */}
+    <div className="relative px-4 md:px-0">
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-screen h-20 bg-green-100 z-0"></div>
+      <Swiper
+        modules={[Autoplay, Navigation]}
+        spaceBetween={16}
+        slidesPerView={1}
+        navigation
+        autoplay={{ delay: 2500, disableOnInteraction: false }}
+        breakpoints={{
+          640: { slidesPerView: 1 },
+          768: { slidesPerView: 2 },
+          1024: { slidesPerView: 3 },
+          1280: { slidesPerView: 3 },
+        }}
+      >
+        {displayProducts.map(product => (
+          <SwiperSlide key={product._id}>
+            <ProductCard  product={product} onQuickAdd={handleQuickAdd} />
+          </SwiperSlide>
+        ))}
+      </Swiper>
 
-          {/* Product Cards - 8 cards in remaining space */}
-          {displayProducts.map((product) => (
-            <ProductCard
-              key={product._id}
-              product={product}
-              onQuickAdd={handleQuickAdd} onViewDetails={function (product: TProduct): void {
-                throw new Error('Function not implemented.');
-              }} />
-          ))}
-        </div>
-
+      {/* AddToCartModal */}
+      {selectedProduct && (
         <AddToCartModal
           product={selectedProduct}
           isOpen={isModalOpen}
@@ -531,7 +536,7 @@ const HomeProductSection: React.FC<HomeProductSectionProps> = ({ products, userR
           onConfirm={handleConfirmCart}
           isLoading={isLoading}
         />
-      </div>
+      )}
     </div>
   );
 };

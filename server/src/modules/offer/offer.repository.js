@@ -12,9 +12,8 @@ class OfferRepository extends BaseRepository {
   }
 
   async createOffer(payload, session) {
-    // Create a single document and return the created offer
+    // create a single document and return the created offer
     const newOffer = await this.#model.create([payload], { session });
-    console.log("New Offer Created:", newOffer);
     return newOffer;
 
   }
@@ -98,6 +97,7 @@ class OfferRepository extends BaseRepository {
     ]);
     return navBar;
   }
+
   async getOfferById(OfferId) {
     const Offer = await this.#model.aggregate([
       {

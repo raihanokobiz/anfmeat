@@ -38,10 +38,11 @@ export function WhyChooseUs() {
                         autoplay={{ delay: 2000, disableOnInteraction: false }}
                         loop={true}
                         speed={2000}
-                        slidesPerView={2}
+                        slidesPerView={1}
+                        spaceBetween={10}
                         breakpoints={{
                             640: {
-                                slidesPerView: 2,
+                                slidesPerView: 1,
                                 spaceBetween: 10,
                             },
                             768: {

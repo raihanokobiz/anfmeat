@@ -224,10 +224,11 @@ const AddToCartModal: React.FC<{
         <div className="lg:p-2  p-1  overflow-y-auto">
           <div className="flex gap-2 mb-2 bg-gray-50 p-2 rounded-xl">
             <div className="w-28 h-28 shrink-0 bg-white rounded-lg overflow-hidden shadow-md">
-              <img 
+              <Image 
                 src={apiBaseUrl + modalImage} 
                 alt={product.name}
                 className="w-full h-full object-cover"
+                fill
                 onError={(e) => {
                   e.currentTarget.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100"%3E%3Crect fill="%23f0f0f0" width="100" height="100"/%3E%3C/svg%3E';
                 }}

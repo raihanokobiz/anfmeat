@@ -23,7 +23,7 @@ export const columns: ColumnDef<TCategory>[] = [
       return (
         <div className="w-20 h-20 relative">
           <Image
-            src={fileUrlGenerator(image)}
+            src={image}
             alt="category"
             fill
             className="object-cover rounded-lg"
@@ -40,7 +40,7 @@ export const columns: ColumnDef<TCategory>[] = [
       return (
         <div className="w-20 h-20 relative">
           <Image
-            src={fileUrlGenerator(vectorImage)}
+            src={vectorImage}
             alt="category"
             fill
             className="object-cover rounded-lg"

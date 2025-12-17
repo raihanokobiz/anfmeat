@@ -39,6 +39,7 @@ export const ProductStatusDropdown: React.FC<ProductStatusDropdownProps> = ({
     productId,
     currentStatus,
 }) => {
+    
     const [status, setStatus] = useState<string | null>(currentStatus);
     const [isLoading, setIsLoading] = useState(false);
 

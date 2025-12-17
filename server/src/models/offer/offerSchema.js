@@ -11,10 +11,13 @@ const Offerschema = new Schema(
       required: true,
       trim: true,
     },
+    slug: {
+      type: String,
+    },
     image: {
       type: String,
     },
-    slug: {
+    imagePublicId: {
       type: String,
     },
   },

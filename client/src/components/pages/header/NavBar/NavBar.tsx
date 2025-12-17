@@ -14,7 +14,7 @@ import ResponsiveSearchForm from "../ResponsiveSearchForm/ResponsiveSearchForm";
 import ResponsiveNavSidBar from "../ResponsiveNavSidBar/ResponsiveNavSidBar";
 import "../NavBar/NavBar.css";
 // import { useLanguage } from "@/context/LanguageContext";
-import { getShopSidebar } from "@/services/shopSidebar";
+// import { getShopSidebar } from "@/services/shopSidebar";
 import { getUser, setCorrelation } from "@/services/auth";
 import UserPopover from "@/shared/UserPopover/UserPopover";
 import { TUser } from "@/types";
@@ -31,15 +31,15 @@ interface NavBarProps {
 const NavBar: React.FC<NavBarProps> = ({ userCartProducts }) => {
   // const { t, language, switchLanguage } = useLanguage();
 
-  const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  // const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [showSearch, setShowSearch] = useState(false);
   const [showSideMenu, setShowSideMenu] = useState(false);
-  const [categories, setCategories] = useState<any[]>([]);
+  // const [ setCategories] = useState<any[]>([]);
   const [usersId, setUsersId] = useState<TUser | null>(null);
   const [placeholderIndex, setPlaceholderIndex] = useState(0);
   // location
   const [selectedLocation, setSelectedLocation] = useState({ city: "", area: "" })
-  const [showLocationModal, setShowLocationModal] = useState(false)
+  // const [showLocationModal, setShowLocationModal] = useState(false)
 
   // const pathname = usePathname();
   // const isShopPage = pathname === "/shop";
@@ -63,8 +63,8 @@ const NavBar: React.FC<NavBarProps> = ({ userCartProducts }) => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const { data } = await getShopSidebar();
-        setCategories(data || []);
+        // const { data } = await getShopSidebar();
+        // setCategories(data || []);
       } catch (error) {
         console.error("Error fetching categories:", error);
       }

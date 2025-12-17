@@ -23,7 +23,7 @@ export const columns: ColumnDef<TCategory>[] = [
       return (
         <div className="w-20 h-20 relative">
           <Image
-            src={fileUrlGenerator(image)}
+            src={image}
             alt="Offer"
             fill
             className="object-cover rounded-lg"
@@ -38,35 +38,5 @@ export const columns: ColumnDef<TCategory>[] = [
       return <DetailsSheet item={row.original} />;
     },
   },
-  {
-    accessorKey: "priority",
-    header: "Priority",
-    cell: ({ row }) => {
-      const [value, setValue] = useState(row.original.status);
-
-      const togglePriority = async () => {
-        setValue(!value);
-        try {
-          await fetch(`${BASE_URL}/offer/status/${row.original._id}`, {
-            method: "PATCH",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ status: !value }),
-          });
-        } catch (err) {
-          console.error("Failed to update status:", err);
-        }
-      };
-
-      return (
-        <button
-          onClick={togglePriority}
-          className={`px-3 py-1 rounded-md font-bold ${value ? "bg-red-600" : "bg-green-600"
-            } text-white`}
-        >
-          {value ? "High" : "Low"}
-        </button>
-      );
-    },
-  }
-
+ 
 ];

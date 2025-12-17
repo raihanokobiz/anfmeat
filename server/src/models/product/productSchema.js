@@ -51,13 +51,25 @@ const Productschema = new Schema(
       type: String,
       required: true,
     },
+    thumbnailImagePublicId: {
+      type: String,
+    },
     backViewImage: {
+      type: String,
+    },
+    backViewImagePublicId: {
       type: String,
     },
     images: {
       type: [String],
     },
+    imagePublicIds: {
+      type: [String],
+    },
     sizeChartImage: {
+      type: String,
+    },
+    sizeChartImagePublicId: {
       type: String,
     },
     videoUrl: {

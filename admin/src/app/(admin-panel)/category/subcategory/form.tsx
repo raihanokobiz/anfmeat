@@ -216,7 +216,7 @@ export const CreateSubCategoryForm: React.FC = () => {
           </div>
 
           {/* Image */}
-          <div className="col-span-1 grid grid-cols-2">
+          {/* <div className="col-span-1 grid grid-cols-2">
             <div className="">
               <Label>
                 Category Image <b className="text-red-500">*</b>
@@ -318,7 +318,7 @@ export const CreateSubCategoryForm: React.FC = () => {
                 {form.formState.errors.bannerImage?.message}
               </div>
             </div>
-          </div>
+          </div> */}
         </form>
       </Form>
     </Card>

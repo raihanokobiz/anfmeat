@@ -3,18 +3,22 @@ const express = require("express");
 const moment = require("moment-timezone");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
-const rootRouter = require("./api/index.js");
-const config = require("./config/config.js");
-const globalErrorHandler = require("./middleware/errors/globalErrorHandler.js");
+const rootRouter = require("./src/api/index.js");
+const config = require("./src/config/config.js");
+const globalErrorHandler = require("./src/middleware/errors/globalErrorHandler.js");
 const colors = require("colors");
+const cloudinaryRoutes = require("./src/cloudinary/cloudinary.js");
 require("dotenv").config();
 
 const app = express();
 
+app.use(cors());
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+//  Body parser limit for image 
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
 moment.tz.setDefault("Asia/Dhaka");
 const currentDate = moment();
@@ -30,6 +34,9 @@ app.get("/time", (req, res, next) => {
   res.send(currentDate.format("YYYY-MM-DD HH:mm:ss"));
 });
 
+app.use("/api/v1/cloudinary", cloudinaryRoutes);
+
+
 app.use(globalErrorHandler);
 
 mongoose
@@ -43,9 +50,3 @@ mongoose
 app.listen(config.port, () => {
   console.log(`app listening to port `, config.port);
 });
-// app.listen(config.port, '192.168.0.117', () => {
-//   console.log(`App listening at http://192.168.0.117:${config.port}`);
-// });
-// app.listen(config.port, '192.168.0.106', () => {
-//   console.log(`App listening at http://192.168.0.106:${config.port}`);
-// });

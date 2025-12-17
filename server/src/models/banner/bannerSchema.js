@@ -6,17 +6,8 @@ const Bannerschema = new Schema(
     image: {
       type: String,
     },
-    title: {
+    imagePublicId: {
       type: String,
-      trim: true,
-    },
-    details: {
-      type: String,
-      trim: true,
-    },
-    bannerCategory: {
-      type: String, //promotion, offer, announcement etc.
-      trim: true,
     },
     type: {
       type: String,
@@ -27,7 +18,7 @@ const Bannerschema = new Schema(
         "NEWSLETTER BANNER",
         "SHOP BANNER",
         "PROMO BANNER",
-        "UPCOMING BANNER"
+        "UPCOMING BANNER",
       ],
       default: "MAIN BANNER",
     },

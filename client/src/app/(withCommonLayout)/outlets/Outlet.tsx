@@ -20,7 +20,9 @@ interface OutletResponse {
 }
 
 export function Outlet({ data }: { data: OutletResponse | Outlet[] }) {
-    const outlets = Array.isArray(data) ? data : data?.data || []
+    const outlets = useMemo(() => {
+        return Array.isArray(data) ? data : data?.data || []
+    }, [data])
 
     const cities = useMemo(() => {
         const uniqueCities = [...new Set(outlets.map(outlet => outlet.city))].filter(Boolean)

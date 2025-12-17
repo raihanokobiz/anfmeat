@@ -27,6 +27,7 @@ export async function createFormAction(data: FormData) {
 }
 
 export async function updateFormAction(id: string, data: any) {
+  
   try {
     await updateOffer(id, data);
     revalidatePath("/");

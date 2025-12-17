@@ -40,7 +40,6 @@ class ProductService extends BaseService {
   }
 
   async createProduct(payloadFiles, payload, session) {
-    // console.log("Payload", payload);
     const { files } = payloadFiles;
     const {
       name,
@@ -64,17 +63,16 @@ class ProductService extends BaseService {
     }
     let invenoryIds = [];
     let totalInventoryCount = 0;
-    // console.log("inventorys", inventoryArray);
     payload.inventoryType = inventoryType;
+
     // activeTabName == 'colorInventory' || activeTabName == "levelInventory" || activeTabName == "colorLevelInventory")
     if (inventoryType == "colorInventory") {
-      console.log("inventory====", inventory);
       let newInventoryId = "";
       for (const item of inventoryArray) {
         const color = item.colorCode || "#000000";
         const name = item.color || "Unknown";
         const quantity = parseInt(item.quantity) || 0;
-        console.log("inventory Quantity ",quantity)
+
         totalInventoryCount += quantity;
         const title = "INV-";
         if (newInventoryId === "") {
@@ -137,10 +135,8 @@ class ProductService extends BaseService {
         invenoryIds.push(createNewInventory[0]._id);
       }
     } else if (inventoryType == "colorLevelInventory") {
-      // console.log('inventory color level', inventoryArray[0]?.colorLevel)
       let newInventoryID = "";
       for (const item of inventoryArray) {
-        // console.log('inventory color level', item)
         const level = item.level || "Unknown";
         const variants = item.colorLevel;
         const itemQuantity = variants.reduce(
@@ -197,10 +193,11 @@ class ProductService extends BaseService {
         newInventory,
         session
       );
-      console.log("createNewInventory", createNewInventory)
+      console.log("createNewInventory", createNewInventory);
       invenoryIds.push(createNewInventory[0]._id);
       totalInventoryCount = parseInt(inventory) || 0;
     }
+
     payload.mainInventory = totalInventoryCount;
     payload.inventoryRef = invenoryIds;
 
@@ -215,30 +212,31 @@ class ProductService extends BaseService {
     } else {
       payload.price = mrpPrice;
     }
-    if (!files?.length) {
-      throw new Error("Thumbnail Image is required");
-    }
-    const hasThumbnailImage = files.some(
-      (file) => file.fieldname === "thumbnailImage"
-    );
 
-    if (!hasThumbnailImage) {
-      throw new Error("Thumbnail Image is required");
-    }
-    let images = await ImgUploader(files);
+    // if (!files?.length) {
+    //   throw new Error("Thumbnail Image is required");
+    // }
+    // const hasThumbnailImage = files.some(
+    //   (file) => file.fieldname === "thumbnailImage"
+    // );
+
+    // if (!hasThumbnailImage) {
+    //   throw new Error("Thumbnail Image is required");
+    // }
+    // let images = await ImgUploader(files);
 
     // images.images = Object.keys(images)
     //   .filter((key) => key.startsWith("images["))
     //   .map((key) => images[key]),
 
-    for (const key in images) {
-      payload[key] = images[key];
-    }
+    // for (const key in images) {
+    //   payload[key] = images[key];
+    // }
 
     payload.productId = await idGenerate("PRO-", "productId", this.#repository);
-    
+
     const productData = await this.#repository.createProduct(payload, session);
-    
+
     if (productData) {
       for (const invenoryId of invenoryIds) {
         const data = await this.#inventoryRepository.updateById(
@@ -300,7 +298,6 @@ class ProductService extends BaseService {
   }
 
   async getSingleProduct(slug) {
-
     const productData = await this.#repository.findBySlug(slug, [
       "brandRef",
       "categoryRef",
@@ -313,101 +310,8 @@ class ProductService extends BaseService {
     return productData;
   }
 
-  // async updateProduct(id, payloadFiles, payload, session) {
-  //   try {
-  //     console.log("update service hit=============", payload);
-  //     const { files } = payloadFiles;
-  //     console.log(files, "files from update product service++++++++++++++");
-  //     const {
-  //       // name,
-  //       // description,
-  //       mrpPrice,
-  //       discountType,
-  //       discount,
-  //       // videoUrl,
-  //       // freeShipping,
-  //       // brandRef,
-  //       // categoryRef,
-  //       // subCategoryRef,
-  //       warehouseRef,
-  //     } = payload;
-  //     const existingProduct = await this.#repository.findById(id);
-  //     if (!existingProduct) throw new Error("Product not found");
-
-  //     if ((discountType, discount)) {
-  //       const { price, discountAmount } = calculateDiscountAmount(
-  //         mrpPrice,
-  //         discountType,
-  //         discount
-  //       );
-  //       payload.price = price;
-  //       payload.discountAmount = discountAmount;
-  //     } else {
-  //       payload.price = mrpPrice;
-  //     }
-
-  //     if (files?.length) {
-  //       let images = await ImgUploader(files);
-  //       images.images = Object.keys(images)
-  //         .filter((key) => key.startsWith("images["))
-  //         .map((key) => images[key]);
-  //       for (const key in images) {
-  //         payload[key] = images[key];
-  //       }
-  //     }
-  //     payload.productId = await idGenerate(
-  //       "PRO-",
-  //       "productId",
-  //       this.#repository
-  //     );
-  //     payload.warehouseRef = warehouseRef;
-  //     console.log(payload, "final payload to repo???????????????");
-  //     const productData = await this.#repository.updateProduct(
-  //       id,
-  //       payload,
-  //       session
-  //     );
-  //     if (files.length && productData) {
-  //       console.log("Checking for image deletions...");
-
-  //       // Compare old and new images to find differences
-  //       const oldImages = existingProduct.images || [];
-  //       const newImages = productData.images || [];
-
-  //       const oldThumbnail = existingProduct.thumbnailImage;
-  //       const newThumbnail = productData.thumbnailImage;
-
-  //       const oldBackView = existingProduct.backViewImage;
-  //       const newBackView = productData.backViewImage;
-
-  //       // Find removed images
-  //       const imagesToRemove = oldImages.filter(
-  //         (img) => !newImages.includes(img)
-  //       );
-
-  //       if (oldThumbnail && oldThumbnail !== newThumbnail) {
-  //         imagesToRemove.push(oldThumbnail);
-  //       }
-  //       if (oldBackView && oldBackView !== newBackView) {
-  //         imagesToRemove.push(oldBackView);
-  //       }
-
-  //       // Remove only the images that were replaced
-  //       if (imagesToRemove.length) {
-  //         await removeUploadFile(imagesToRemove);
-  //         console.log("Removed images:", imagesToRemove);
-  //       }
-  //     }
-  //     return productData;
-  //   } catch (error) {
-  //     console.log(error.message);
-  //   }
-  // }
-
   async updateProduct(id, payloadFiles, payload, session) {
     try {
-
-
       const { files } = payloadFiles;
       const {
         name,
@@ -614,26 +518,21 @@ class ProductService extends BaseService {
   }
 
   async togglePriority(id) {
-
-    
-  const updatedProduct = await this.#repository.togglePriority(id);
-  return updatedProduct;
-}
-
+    const updatedProduct = await this.#repository.togglePriority(id);
+    return updatedProduct;
+  }
 
   async updateProductStatus(id, status) {
-    
     if (!status) throw new NotFoundError("Status is required");
     const product = await this.#repository.updateProductStatus(id, {
       status: status,
     });
-   
+
     if (!product) throw new NotFoundError("Product not found");
     return product;
   }
 
   async deleteProduct(id, session) {
-   
     const product = await this.#repository.findById(id);
     if (!product) throw new NotFoundError("Product not found");
     const deletedProduct = await this.#repository.deleteById(id, session);

@@ -38,6 +38,7 @@ import { UploadOutlined } from "@ant-design/icons";
 import { fileUrlGenerator, humanFileSize, makeFormData } from "@/utils/helpers";
 import Image from "next/image";
 import { Label } from "@/components/ui/label";
+import { deleteImageFromCloudinary, uploadImageToCloudinary } from "@/services/cloudinary/cloudinary";
 
 interface Props {
   item: TCategory;
@@ -54,25 +55,12 @@ export const DetailsSheet: React.FC<Props> = ({ item }) => {
       uid: "-1",
       name: String(item.image).split("/").pop() || "",
       status: "done",
-      url: fileUrlGenerator(item.image),
+      url: item.image
     },
   ]);
-  const [vectorFileList, setVectorFileList] = React.useState<UploadFile<any>[]>(
-    [
-      {
-        uid: "-1",
-        name: String(item.vectorImage).split("/").pop() || "",
-        status: "done",
-        url: fileUrlGenerator(item.vectorImage),
-      },
-    ]
-  );
 
   const [selectedImageUrl, setSelectedImageUrl] = React.useState(
     fileUrlGenerator(item.image)
-  );
-  const [selectedVectorImageUrl, setSelectedVectorImageUrl] = React.useState(
-    item.vectorImage ? fileUrlGenerator(item.vectorImage) : ""
   );
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -80,7 +68,6 @@ export const DetailsSheet: React.FC<Props> = ({ item }) => {
     defaultValues: {
       name: item.name,
       image: [],
-      vectorImage: [],
     },
   });
 
@@ -95,22 +82,20 @@ export const DetailsSheet: React.FC<Props> = ({ item }) => {
     form.setValue("image", rawFiles);
   };
 
-  const handleBannerFileChange = ({ fileList }: any) => {
-    setVectorFileList(fileList);
-
-    const rawFiles = fileList
-      .map((file: any) => file.originFileObj)
-      .filter(Boolean);
-
-    // Sync with react-hook-form
-    form.setValue("vectorImage", rawFiles);
-  };
-
   const onSubmitUpdate = async (values: z.infer<typeof formSchema>) => {
     setUpdating(true);
-    const data = await makeFormData(values);
+
     try {
-      await updateFormAction(String(item._id), data);
+      const formData = new FormData();
+      formData.append("name", values.name);
+      formData.append("currentImagePublicId", item.imagePublicId || "");
+
+      //  image  append 
+      if (values.image && values.image.length > 0) {
+        formData.append("image", values.image[0]);
+      }
+
+      await updateFormAction(String(item._id), formData);
       toast({
         title: "Outlet updated successfully",
       });
@@ -129,11 +114,14 @@ export const DetailsSheet: React.FC<Props> = ({ item }) => {
   const handleDeleteClick = async () => {
     if (await confirmation("Are you sure you want to delete this item?")) {
       setDeleting(true);
+
       const deleted = await deleteAction(String(item._id));
       if (deleted) {
         toast({
           title: "Coupon deleted successfully",
         });
+        const res = await deleteImageFromCloudinary(item.imagePublicId);
+
         setSheetOpen(false);
       }
     }
@@ -245,7 +233,7 @@ export const DetailsSheet: React.FC<Props> = ({ item }) => {
               <Button
                 type="button"
                 variant="destructive"
-                onClick={handleDeleteClick}
+                onClick={() => handleDeleteClick(item)}
                 loading={deleting}
               >
                 Delete

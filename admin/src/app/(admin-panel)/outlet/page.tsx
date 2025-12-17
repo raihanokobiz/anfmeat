@@ -21,6 +21,9 @@ export default async function OutletPage({ searchParams }: Props) {
 
     const { data } = await getOutletWithPagination(page, limit);
 
+    console.log(data, "ok");
+    
+
 
     return (
         <ContentLayout title="Outlet" >

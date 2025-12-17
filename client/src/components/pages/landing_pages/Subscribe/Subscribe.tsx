@@ -6,13 +6,16 @@ import { useState } from "react"
 import F1 from "../../../../assets/subscribe/S1.png"
 import FAnimation from "../../../../assets/subscribe/FishAnimation.json"
 import { Player } from "@lottiefiles/react-lottie-player"
+import { addSubscribe } from "@/services/subscribe"
 
 export function Subscribe() {
     const [email, setEmail] = useState("")
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
-        console.log("Subscribed:", email)
+        e.preventDefault()
+
+        await addSubscribe({ email })
         setEmail("")
     }
 
@@ -42,7 +45,7 @@ export function Subscribe() {
                             />
                             <button
                                 type="submit"
-                                className="px-6 py-3 bg-primary text-white font-semibold uppercase tracking-wide transition-colors"
+                                className="px-6 py-3 bg-primary text-white font-semibold uppercase tracking-wide transition-colors cursor-pointer"
                             >
                                 Subscribe
                             </button>

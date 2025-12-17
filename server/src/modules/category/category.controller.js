@@ -6,19 +6,16 @@ const CategoryService = require("./category.service.js");
 class CategoryController {
   createCategory = withTransaction(async (req, res, next, session) => {
     try {
- 
-      const payloadFiles = {
-        files: req.files,
-      };
       const payload = {
         name: req.body.name,
         slug: req.body.slug,
-        // subCategoryRef: req.body.subCategoryRef,
         status: req.body.status,
-        colorCode: req.body.colorCode,
+        image: req?.body?.image,
+        imagePublicId: req?.body?.imagePublicId,
+        vectorImage: req?.body?.vectorImage,
+        vectorImagePublicId: req?.body?.vectorImagePublicId,
       };
       const categoryResult = await CategoryService.createCategory(
-        payloadFiles,
         payload,
         session
       );
@@ -98,15 +95,13 @@ class CategoryController {
       const payload = {
         name: req.body.name,
         slug: req.body.slug,
-        // subCategoryRef: req.body.subCategoryRef,
         status: req.body.status,
-        colorCode: req.body.colorCode,
+        image: req?.body?.image,
+        imagePublicId: req?.body?.imagePublicId,
+        vectorImage: req?.body?.vectorImage,
+        vectorImagePublicId: req?.body?.vectorImagePublicId,
       };
-      const categoryResult = await CategoryService.updateCategory(
-        id,
-        payloadFiles,
-        payload
-      );
+      await CategoryService.updateCategory(id, payloadFiles, payload);
       const resDoc = responseHandler(201, "Category Update successfully");
       res.status(resDoc.statusCode).json(resDoc);
     } catch (error) {
@@ -122,22 +117,19 @@ class CategoryController {
   updateCategoryStatus = catchError(async (req, res, next) => {
     const id = req.params.id;
     const { status } = req.body;
-    
+
     if (status === undefined) {
       throw new Error("Status is required");
     }
 
-    const categoryResult = await CategoryService.updateCategoryStatus(
-      id,
-      status
-    );
+    await CategoryService.updateCategoryStatus(id, status);
     const resDoc = responseHandler(201, "Category Status Update successfully");
     res.status(resDoc.statusCode).json(resDoc);
   });
 
   deleteCategory = catchError(async (req, res, next) => {
     const id = req.params.id;
-    const categoryResult = await CategoryService.deleteCategory(id);
+    await CategoryService.deleteCategory(id);
     const resDoc = responseHandler(200, "Category Deleted successfully");
     res.status(resDoc.statusCode).json(resDoc);
   });
