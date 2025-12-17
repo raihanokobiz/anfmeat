@@ -311,210 +311,214 @@ class ProductService extends BaseService {
   }
 
   async updateProduct(id, payloadFiles, payload, session) {
-    try {
-      const { files } = payloadFiles;
-      const {
-        name,
-        barcode,
-        mrpPrice,
-        discountType,
-        discount,
-        inventoryType,
-        inventory,
-        inventoryArray,
-      } = payload;
 
-      const existingProduct = await this.#repository.findById(id);
-      if (!existingProduct) throw new Error("Product not found");
+    console.log(payload, 'pok___________________________________________');
+    
 
-      let inventoryIds = [];
-      let totalInventoryCount = 0;
+    // try {
+    //   const { files } = payloadFiles;
+    //   const {
+    //     name,
+    //     barcode,
+    //     mrpPrice,
+    //     discountType,
+    //     discount,
+    //     inventoryType,
+    //     inventory,
+    //     inventoryArray,
+    //   } = payload;
 
-      // Handle inventory logic
-      if (inventoryType === "colorInventory") {
-        let newInventoryId = "";
-        for (const item of inventoryArray) {
-          const quantity = parseInt(item.quantity) || 0;
-          totalInventoryCount += quantity;
+    //   const existingProduct = await this.#repository.findById(id);
+    //   if (!existingProduct) throw new Error("Product not found");
 
-          const title = "INV-";
-          if (!newInventoryId) {
-            newInventoryId = await idGenerate(
-              title,
-              "inventoryID",
-              this.#inventoryRepository
-            );
-          } else {
-            let idNum = Number(newInventoryId.slice(title.length + 6)) + 1;
-            let prefix = newInventoryId.slice(0, title.length + 6);
-            newInventoryId = prefix + idNum;
-          }
+    //   let inventoryIds = [];
+    //   let totalInventoryCount = 0;
 
-          const newInventory = {
-            quantity,
-            availableQuantity: quantity,
-            inventoryType,
-            color: item.colorCode || "#000000",
-            name: item.color || "Unknown",
-            barcode: item.barcode || generateEAN13Barcode(),
-            inventoryID: newInventoryId,
-          };
+    //   // Handle inventory logic
+    //   if (inventoryType === "colorInventory") {
+    //     let newInventoryId = "";
+    //     for (const item of inventoryArray) {
+    //       const quantity = parseInt(item.quantity) || 0;
+    //       totalInventoryCount += quantity;
 
-          const createdInventory = await this.#inventoryRepository.create(
-            newInventory,
-            session
-          );
-          inventoryIds.push(createdInventory[0]._id);
-        }
-      } else if (inventoryType === "levelInventory") {
-        let newInventoryId = "";
-        for (const item of inventoryArray) {
-          const quantity = Number(item.quantity) || 0;
-          totalInventoryCount += quantity;
+    //       const title = "INV-";
+    //       if (!newInventoryId) {
+    //         newInventoryId = await idGenerate(
+    //           title,
+    //           "inventoryID",
+    //           this.#inventoryRepository
+    //         );
+    //       } else {
+    //         let idNum = Number(newInventoryId.slice(title.length + 6)) + 1;
+    //         let prefix = newInventoryId.slice(0, title.length + 6);
+    //         newInventoryId = prefix + idNum;
+    //       }
 
-          const title = "INV-";
-          if (!newInventoryId) {
-            newInventoryId = await idGenerate(
-              title,
-              "inventoryID",
-              this.#inventoryRepository
-            );
-          } else {
-            let idNum = Number(newInventoryId.slice(title.length + 6)) + 1;
-            let prefix = newInventoryId.slice(0, title.length + 6);
-            newInventoryId = prefix + idNum;
-          }
+    //       const newInventory = {
+    //         quantity,
+    //         availableQuantity: quantity,
+    //         inventoryType,
+    //         color: item.colorCode || "#000000",
+    //         name: item.color || "Unknown",
+    //         barcode: item.barcode || generateEAN13Barcode(),
+    //         inventoryID: newInventoryId,
+    //       };
 
-          const newInventory = {
-            level: item.level || "Unknown",
-            barcode: item.barcode || generateEAN13Barcode(),
-            quantity,
-            availableQuantity: quantity,
-            inventoryType,
-            inventoryID: newInventoryId,
-          };
+    //       const createdInventory = await this.#inventoryRepository.create(
+    //         newInventory,
+    //         session
+    //       );
+    //       inventoryIds.push(createdInventory[0]._id);
+    //     }
+    //   } else if (inventoryType === "levelInventory") {
+    //     let newInventoryId = "";
+    //     for (const item of inventoryArray) {
+    //       const quantity = Number(item.quantity) || 0;
+    //       totalInventoryCount += quantity;
 
-          const createdInventory = await this.#inventoryRepository.create(
-            newInventory,
-            session
-          );
-          inventoryIds.push(createdInventory[0]._id);
-        }
-      } else if (inventoryType === "colorLevelInventory") {
-        let newInventoryId = "";
-        for (const item of inventoryArray) {
-          const level = item.level || "Unknown";
-          const variants = item.colorLevel;
+    //       const title = "INV-";
+    //       if (!newInventoryId) {
+    //         newInventoryId = await idGenerate(
+    //           title,
+    //           "inventoryID",
+    //           this.#inventoryRepository
+    //         );
+    //       } else {
+    //         let idNum = Number(newInventoryId.slice(title.length + 6)) + 1;
+    //         let prefix = newInventoryId.slice(0, title.length + 6);
+    //         newInventoryId = prefix + idNum;
+    //       }
 
-          for (const variant of variants) {
-            const quantity = Number(variant.quantity) || 0;
-            totalInventoryCount += quantity;
+    //       const newInventory = {
+    //         level: item.level || "Unknown",
+    //         barcode: item.barcode || generateEAN13Barcode(),
+    //         quantity,
+    //         availableQuantity: quantity,
+    //         inventoryType,
+    //         inventoryID: newInventoryId,
+    //       };
 
-            const title = "INV-";
-            if (!newInventoryId) {
-              newInventoryId = await idGenerate(
-                title,
-                "inventoryID",
-                this.#inventoryRepository
-              );
-            } else {
-              let idNum = Number(newInventoryId.slice(title.length + 6)) + 1;
-              let prefix = newInventoryId.slice(0, title.length + 6);
-              newInventoryId = prefix + idNum;
-            }
+    //       const createdInventory = await this.#inventoryRepository.create(
+    //         newInventory,
+    //         session
+    //       );
+    //       inventoryIds.push(createdInventory[0]._id);
+    //     }
+    //   } else if (inventoryType === "colorLevelInventory") {
+    //     let newInventoryId = "";
+    //     for (const item of inventoryArray) {
+    //       const level = item.level || "Unknown";
+    //       const variants = item.colorLevel;
 
-            const newInventory = {
-              level,
-              quantity,
-              availableQuantity: quantity,
-              color: variant.colorCode || "#000000",
-              name: variant.color || "Unknown",
-              barcode: variant.barcode || generateEAN13Barcode(),
-              inventoryType,
-              inventoryID: newInventoryId,
-            };
+    //       for (const variant of variants) {
+    //         const quantity = Number(variant.quantity) || 0;
+    //         totalInventoryCount += quantity;
 
-            const createdInventory = await this.#inventoryRepository.create(
-              newInventory,
-              session
-            );
-            inventoryIds.push(createdInventory[0]._id);
-          }
-        }
-      } else {
-        payload.inventoryType = "inventory";
-        const newInventoryId = await idGenerate(
-          "INV-",
-          "inventoryID",
-          this.#inventoryRepository
-        );
-        const newInventory = {
-          quantity: inventory,
-          barcode: barcode || generateEAN13Barcode(),
-          availableQuantity: inventory,
-          inventoryType,
-          inventoryID: newInventoryId,
-        };
+    //         const title = "INV-";
+    //         if (!newInventoryId) {
+    //           newInventoryId = await idGenerate(
+    //             title,
+    //             "inventoryID",
+    //             this.#inventoryRepository
+    //           );
+    //         } else {
+    //           let idNum = Number(newInventoryId.slice(title.length + 6)) + 1;
+    //           let prefix = newInventoryId.slice(0, title.length + 6);
+    //           newInventoryId = prefix + idNum;
+    //         }
 
-        const createdInventory = await this.#inventoryRepository.create(
-          newInventory,
-          session
-        );
-        inventoryIds.push(createdInventory[0]._id);
-        totalInventoryCount = inventory;
-      }
+    //         const newInventory = {
+    //           level,
+    //           quantity,
+    //           availableQuantity: quantity,
+    //           color: variant.colorCode || "#000000",
+    //           name: variant.color || "Unknown",
+    //           barcode: variant.barcode || generateEAN13Barcode(),
+    //           inventoryType,
+    //           inventoryID: newInventoryId,
+    //         };
 
-      // Update price and discount
-      if (discountType && discount) {
-        const { price, discountAmount } = calculateDiscountAmount(
-          mrpPrice,
-          discountType,
-          discount
-        );
-        payload.price = price;
-        payload.discountAmount = discountAmount;
-      } else {
-        payload.price = mrpPrice;
-      }
+    //         const createdInventory = await this.#inventoryRepository.create(
+    //           newInventory,
+    //           session
+    //         );
+    //         inventoryIds.push(createdInventory[0]._id);
+    //       }
+    //     }
+    //   } else {
+    //     payload.inventoryType = "inventory";
+    //     const newInventoryId = await idGenerate(
+    //       "INV-",
+    //       "inventoryID",
+    //       this.#inventoryRepository
+    //     );
+    //     const newInventory = {
+    //       quantity: inventory,
+    //       barcode: barcode || generateEAN13Barcode(),
+    //       availableQuantity: inventory,
+    //       inventoryType,
+    //       inventoryID: newInventoryId,
+    //     };
 
-      // Set inventory refs
-      payload.inventoryRef = inventoryIds;
-      payload.mainInventory = totalInventoryCount;
+    //     const createdInventory = await this.#inventoryRepository.create(
+    //       newInventory,
+    //       session
+    //     );
+    //     inventoryIds.push(createdInventory[0]._id);
+    //     totalInventoryCount = inventory;
+    //   }
 
-      // Upload and update images
-      if (files?.length) {
-        const images = await ImgUploader(files);
-        for (const key in images) {
-          payload[key] = images[key];
-        }
-      }
+    //   // Update price and discount
+    //   if (discountType && discount) {
+    //     const { price, discountAmount } = calculateDiscountAmount(
+    //       mrpPrice,
+    //       discountType,
+    //       discount
+    //     );
+    //     payload.price = price;
+    //     payload.discountAmount = discountAmount;
+    //   } else {
+    //     payload.price = mrpPrice;
+    //   }
 
-      const productData = await this.#repository.updateProduct(
-        id,
-        payload,
-        session
-      );
+    //   // Set inventory refs
+    //   payload.inventoryRef = inventoryIds;
+    //   payload.mainInventory = totalInventoryCount;
 
-      // Link inventory to product
-      if (productData && inventoryIds.length) {
-        const productId = productData._id || productData[0]?._id;
-        if (!productId)
-          throw new Error("Failed to get product ID from update result");
+    //   // Upload and update images
+    //   if (files?.length) {
+    //     const images = await ImgUploader(files);
+    //     for (const key in images) {
+    //       payload[key] = images[key];
+    //     }
+    //   }
 
-        for (const inventoryId of inventoryIds) {
-          await this.#inventoryRepository.updateById(
-            inventoryId,
-            { productRef: productId },
-            session
-          );
-        }
-      }
+    //   const productData = await this.#repository.updateProduct(
+    //     id,
+    //     payload,
+    //     session
+    //   );
 
-      return productData;
-    } catch (error) {
-      console.error("Update Product Error:", error);
-      throw error;
-    }
+    //   // Link inventory to product
+    //   if (productData && inventoryIds.length) {
+    //     const productId = productData._id || productData[0]?._id;
+    //     if (!productId)
+    //       throw new Error("Failed to get product ID from update result");
+
+    //     for (const inventoryId of inventoryIds) {
+    //       await this.#inventoryRepository.updateById(
+    //         inventoryId,
+    //         { productRef: productId },
+    //         session
+    //       );
+    //     }
+    //   }
+
+    //   return productData;
+    // } catch (error) {
+    //   console.error("Update Product Error:", error);
+    //   throw error;
+    // }
   }
 
   async togglePriority(id) {

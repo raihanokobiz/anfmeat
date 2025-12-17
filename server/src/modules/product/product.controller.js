@@ -190,10 +190,6 @@ class ProductController {
 
   updateProduct = withTransaction(async (req, res, next, session) => {
     
-    console.log(
-      req.body,
-      "ok___________________________________________________1"
-    );
 
     try {
       const id = req.params.id;
@@ -240,7 +236,8 @@ class ProductController {
           : [],
       };
 
-      await ProductService.updateProduct(id, payload, session);
+     await ProductService.updateProduct(id, payload, session);
+    
       const resDoc = responseHandler(201, "Product Update successfully");
       res.status(resDoc.statusCode).json(resDoc);
     } catch (error) {
