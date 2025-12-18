@@ -50,7 +50,8 @@ export const DetailsSheet: React.FC<Props> = ({ item }) => {
   const [updating, setUpdating] = React.useState(false);
   const [deleting, setDeleting] = React.useState(false);
 
-  const [imageFileList, setImageFileList] = React.useState<UploadFile<any>[]>([
+  const [
+    , setImageFileList] = React.useState<UploadFile<any>[]>([
     {
       uid: "-1",
       name: String(item.image).split("/").pop() || "",
