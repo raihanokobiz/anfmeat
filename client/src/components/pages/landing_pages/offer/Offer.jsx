@@ -36,7 +36,7 @@ export default function Offer({ offrs }) {
           <SwiperSlide key={index}>
             <div className="relative w-full h-48 md:h-64">
               <Image
-                src={`${apiBaseUrl}${item?.image}`}
+                src={item?.image}
                 alt={`Offer ${index + 1}`}
                 fill
                 style={{ objectFit: "cover" }}

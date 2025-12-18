@@ -1,9 +1,15 @@
 import { BASE_URL } from "@/config/config";
 
+export type TCloudinaryUploadResult = {
+  secure_url: string;
+  public_id: string;
+};
+
+
 export const uploadImageToCloudinary = async (
   file: File,
   folder: string = "misc"
-): Promise<string> => {
+): Promise<TCloudinaryUploadResult> => {
   const formData = new FormData();
   formData.append("file", file);
 
@@ -19,7 +25,7 @@ export const uploadImageToCloudinary = async (
   return await res.json();
 };
 
-export const deleteImageFromCloudinary = async (imagePublicId: string) => {
+export const deleteImageFromCloudinary = async (imagePublicId:string | undefined) => {
   const res = await fetch(`${BASE_URL}/cloudinary/delete`, {
     method: "POST",
     headers: {

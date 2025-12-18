@@ -9,7 +9,7 @@ import { TBanner } from "@/types";
 import { Autoplay, Navigation } from "swiper/modules";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import { apiBaseUrl } from "@/config/config";
+// import { apiBaseUrl } from "@/config/config";
 import { Swiper as SwiperClass } from "swiper";
 import { MdArrowBackIos, MdArrowForwardIos } from "react-icons/md";
 interface BannerProps {
@@ -32,7 +32,7 @@ const BannerSlider: React.FC<BannerProps> = ({ banners }) => {
           <SwiperSlide key={banner._id}>
             <div className="2xl:h-[550px] xl:h-[450px] md:h-[350px] h-[200px]  relative">
               <Image
-                src={apiBaseUrl + banner.image || ""}
+                src={banner.image || ""}
                 alt="Banner"
                 width={1600}
                 height={600}

@@ -39,7 +39,9 @@ class ProductService extends BaseService {
     this.#subCategoryRepository = subCategoryRepository;
   }
 
+
   async createProduct(payloadFiles, payload, session) {
+    // console.log("Payload", payload);
     const { files } = payloadFiles;
     const {
       name,
@@ -63,17 +65,19 @@ class ProductService extends BaseService {
     }
     let invenoryIds = [];
     let totalInventoryCount = 0;
+    // console.log("inventorys", inventoryArray);
     payload.inventoryType = inventoryType;
-
     // activeTabName == 'colorInventory' || activeTabName == "levelInventory" || activeTabName == "colorLevelInventory")
     if (inventoryType == "colorInventory") {
+      console.log("inventory====", inventory);
+      let inventoryTotal = 0;
       let newInventoryId = "";
       for (const item of inventoryArray) {
         const color = item.colorCode || "#000000";
         const name = item.color || "Unknown";
         const quantity = parseInt(item.quantity) || 0;
-
-        totalInventoryCount += quantity;
+        console.log("inventory Quantity ",quantity)
+        inventoryTotal += quantity;
         const title = "INV-";
         if (newInventoryId === "") {
           newInventoryId = await idGenerate(
@@ -102,11 +106,12 @@ class ProductService extends BaseService {
         invenoryIds.push(createNewInventory[0]._id);
       }
     } else if (inventoryType == "levelInventory") {
+      let inventoryTotal = 0;
       let newInventoryId = "";
       for (const item of inventoryArray) {
         const level = item.level || "Unknown";
         const quantity = Number(item.quantity) || 0;
-        totalInventoryCount += quantity;
+        inventoryTotal += quantity;
         const title = "INV-";
         if (newInventoryId === "") {
           newInventoryId = await idGenerate(
@@ -135,15 +140,20 @@ class ProductService extends BaseService {
         invenoryIds.push(createNewInventory[0]._id);
       }
     } else if (inventoryType == "colorLevelInventory") {
+      // console.log('inventory color level', inventoryArray[0]?.colorLevel)
+      console.log('inventory Total', inventoryTotal)
+      let inventoryTotal = 0;
+      const aggregatedVariants = [];
       let newInventoryID = "";
       for (const item of inventoryArray) {
+        // console.log('inventory color level', item)
         const level = item.level || "Unknown";
         const variants = item.colorLevel;
         const itemQuantity = variants.reduce(
           (total, variant) => total + Number(variant.quantity),
           0
         );
-        totalInventoryCount += itemQuantity;
+        inventoryTotal += itemQuantity;
         const title = "INV-";
         for (const item of variants) {
           if (newInventoryID === "") {
@@ -193,11 +203,9 @@ class ProductService extends BaseService {
         newInventory,
         session
       );
-      console.log("createNewInventory", createNewInventory);
+      console.log("createNewInventory", createNewInventory)
       invenoryIds.push(createNewInventory[0]._id);
-      totalInventoryCount = parseInt(inventory) || 0;
     }
-
     payload.mainInventory = totalInventoryCount;
     payload.inventoryRef = invenoryIds;
 
@@ -212,31 +220,30 @@ class ProductService extends BaseService {
     } else {
       payload.price = mrpPrice;
     }
+    if (!files?.length) {
+      throw new Error("Thumbnail Image is required");
+    }
+    const hasThumbnailImage = files.some(
+      (file) => file.fieldname === "thumbnailImage"
+    );
 
-    // if (!files?.length) {
-    //   throw new Error("Thumbnail Image is required");
-    // }
-    // const hasThumbnailImage = files.some(
-    //   (file) => file.fieldname === "thumbnailImage"
-    // );
-
-    // if (!hasThumbnailImage) {
-    //   throw new Error("Thumbnail Image is required");
-    // }
-    // let images = await ImgUploader(files);
+    if (!hasThumbnailImage) {
+      throw new Error("Thumbnail Image is required");
+    }
+    let images = await ImgUploader(files);
 
     // images.images = Object.keys(images)
     //   .filter((key) => key.startsWith("images["))
     //   .map((key) => images[key]),
 
-    // for (const key in images) {
-    //   payload[key] = images[key];
-    // }
+    for (const key in images) {
+      payload[key] = images[key];
+    }
 
     payload.productId = await idGenerate("PRO-", "productId", this.#repository);
-
+    
     const productData = await this.#repository.createProduct(payload, session);
-
+    
     if (productData) {
       for (const invenoryId of invenoryIds) {
         const data = await this.#inventoryRepository.updateById(
@@ -248,6 +255,7 @@ class ProductService extends BaseService {
     }
     return productData;
   }
+
 
   async getAllProduct(payload) {
     const { warehouseRef } = payload;
@@ -311,214 +319,212 @@ class ProductService extends BaseService {
   }
 
   async updateProduct(id, payloadFiles, payload, session) {
+    try {
 
-    console.log(payload, 'pok___________________________________________');
-    
 
-    // try {
-    //   const { files } = payloadFiles;
-    //   const {
-    //     name,
-    //     barcode,
-    //     mrpPrice,
-    //     discountType,
-    //     discount,
-    //     inventoryType,
-    //     inventory,
-    //     inventoryArray,
-    //   } = payload;
+      const { files } = payloadFiles;
+      const {
+        name,
+        barcode,
+        mrpPrice,
+        discountType,
+        discount,
+        inventoryType,
+        inventory,
+        inventoryArray,
+      } = payload;
 
-    //   const existingProduct = await this.#repository.findById(id);
-    //   if (!existingProduct) throw new Error("Product not found");
+      const existingProduct = await this.#repository.findById(id);
+      if (!existingProduct) throw new Error("Product not found");
 
-    //   let inventoryIds = [];
-    //   let totalInventoryCount = 0;
+      let inventoryIds = [];
+      let totalInventoryCount = 0;
 
-    //   // Handle inventory logic
-    //   if (inventoryType === "colorInventory") {
-    //     let newInventoryId = "";
-    //     for (const item of inventoryArray) {
-    //       const quantity = parseInt(item.quantity) || 0;
-    //       totalInventoryCount += quantity;
+      // Handle inventory logic
+      if (inventoryType === "colorInventory") {
+        let newInventoryId = "";
+        for (const item of inventoryArray) {
+          const quantity = parseInt(item.quantity) || 0;
+          totalInventoryCount += quantity;
 
-    //       const title = "INV-";
-    //       if (!newInventoryId) {
-    //         newInventoryId = await idGenerate(
-    //           title,
-    //           "inventoryID",
-    //           this.#inventoryRepository
-    //         );
-    //       } else {
-    //         let idNum = Number(newInventoryId.slice(title.length + 6)) + 1;
-    //         let prefix = newInventoryId.slice(0, title.length + 6);
-    //         newInventoryId = prefix + idNum;
-    //       }
+          const title = "INV-";
+          if (!newInventoryId) {
+            newInventoryId = await idGenerate(
+              title,
+              "inventoryID",
+              this.#inventoryRepository
+            );
+          } else {
+            let idNum = Number(newInventoryId.slice(title.length + 6)) + 1;
+            let prefix = newInventoryId.slice(0, title.length + 6);
+            newInventoryId = prefix + idNum;
+          }
 
-    //       const newInventory = {
-    //         quantity,
-    //         availableQuantity: quantity,
-    //         inventoryType,
-    //         color: item.colorCode || "#000000",
-    //         name: item.color || "Unknown",
-    //         barcode: item.barcode || generateEAN13Barcode(),
-    //         inventoryID: newInventoryId,
-    //       };
+          const newInventory = {
+            quantity,
+            availableQuantity: quantity,
+            inventoryType,
+            color: item.colorCode || "#000000",
+            name: item.color || "Unknown",
+            barcode: item.barcode || generateEAN13Barcode(),
+            inventoryID: newInventoryId,
+          };
 
-    //       const createdInventory = await this.#inventoryRepository.create(
-    //         newInventory,
-    //         session
-    //       );
-    //       inventoryIds.push(createdInventory[0]._id);
-    //     }
-    //   } else if (inventoryType === "levelInventory") {
-    //     let newInventoryId = "";
-    //     for (const item of inventoryArray) {
-    //       const quantity = Number(item.quantity) || 0;
-    //       totalInventoryCount += quantity;
+          const createdInventory = await this.#inventoryRepository.create(
+            newInventory,
+            session
+          );
+          inventoryIds.push(createdInventory[0]._id);
+        }
+      } else if (inventoryType === "levelInventory") {
+        let newInventoryId = "";
+        for (const item of inventoryArray) {
+          const quantity = Number(item.quantity) || 0;
+          totalInventoryCount += quantity;
 
-    //       const title = "INV-";
-    //       if (!newInventoryId) {
-    //         newInventoryId = await idGenerate(
-    //           title,
-    //           "inventoryID",
-    //           this.#inventoryRepository
-    //         );
-    //       } else {
-    //         let idNum = Number(newInventoryId.slice(title.length + 6)) + 1;
-    //         let prefix = newInventoryId.slice(0, title.length + 6);
-    //         newInventoryId = prefix + idNum;
-    //       }
+          const title = "INV-";
+          if (!newInventoryId) {
+            newInventoryId = await idGenerate(
+              title,
+              "inventoryID",
+              this.#inventoryRepository
+            );
+          } else {
+            let idNum = Number(newInventoryId.slice(title.length + 6)) + 1;
+            let prefix = newInventoryId.slice(0, title.length + 6);
+            newInventoryId = prefix + idNum;
+          }
 
-    //       const newInventory = {
-    //         level: item.level || "Unknown",
-    //         barcode: item.barcode || generateEAN13Barcode(),
-    //         quantity,
-    //         availableQuantity: quantity,
-    //         inventoryType,
-    //         inventoryID: newInventoryId,
-    //       };
+          const newInventory = {
+            level: item.level || "Unknown",
+            barcode: item.barcode || generateEAN13Barcode(),
+            quantity,
+            availableQuantity: quantity,
+            inventoryType,
+            inventoryID: newInventoryId,
+          };
 
-    //       const createdInventory = await this.#inventoryRepository.create(
-    //         newInventory,
-    //         session
-    //       );
-    //       inventoryIds.push(createdInventory[0]._id);
-    //     }
-    //   } else if (inventoryType === "colorLevelInventory") {
-    //     let newInventoryId = "";
-    //     for (const item of inventoryArray) {
-    //       const level = item.level || "Unknown";
-    //       const variants = item.colorLevel;
+          const createdInventory = await this.#inventoryRepository.create(
+            newInventory,
+            session
+          );
+          inventoryIds.push(createdInventory[0]._id);
+        }
+      } else if (inventoryType === "colorLevelInventory") {
+        let newInventoryId = "";
+        for (const item of inventoryArray) {
+          const level = item.level || "Unknown";
+          const variants = item.colorLevel;
 
-    //       for (const variant of variants) {
-    //         const quantity = Number(variant.quantity) || 0;
-    //         totalInventoryCount += quantity;
+          for (const variant of variants) {
+            const quantity = Number(variant.quantity) || 0;
+            totalInventoryCount += quantity;
 
-    //         const title = "INV-";
-    //         if (!newInventoryId) {
-    //           newInventoryId = await idGenerate(
-    //             title,
-    //             "inventoryID",
-    //             this.#inventoryRepository
-    //           );
-    //         } else {
-    //           let idNum = Number(newInventoryId.slice(title.length + 6)) + 1;
-    //           let prefix = newInventoryId.slice(0, title.length + 6);
-    //           newInventoryId = prefix + idNum;
-    //         }
+            const title = "INV-";
+            if (!newInventoryId) {
+              newInventoryId = await idGenerate(
+                title,
+                "inventoryID",
+                this.#inventoryRepository
+              );
+            } else {
+              let idNum = Number(newInventoryId.slice(title.length + 6)) + 1;
+              let prefix = newInventoryId.slice(0, title.length + 6);
+              newInventoryId = prefix + idNum;
+            }
 
-    //         const newInventory = {
-    //           level,
-    //           quantity,
-    //           availableQuantity: quantity,
-    //           color: variant.colorCode || "#000000",
-    //           name: variant.color || "Unknown",
-    //           barcode: variant.barcode || generateEAN13Barcode(),
-    //           inventoryType,
-    //           inventoryID: newInventoryId,
-    //         };
+            const newInventory = {
+              level,
+              quantity,
+              availableQuantity: quantity,
+              color: variant.colorCode || "#000000",
+              name: variant.color || "Unknown",
+              barcode: variant.barcode || generateEAN13Barcode(),
+              inventoryType,
+              inventoryID: newInventoryId,
+            };
 
-    //         const createdInventory = await this.#inventoryRepository.create(
-    //           newInventory,
-    //           session
-    //         );
-    //         inventoryIds.push(createdInventory[0]._id);
-    //       }
-    //     }
-    //   } else {
-    //     payload.inventoryType = "inventory";
-    //     const newInventoryId = await idGenerate(
-    //       "INV-",
-    //       "inventoryID",
-    //       this.#inventoryRepository
-    //     );
-    //     const newInventory = {
-    //       quantity: inventory,
-    //       barcode: barcode || generateEAN13Barcode(),
-    //       availableQuantity: inventory,
-    //       inventoryType,
-    //       inventoryID: newInventoryId,
-    //     };
+            const createdInventory = await this.#inventoryRepository.create(
+              newInventory,
+              session
+            );
+            inventoryIds.push(createdInventory[0]._id);
+          }
+        }
+      } else {
+        payload.inventoryType = "inventory";
+        const newInventoryId = await idGenerate(
+          "INV-",
+          "inventoryID",
+          this.#inventoryRepository
+        );
+        const newInventory = {
+          quantity: inventory,
+          barcode: barcode || generateEAN13Barcode(),
+          availableQuantity: inventory,
+          inventoryType,
+          inventoryID: newInventoryId,
+        };
 
-    //     const createdInventory = await this.#inventoryRepository.create(
-    //       newInventory,
-    //       session
-    //     );
-    //     inventoryIds.push(createdInventory[0]._id);
-    //     totalInventoryCount = inventory;
-    //   }
+        const createdInventory = await this.#inventoryRepository.create(
+          newInventory,
+          session
+        );
+        inventoryIds.push(createdInventory[0]._id);
+        totalInventoryCount = inventory;
+      }
 
-    //   // Update price and discount
-    //   if (discountType && discount) {
-    //     const { price, discountAmount } = calculateDiscountAmount(
-    //       mrpPrice,
-    //       discountType,
-    //       discount
-    //     );
-    //     payload.price = price;
-    //     payload.discountAmount = discountAmount;
-    //   } else {
-    //     payload.price = mrpPrice;
-    //   }
+      // Update price and discount
+      if (discountType && discount) {
+        const { price, discountAmount } = calculateDiscountAmount(
+          mrpPrice,
+          discountType,
+          discount
+        );
+        payload.price = price;
+        payload.discountAmount = discountAmount;
+      } else {
+        payload.price = mrpPrice;
+      }
 
-    //   // Set inventory refs
-    //   payload.inventoryRef = inventoryIds;
-    //   payload.mainInventory = totalInventoryCount;
+      // Set inventory refs
+      payload.inventoryRef = inventoryIds;
+      payload.mainInventory = totalInventoryCount;
 
-    //   // Upload and update images
-    //   if (files?.length) {
-    //     const images = await ImgUploader(files);
-    //     for (const key in images) {
-    //       payload[key] = images[key];
-    //     }
-    //   }
+      // Upload and update images
+      if (files?.length) {
+        const images = await ImgUploader(files);
+        for (const key in images) {
+          payload[key] = images[key];
+        }
+      }
 
-    //   const productData = await this.#repository.updateProduct(
-    //     id,
-    //     payload,
-    //     session
-    //   );
+      const productData = await this.#repository.updateProduct(
+        id,
+        payload,
+        session
+      );
 
-    //   // Link inventory to product
-    //   if (productData && inventoryIds.length) {
-    //     const productId = productData._id || productData[0]?._id;
-    //     if (!productId)
-    //       throw new Error("Failed to get product ID from update result");
+      // Link inventory to product
+      if (productData && inventoryIds.length) {
+        const productId = productData._id || productData[0]?._id;
+        if (!productId)
+          throw new Error("Failed to get product ID from update result");
 
-    //     for (const inventoryId of inventoryIds) {
-    //       await this.#inventoryRepository.updateById(
-    //         inventoryId,
-    //         { productRef: productId },
-    //         session
-    //       );
-    //     }
-    //   }
+        for (const inventoryId of inventoryIds) {
+          await this.#inventoryRepository.updateById(
+            inventoryId,
+            { productRef: productId },
+            session
+          );
+        }
+      }
 
-    //   return productData;
-    // } catch (error) {
-    //   console.error("Update Product Error:", error);
-    //   throw error;
-    // }
+      return productData;
+    } catch (error) {
+      console.error("Update Product Error:", error);
+      throw error;
+    }
   }
 
   async togglePriority(id) {

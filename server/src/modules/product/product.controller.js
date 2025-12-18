@@ -39,18 +39,6 @@ class ProductController {
           : [],
         slug: req.body.slug,
         barcode: req.body.barcode,
-
-        // Cloudinary URLs
-        thumbnailImage: req.body.thumbnailImage,
-        thumbnailImagePublicId: req.body.thumbnailImagePublicId,
-        backViewImage: req.body.backViewImage || null,
-        backViewImagePublicId: req.body.backViewImagePublicId || null,
-        sizeChartImage: req.body.sizeChartImage || null,
-        sizeChartImagePublicId: req.body.sizeChartImagePublicId || null,
-        images: req.body.images ? JSON.parse(req.body.images) : [],
-        imagePublicIds: req.body.imagePublicIds
-          ? JSON.parse(req.body.imagePublicIds)
-          : [],
       };
       console.log("Add product Payload=============>", payload);
       const productResult = await ProductService.createProduct(
@@ -65,7 +53,6 @@ class ProductController {
       );
       res.status(resDoc.statusCode).json(resDoc);
     } catch (error) {
-      console.error("Create Product Error:", error);
       if (error.code === 11000) {
         return res
           .status(400)
@@ -189,10 +176,13 @@ class ProductController {
   });
 
   updateProduct = withTransaction(async (req, res, next, session) => {
-    
-
     try {
+
       const id = req.params.id;
+
+      const payloadFiles = {
+        files: req?.files,
+      };
 
       const payload = {
         name: req.body.name,
@@ -222,22 +212,13 @@ class ProductController {
           : [],
         slug: req.body.slug,
         barcode: req.body.barcode,
-
-        // Cloudinary URLs
-        thumbnailImage: req.body.thumbnailImage,
-        thumbnailImagePublicId: req.body.thumbnailImagePublicId,
-        backViewImage: req.body.backViewImage || null,
-        backViewImagePublicId: req.body.backViewImagePublicId || null,
-        sizeChartImage: req.body.sizeChartImage || null,
-        sizeChartImagePublicId: req.body.sizeChartImagePublicId || null,
-        images: req.body.images ? JSON.parse(req.body.images) : [],
-        imagePublicIds: req.body.imagePublicIds
-          ? JSON.parse(req.body.imagePublicIds)
-          : [],
       };
 
-     await ProductService.updateProduct(id, payload, session);
-    
+      console.log(
+        { id: id, payloadFiles: payloadFiles, payload: payload },
+        "from update product controller....."
+      );
+      await ProductService.updateProduct(id, payloadFiles, payload, session);
       const resDoc = responseHandler(201, "Product Update successfully");
       res.status(resDoc.statusCode).json(resDoc);
     } catch (error) {
@@ -250,7 +231,7 @@ class ProductController {
       next(error);
     }
   });
-
+  
   togglePriority = catchError(async (req, res) => {
     const { id } = req.params;
     const updatedProduct = await ProductService.togglePriority(id);

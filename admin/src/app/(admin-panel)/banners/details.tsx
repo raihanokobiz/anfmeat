@@ -87,8 +87,8 @@ export const BannerDetailsSheet: React.FC<Props> = ({ banner }) => {
     setUpdating(true);
     try {
 
-      let imageUrl = banner.image;
-      let imagePublicId = banner.imagePublicId;
+      let imageUrl = banner.image ?? "";;
+      let imagePublicId = banner.imagePublicId ?? "";
 
       // new image upload 
       if (values.image && values.image.length > 0) {
