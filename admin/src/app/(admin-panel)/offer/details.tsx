@@ -233,7 +233,7 @@ export const DetailsSheet: React.FC<Props> = ({ item }) => {
               <Button
                 type="button"
                 variant="destructive"
-                onClick={() => handleDeleteClick(item)}
+                onClick={handleDeleteClick}
                 loading={deleting}
               >
                 Delete

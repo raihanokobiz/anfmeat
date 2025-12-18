@@ -4,7 +4,7 @@ import { TShopSideBar } from "@/types";
 import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
-import { apiBaseUrl } from "@/config/config";
+// import { apiBaseUrl } from "@/config/config";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
@@ -86,7 +86,7 @@ const ShopProductsCategories: React.FC<ShopProductsCategoriesProps> = ({ shopSid
               {cat.image && (
                 <div className="relative w-full flex-1 flex items-center justify-center">
                   <div className="relative w-20 h-20">
-                    <Image src={apiBaseUrl + cat.image} alt={cat.name} fill className="object-contain" />
+                    <Image src={cat.image} alt={cat.name} fill className="object-contain" />
                   </div>
                 </div>
               )}

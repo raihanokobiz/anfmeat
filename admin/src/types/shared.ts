@@ -53,13 +53,16 @@ export type TUser = {
 
 export type TBanner = {
   _id?: string;
-  image?: string;
   files?: File[];
   title?: string;
   details?: string;
   bannerCategory?: string;
   type?: string;
   status?: boolean;
+  imageUrl: string;
+  secure_url: string;
+  image?: string;
+  imagePublicId?: string;
   createdAt?: string;
   updatedAt?: string;
 };
@@ -87,9 +90,9 @@ export type TOrder = {
   userRef?: TUser;
   couponRef?: TCoupon;
   note?: string;
-  paymentMethod?: "CashOnDelivery" | "Online" | "MobileBanking"; 
-  mobileBankingProvider?: string; 
-  mobileNumber?: string; 
+  paymentMethod?: "CashOnDelivery" | "Online" | "MobileBanking";
+  mobileBankingProvider?: string;
+  mobileNumber?: string;
   createdAt?: string;
   updatedAt?: string;
 };
@@ -109,7 +112,9 @@ export type TCategory = {
   _id: string;
   name: string;
   image: string;
+  imagePublicId?: string;
   vectorImage: string;
+  vectorImagePublicId?: string;
   slug: string;
   status: boolean;
   createdAt: string;

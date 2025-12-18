@@ -86,7 +86,7 @@ export const PopularItems = ({ products }: PopularItemsProps) => {
                       <h3 className="text-base md:text-2xl font-bold text-gray-800">
                         {product.name}
                       </h3>
-
+                      
                       {/* Weight and Price */}
                       <div className="flex items-center gap-3 md:gap-4 mb-3 text-xs md:text-sm text-gray-600">
                         <div className="flex items-center gap-1 font-semibold bg-gray-100 px-2 py-1 rounded-2xl mt-6">

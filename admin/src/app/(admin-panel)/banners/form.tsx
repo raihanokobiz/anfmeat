@@ -81,7 +81,7 @@ export const CreateBannerForm: React.FC = () => {
       // Image upload to Cloudinary
       const file = values.image[0];
       const uploadResult = await uploadImageToCloudinary(
-        file.originFileObj || file,
+        (file as any).originFileObj || file,
         "banners" // folder name
       );
 

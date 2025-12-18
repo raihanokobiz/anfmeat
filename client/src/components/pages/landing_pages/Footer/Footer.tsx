@@ -1,10 +1,10 @@
 "use Client";
 import React from "react";
-import {
-  FaFacebookF,
-  FaInstagram,
-  FaYoutube,
-} from "react-icons/fa";
+// import {
+//   FaFacebookF,
+//   FaInstagram,
+//   FaYoutube,
+// } from "react-icons/fa";
 import Link from "next/link";
 import DownFooter from "../../DownFooter/DownFooter";
 
@@ -102,7 +102,7 @@ const Footer: React.FC<FooterProps> = ({ userCartProducts }) => {
             <div className="text-black font-semibold mb-5 text-xl">
               Social Media
             </div>
-            <div className="">
+            {/* <div className="">
               <div className="flex lg:justify-center lg:items-center gap-2 mt-4">
                 <a
                   href="https://www.facebook.com/share/1BfwmV2KcS/"
@@ -152,7 +152,7 @@ const Footer: React.FC<FooterProps> = ({ userCartProducts }) => {
                   </svg>
                 </a>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

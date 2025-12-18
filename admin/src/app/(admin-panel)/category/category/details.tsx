@@ -106,9 +106,9 @@ export const DetailsSheet: React.FC<Props> = ({ item }) => {
     try {
 
       let imageUrl = item.image;
-      let imagePublicId = item.imagePublicId;
+      let imagePublicId = item.imagePublicId || "";
       let vectorImageUrl = item.vectorImage;
-      let vectorImagePublicId = item.vectorImagePublicId;
+      let vectorImagePublicId = item.vectorImagePublicId || "";
 
 
       // new image upload 

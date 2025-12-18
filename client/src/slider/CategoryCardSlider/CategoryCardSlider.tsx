@@ -3,7 +3,7 @@
 import { TCategory } from "@/types";
 import Image from "next/image";
 import React, { useRef } from "react";
-import { apiBaseUrl } from "@/config/config";
+// import { apiBaseUrl } from "@/config/config";
 import Link from "next/link";
 
 interface CategoryProps {
@@ -59,7 +59,7 @@ const CategoryCardSlider: React.FC<CategoryProps> = ({ categoriesList }) => {
                   <div className="relative w-full flex-1 flex items-center justify-center">
                     <div className="relative w-[80px] h-20">
                       <Image
-                        src={apiBaseUrl + category.image || ""}
+                        src={category.image}
                         alt={category.name}
                         fill
                         className="object-contain"
