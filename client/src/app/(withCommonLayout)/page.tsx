@@ -12,7 +12,7 @@ import { getAllProductsForShop } from "@/services/products";
 import Campaign from "@/components/pages/landing_pages/Campaign/Campaign";
 import { getCampaign } from "@/services/campaign";
 import Offer from "@/components/pages/landing_pages/offer/Offer";
-// import Text1 from "../../assets/texture/Text2.jpg";
+import Text1 from "../../assets/texture/Text2.png";
 import { WhyChooseUs } from "@/components/pages/landing_pages/WhyChooseUs/WhyChooseUs";
 // import { Testimonial } from "@/components/pages/landing_pages/Testimonial/Testimonial";
 import { Subscribe } from "@/components/pages/landing_pages/Subscribe/Subscribe";
@@ -65,7 +65,7 @@ const page = async () => {
 
   const popularProducts = allProducts.filter(
     (item: any) => item.status === "popular"
-  );  
+  );
 
 
 
@@ -76,26 +76,32 @@ const page = async () => {
         <LocationModalWrapper />
         <Banner banners={[]} />
         <div
-        // style={{
-        //   backgroundImage: `url(${Text1.src})`,
-        //   backgroundRepeat: "no-repeat",
-        //   backgroundSize: "cover",
-        //   backgroundPosition: "center",
-        // }}
+          style={{
+            backgroundImage: `url(${Text1.src})`,
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
         >
           <Category />
           <Offer offrs={offrs} />
+          {/* <SubCategory /> */}
+          {/* <ChildCategory />   */}
+          <HomeProductSection title="Best Deals" products={bestDealProducts} />
+          <HomeProductSection title="Best Sellers" products={bestSellerProducts} />
         </div>
-        {/* <SubCategory /> */}
-        {/* <ChildCategory />   */}
 
-        <HomeProductSection  title="Best Deals" products={bestDealProducts} />
-
-        <HomeProductSection title="Best Sellers" products={bestSellerProducts} />
-
-        <PopularItems products={popularProducts} />
-
-        <WhyChooseUs />
+        <div
+          style={{
+            backgroundImage: `url(${Text1.src})`,
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        >
+          <PopularItems products={popularProducts} />
+          <WhyChooseUs />
+        </div>
         {/* <Testimonial/> */}
         <Subscribe />
         {/* <MiddleChildCategory

@@ -45,7 +45,7 @@ interface TProduct {
 }
 
 interface HomeProductSectionProps {
- products: TProduct[];
+  products: TProduct[];
   userRef?: string;
 }
 
@@ -92,14 +92,16 @@ const ProductCard: React.FC<{ product: TProduct; onQuickAdd: (product: TProduct)
               </div>
             </div>
           ) : (
-            <Image
-              src={apiBaseUrl + displayImage}
-              alt={product.name}
-              width={160}
-              height={200}
-              onError={handleImageError}
-              className="w-full h-full object-fill transition-transform duration-700 group-hover:scale-110"
-            />
+            <div>
+              <Image
+                src={apiBaseUrl + displayImage}
+                alt={product.name}
+                width={160}
+                height={160}
+                onError={handleImageError}
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              />
+            </div>
           )}
         </Link>
 
@@ -110,11 +112,6 @@ const ProductCard: React.FC<{ product: TProduct; onQuickAdd: (product: TProduct)
               STOCK OUT
             </div>
           </div>
-        )}
-
-        {/* Stock Out Overlay */}
-        {isStockOut && (
-          <div className="absolute inset-0 bg-gray-900/40 backdrop-blur-[1px] z-10"></div>
         )}
 
         {hasDiscount && !isStockOut && (
@@ -155,10 +152,10 @@ const ProductCard: React.FC<{ product: TProduct; onQuickAdd: (product: TProduct)
           {product.name}
         </h3>
         <div className='flex justify-between gap-4'>
-          <p className='text-base font-bold text-gray-900 bg-gray-200 rounded-2xl px-6 flex items-center'>
-            <TbWeight className='text-xl' />
+          {/* <p className='text-base font-bold text-gray-900 bg-gray-200 rounded-2xl px-6 flex items-center'>
+            <TbWeight className='text-sm' />
             {product?.inventoryRef?.[0]?.level}
-          </p>
+          </p> */}
           <div className="flex items-center gap-1 flex-wrap">
             <span className="text-base font-bold text-gray-900 bg-gray-200 rounded-2xl py-1 px-6">৳{product.price}</span>
             {hasDiscount && (
@@ -506,7 +503,7 @@ const HomeProductSection: React.FC<HomeProductSectionProps> = ({ products, userR
   return (
 
     <div className="relative px-4 md:px-0">
-      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-screen h-20 bg-green-100 z-0"></div>
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-screen h-28 bg-primary z-0"></div>
       <Swiper
         modules={[Autoplay, Navigation]}
         spaceBetween={16}
@@ -516,13 +513,13 @@ const HomeProductSection: React.FC<HomeProductSectionProps> = ({ products, userR
         breakpoints={{
           640: { slidesPerView: 1 },
           768: { slidesPerView: 2 },
-          1024: { slidesPerView: 3 },
-          1280: { slidesPerView: 3 },
+          1024: { slidesPerView: 4 },
+          1280: { slidesPerView: 4 },
         }}
       >
         {displayProducts.map(product => (
           <SwiperSlide key={product._id}>
-            <ProductCard  product={product} onQuickAdd={handleQuickAdd} />
+            <ProductCard product={product} onQuickAdd={handleQuickAdd} />
           </SwiperSlide>
         ))}
       </Swiper>
