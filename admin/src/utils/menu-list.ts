@@ -93,7 +93,7 @@ export function getMenuList(pathname: string): Group[] {
           icon: Package2,
           submenus: [],
         },
-          {
+        {
           href: "/outlet",
           label: "Outlet",
           active: pathname.includes("/outlet"),
@@ -142,17 +142,5 @@ export function getMenuList(pathname: string): Group[] {
         },
       ],
     },
-    // {
-    //   groupLabel: "Configuration",
-    //   menus: [
-    //     {
-    //       href: "/staffs",
-    //       label: "Staffs",
-    //       active: pathname.includes("/staffs"),
-    //       icon: UserCog,
-    //       submenus: [],
-    //     },
-    //   ],
-    // },
   ];
 }

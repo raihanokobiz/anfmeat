@@ -1,6 +1,6 @@
 const { NotFoundError } = require("../../utils/errors.js");
 const BaseService = require("../base/base.service.js");
-const SubscribeRepository = require("./Subscribe.repository.js");
+const SubscribeRepository = require("./subscribe.repository.js");
 
 class SubscribeService extends BaseService {
   #repository;
@@ -23,7 +23,9 @@ class SubscribeService extends BaseService {
   }
 
   async getSubscribeWithPagination(payload) {
-    const Subscribe = await this.#repository.getSubscribeWithPagination(payload);
+    const Subscribe = await this.#repository.getSubscribeWithPagination(
+      payload
+    );
     return Subscribe;
   }
 
@@ -53,17 +55,17 @@ class SubscribeService extends BaseService {
   }
 
   async updateSubscribeStatus(id, status) {
-   if (status === undefined) throw new NotFoundError("Status is required");
+    if (status === undefined) throw new NotFoundError("Status is required");
 
-  const updatedStatus = status === true || status === "true";
+    const updatedStatus = status === true || status === "true";
 
-  const Subscribe = await this.#repository.updateSubscribeStatus(id, {
-    status: updatedStatus,
-  });
+    const Subscribe = await this.#repository.updateSubscribeStatus(id, {
+      status: updatedStatus,
+    });
 
-  if (!Subscribe) throw new NotFoundError("Subscribe not found");
+    if (!Subscribe) throw new NotFoundError("Subscribe not found");
 
-  return Subscribe;
+    return Subscribe;
   }
 
   async deleteSubscribe(id) {

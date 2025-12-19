@@ -9,31 +9,29 @@ import "swiper/css/navigation";
 import Image from "next/image";
 import { apiBaseUrl } from "@/config/config";
 import { Swiper as SwiperClass } from "swiper";
-import { AnimationControls } from "framer-motion";
 import InnerImageZoom from "react-inner-image-zoom";
-import { motion } from "framer-motion";
+import { motion, useAnimation } from "framer-motion";
 import { MdArrowBackIos, MdArrowForwardIos } from "react-icons/md";
+
 interface Props {
   thumbnailImage: string;
   backViewImage: string;
   images: string[];
   name: string;
-  controls: AnimationControls;
 }
 
 const ProductDetailsSlide: React.FC<Props> = ({
-  controls,
   images,
   thumbnailImage,
   backViewImage,
 }) => {
   const swiperRef = useRef<SwiperClass | null>(null);
+  const controls = useAnimation();
   const allImages = [
     ...(thumbnailImage ? [thumbnailImage] : []),
     ...(backViewImage ? [backViewImage] : []),
     ...images,
   ];
-
 
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
@@ -56,7 +54,9 @@ const ProductDetailsSlide: React.FC<Props> = ({
           <Swiper
             modules={[Navigation]}
             // navigation
-            onSlideChange={(swiper) => setSelectedImageIndex(swiper.activeIndex)}
+            onSlideChange={(swiper) =>
+              setSelectedImageIndex(swiper.activeIndex)
+            }
             onSwiper={(swiper) => (swiperRef.current = swiper)}
             initialSlide={selectedImageIndex}
             className="w-full h-full"

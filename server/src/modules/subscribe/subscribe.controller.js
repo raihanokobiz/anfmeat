@@ -1,12 +1,11 @@
 const catchError = require("../../middleware/errors/catchError.js");
 const responseHandler = require("../../utils/responseHandler.js");
 const withTransaction = require("../../middleware/transactions/withTransaction.js");
-const SubscribeService = require("./Subscribe.service.js");
+const SubscribeService = require("./subscribe.service.js");
 
 class SubscribeController {
   createSubscribe = withTransaction(async (req, res, next, session) => {
     try {
- 
       const payload = {
         email: req.body.email,
       };
@@ -22,9 +21,7 @@ class SubscribeController {
       res.status(resDoc.statusCode).json(resDoc);
     } catch (error) {
       if (error.code === 11000) {
-        return res
-          .status(400)
-          .json({ message: "Email already exists." });
+        return res.status(400).json({ message: "Email already exists." });
       }
       next(error);
     }
@@ -42,8 +39,14 @@ class SubscribeController {
       limit: req.query.limit,
       order: req.query.order,
     };
-    const Subscribe = await SubscribeService.getSubscribeWithPagination(payload);
-    const resDoc = responseHandler(200, "Subscribes get successfully", Subscribe);
+    const Subscribe = await SubscribeService.getSubscribeWithPagination(
+      payload
+    );
+    const resDoc = responseHandler(
+      200,
+      "Subscribes get successfully",
+      Subscribe
+    );
     res.status(resDoc.statusCode).json(resDoc);
   });
 
@@ -61,7 +64,7 @@ class SubscribeController {
   updateSubscribe = catchError(async (req, res, next) => {
     try {
       const id = req.params.id;
-   
+
       const payload = {
         email: req.body.email,
       };

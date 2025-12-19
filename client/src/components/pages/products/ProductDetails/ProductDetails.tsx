@@ -119,13 +119,11 @@ const ProductDetails: React.FC<Props> = ({ product }) => {
       toast.error("Failed to add product to cart.");
     }
   };
-  
 
   return (
     <div className="Container  py-8  lg:mt-14 mt-16">
       <div className="grid lg:grid-cols-2 gap-8 ">
         <ProductDetailsSlide
-          controls={controls}
           thumbnailImage={thumbnailImage}
           backViewImage={backViewImage}
           images={images}
@@ -133,7 +131,9 @@ const ProductDetails: React.FC<Props> = ({ product }) => {
         />
 
         <div className="">
-          <h2 className={`text-2xl lg:text-3xl font-bold text-gray-700 ${rajdhani.className}`}>
+          <h2
+            className={`text-2xl lg:text-3xl font-bold text-gray-700 ${rajdhani.className}`}
+          >
             {name}
           </h2>
 
@@ -154,48 +154,52 @@ const ProductDetails: React.FC<Props> = ({ product }) => {
             )}
           </div>
 
-
           <div className="mt-3">
             {(inventoryType === "levelInventory" ||
               inventoryType === "colorLevelInventory") && (
-                <div className="flex flex-col">
-                  <h3 className={`text-base md:text-lg font-semibold ${rajdhani.className}`}>
-                    Select Size:
-                  </h3>
-                  <div className="flex items-center gap-2 text-sm font-semibold text-[#262626]/60 mt-1 cursor-pointer">
-                    {inventoryRef
-                      ?.filter(
-                        (value, index, item) =>
-                          index === item.findIndex((t) => t.level === value.level)
-                      )
-                      .map((size) => (
-                        <p
-                          key={size._id}
-                          onClick={() => {
-                            setLevel(size.level);
-                            setSelectedLevel(size._id);
-                            setSelectedColor(null);
-                            setLevelError(false);
-                          }}
-                          className={`w-[40px] h-[30px] border border-primary hover:text-primary duration-300 cursor-pointer rounded text-center flex items-center justify-center uppercase ${level === size.level ? "bg-primary text-white" : "border-primary"
-                            }`}
-                        >
-                          {size.level}
-                        </p>
-                      ))}
-                  </div>
-                  {levelError && (
-                    <p className="text-red-500 text-sm mt-1">
-                      Please select a size.
-                    </p>
-                  )}
+              <div className="flex flex-col">
+                <h3
+                  className={`text-base md:text-lg font-semibold ${rajdhani.className}`}
+                >
+                  Select Size:
+                </h3>
+                <div className="flex items-center gap-2 text-sm font-semibold text-[#262626]/60 mt-1 cursor-pointer">
+                  {inventoryRef
+                    ?.filter(
+                      (value, index, item) =>
+                        index === item.findIndex((t) => t.level === value.level)
+                    )
+                    .map((size) => (
+                      <p
+                        key={size._id}
+                        onClick={() => {
+                          setLevel(size.level);
+                          setSelectedLevel(size._id);
+                          setSelectedColor(null);
+                          setLevelError(false);
+                        }}
+                        className={`w-[40px] h-[30px] border border-primary hover:text-primary duration-300 cursor-pointer rounded text-center flex items-center justify-center uppercase ${
+                          level === size.level
+                            ? "bg-primary text-white"
+                            : "border-primary"
+                        }`}
+                      >
+                        {size.level}
+                      </p>
+                    ))}
                 </div>
-              )}
+                {levelError && (
+                  <p className="text-red-500 text-sm mt-1">
+                    Please select a size.
+                  </p>
+                )}
+              </div>
+            )}
           </div>
 
           <div className="mt-3">
             {(inventoryType === "colorLevelInventory" && selectedLevel) ||
-              inventoryType === "colorInventory" ? (
+            inventoryType === "colorInventory" ? (
               <div className="flex flex-col">
                 <h3
                   className={`text-base md:text-lg font-semibold text-[#262626] ${rajdhani.className}`}
@@ -220,10 +224,11 @@ const ProductDetails: React.FC<Props> = ({ product }) => {
                           setSelectedColor(colorItem._id);
                           setColorError(false);
                         }}
-                        className={`border ${selectedColor === colorItem._id
-                          ? "border-[#1F4193] border-2 w-[20px] h-[20px]"
-                          : "border-[#262626] w-[25px] h-[25px]"
-                          } rounded-full cursor-pointer`}
+                        className={`border ${
+                          selectedColor === colorItem._id
+                            ? "border-[#1F4193] border-2 w-[20px] h-[20px]"
+                            : "border-[#262626] w-[25px] h-[25px]"
+                        } rounded-full cursor-pointer`}
                         style={{ backgroundColor: colorItem.color }}
                       />
                     ))}

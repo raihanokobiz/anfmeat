@@ -38,7 +38,10 @@ import { UploadOutlined } from "@ant-design/icons";
 import { fileUrlGenerator, humanFileSize, makeFormData } from "@/utils/helpers";
 import Image from "next/image";
 import { Label } from "@/components/ui/label";
-import { deleteImageFromCloudinary, uploadImageToCloudinary } from "@/services/cloudinary/cloudinary";
+import {
+  deleteImageFromCloudinary,
+  uploadImageToCloudinary,
+} from "@/services/cloudinary/cloudinary";
 
 interface Props {
   item: TCategory;
@@ -50,8 +53,7 @@ export const DetailsSheet: React.FC<Props> = ({ item }) => {
   const [updating, setUpdating] = React.useState(false);
   const [deleting, setDeleting] = React.useState(false);
 
-  const [
-    , setImageFileList] = React.useState<UploadFile<any>[]>([
+  const [imageFileList, setImageFileList] = React.useState<UploadFile<any>[]>([
     {
       uid: "-1",
       name: String(item.image).split("/").pop() || "",
@@ -59,6 +61,7 @@ export const DetailsSheet: React.FC<Props> = ({ item }) => {
       url: item.image,
     },
   ]);
+
   const [vectorFileList, setVectorFileList] = React.useState<UploadFile<any>[]>(
     [
       {
@@ -104,47 +107,50 @@ export const DetailsSheet: React.FC<Props> = ({ item }) => {
   const onSubmitUpdate = async (values: z.infer<typeof formSchema>) => {
     setUpdating(true);
     try {
-
       let imageUrl = item.image;
       let imagePublicId = item.imagePublicId || "";
       let vectorImageUrl = item.vectorImage;
       let vectorImagePublicId = item.vectorImagePublicId || "";
 
-
-      // new image upload 
+      // new image upload
       if (values.image && values.image.length > 0) {
-        // old image delete 
+        // old image delete
         if (item.imagePublicId) {
           await deleteImageFromCloudinary(item.imagePublicId);
         }
 
-        // new image upload 
-        const uploadResult = await uploadImageToCloudinary(values.image[0], "categories");
+        // new image upload
+        const uploadResult = await uploadImageToCloudinary(
+          values.image[0],
+          "categories"
+        );
         imageUrl = uploadResult.secure_url;
         imagePublicId = uploadResult.public_id;
       }
 
-      // new vector image upload 
+      // new vector image upload
       if (values.vectorImage && values.vectorImage.length > 0) {
-        // old vector image delete 
+        // old vector image delete
         if (item.vectorImagePublicId) {
           await deleteImageFromCloudinary(item.vectorImagePublicId);
         }
 
-        // new vector image upload 
-        const vectorUploadResult = await uploadImageToCloudinary(values.vectorImage[0], "categories/vectors");
+        // new vector image upload
+        const vectorUploadResult = await uploadImageToCloudinary(
+          values.vectorImage[0],
+          "categories/vectors"
+        );
         vectorImageUrl = vectorUploadResult.secure_url;
         vectorImagePublicId = vectorUploadResult.public_id;
       }
 
-      // FormData 
+      // FormData
       const formData = new FormData();
       formData.append("name", values.name);
       formData.append("image", imageUrl);
       formData.append("imagePublicId", imagePublicId);
       formData.append("vectorImage", vectorImageUrl);
       formData.append("vectorImagePublicId", vectorImagePublicId);
-
 
       await updateFormAction(String(item._id), formData);
       toast({
@@ -167,7 +173,6 @@ export const DetailsSheet: React.FC<Props> = ({ item }) => {
       setDeleting(true);
 
       try {
-
         if (item.imagePublicId) {
           await deleteImageFromCloudinary(item.imagePublicId);
         }

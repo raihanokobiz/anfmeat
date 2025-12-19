@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const controller = require("../../modules/Offer/Offer.controller.js");
+const controller = require("../../modules/offer/offer.controller.js");
 // const jwtAuth = require("../../middleware/auth/jwtAuth.js");
 const { upload } = require("../../middleware/upload/upload.js");
 
