@@ -23,7 +23,11 @@ const Footer: React.FC<FooterProps> = ({ userCartProducts }) => {
       link: "/shop",
     },
     {
-      name: "About Us",
+      name: "Our Outlets",
+      link: "/outlets",
+    },
+    {
+      name: "Our story",
       link: "/about",
     },
     {
