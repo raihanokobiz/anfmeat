@@ -14,6 +14,10 @@ const nextConfig = {
         hostname: "res.cloudinary.com",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "api.anfmeat.com"
+      }
     ],
   },
 };
