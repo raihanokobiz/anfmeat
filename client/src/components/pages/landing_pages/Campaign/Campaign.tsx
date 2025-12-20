@@ -59,7 +59,7 @@ const Campaign: React.FC<Props> = ({ campaign }) => {
   }, [campaign]);
 
   return (
-    <div className="max-w-6xl mx-auto pb-8 py-4">
+    <div className="px-4 md:px-6 py-6 md:py-10  lg:py-12 max-w-6xl mx-auto pb-8">
       <div className="grid md:grid-cols-2   rounded">
         <div className="flex flex-col items-center justify-center bg-primary md:rounded-l rounded-t">
           <div className="text-center lg:pb-8 pb-4 text-[#fff]">

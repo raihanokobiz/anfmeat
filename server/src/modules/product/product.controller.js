@@ -246,6 +246,8 @@ class ProductController {
   updateProductStatus = catchError(async (req, res) => {
     const id = req.params.id;
     const { status } = req.body;
+    console.log(status, "ok");
+    
     await ProductService.updateProductStatus(id, status);
     const resDoc = responseHandler(201, "Product Status Update successfully");
     res.status(resDoc.statusCode).json(resDoc);

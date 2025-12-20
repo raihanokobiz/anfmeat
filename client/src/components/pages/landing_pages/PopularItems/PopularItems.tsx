@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
@@ -28,8 +28,8 @@ interface PopularItemsProps {
 
 export const PopularItems = ({ products }: PopularItemsProps) => {
   return (
-    <div className="bg-white py-8 px-4">
-      <div className="max-w-6xl mx-auto">
+    <div className="bg-white ">
+      <div className="px-4 md:px-6 py-6 md:py-10  lg:py-12 max-w-6xl mx-auto">
         {/* Header */}
         <div className="flex items-center justify-between mb-6 px-4 pb-4 border-b-2 border-gray-200">
           <h2 className="text-2xl md:text-3xl font-bold text-gray-800 flex items-center gap-2">
@@ -51,21 +51,22 @@ export const PopularItems = ({ products }: PopularItemsProps) => {
             spaceBetween={20}
             slidesPerView={1}
             navigation={{
-              prevEl: '.popular-prev',
-              nextEl: '.popular-next',
+              prevEl: ".popular-prev",
+              nextEl: ".popular-next",
             }}
             pagination={{
               clickable: true,
-              el: '.popular-pagination',
+              el: ".popular-pagination",
             }}
             autoplay={{
               delay: 3000,
               disableOnInteraction: false,
             }}
             breakpoints={{
-              768: {
-                slidesPerView: 2,
-              },
+              640: { slidesPerView: 1 },
+              768: { slidesPerView: 2 },
+              1024: { slidesPerView: 3 },
+              1280: { slidesPerView: 3 },
             }}
             className="popular-swiper"
           >
@@ -78,15 +79,19 @@ export const PopularItems = ({ products }: PopularItemsProps) => {
                       {/* Badge */}
                       {product.badge && (
                         <div className="flex items-center gap-1 mb-2">
-                          <span className="text-yellow-500 lg:text-xl text-lg"><FaCrown /></span>
-                          <span className="lg:text-md text-sm text-gray-600 font-semibold">{product.badge}</span>
+                          <span className="text-yellow-500 lg:text-xl text-lg">
+                            <FaCrown />
+                          </span>
+                          <span className="lg:text-md text-sm text-gray-600 font-semibold">
+                            {product.badge}
+                          </span>
                         </div>
                       )}
 
                       <h3 className="text-base md:text-2xl font-bold text-gray-800">
                         {product.name}
                       </h3>
-                      
+
                       {/* Weight and Price */}
                       <div className="flex items-center gap-3 md:gap-4 mb-3 text-xs md:text-sm text-gray-600">
                         <div className="flex items-center gap-1 font-semibold bg-gray-100 px-2 py-1 rounded-2xl mt-6">
@@ -105,8 +110,13 @@ export const PopularItems = ({ products }: PopularItemsProps) => {
                           <span className="text-3xl text-white mx-auto">+</span>
                         </button>
                         <div className="flex items-center gap-1 mx-2.5 font-semibold bg-gray-100 px-2 py-1 rounded-2xl">
-                          <Star size={16} className="fill-yellow-400 text-yellow-400" />
-                          <span className="text-sm font-semibold text-gray-700">{product.rating}</span>
+                          <Star
+                            size={16}
+                            className="fill-yellow-400 text-yellow-400"
+                          />
+                          <span className="text-sm font-semibold text-gray-700">
+                            {product.rating}
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -155,4 +165,4 @@ export const PopularItems = ({ products }: PopularItemsProps) => {
       `}</style>
     </div>
   );
-}
+};

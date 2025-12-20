@@ -36,28 +36,36 @@ const CategoryCardSlider: React.FC<CategoryProps> = ({ categoriesList }) => {
 
       <div
         ref={containerRef}
-        className="flex gap-8 overflow-x-auto scroll-smooth scrollbar-hide snap-x snap-mandatory"
-        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+        className="flex ml-2 md:ml-0 gap-8 overflow-x-auto scroll-smooth scrollbar-hide snap-x snap-mandatory"
+        style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
       >
         {sortedCategories?.map((category) => {
-          const isUpcoming = 'isUpcoming' in category && category.isUpcoming;
+          const isUpcoming = "isUpcoming" in category && category.isUpcoming;
 
           return (
             <Link
               key={category?._id}
-              href={isUpcoming ? "#" : `/shop?category=${category.slug || category._id}`}
+              href={
+                isUpcoming
+                  ? "#"
+                  : `/shop?category=${category.slug || category._id}`
+              }
               className="flex-shrink-0 snap-start"
               onClick={(e) => isUpcoming && e.preventDefault()}
             >
               <div
-                className={`group relative h-40 w-32
+                className={`group relative h-40 w-28 md:w-32
                   bg-white rounded-md overflow-hidden transition-all duration-300
-                  ${isUpcoming ? "cursor-default bg-gray-100" : "cursor-pointer hover:bg-[#1e6a39] hover:scale-105"} 
+                  ${
+                    isUpcoming
+                      ? "cursor-default bg-gray-100"
+                      : "cursor-pointer hover:bg-[#1e6a39] hover:scale-105"
+                  } 
                   flex flex-col shadow-sm`}
               >
                 {!isUpcoming && (
                   <div className="relative w-full flex-1 flex items-center justify-center">
-                    <div className="relative w-[80px] h-20">
+                    <div className="relative w-[100px] h-24">
                       <Image
                         src={category.image}
                         alt={category.name}
@@ -68,10 +76,13 @@ const CategoryCardSlider: React.FC<CategoryProps> = ({ categoriesList }) => {
                   </div>
                 )}
                 <div className="pb-2 px-2 text-center">
-                  <p className={`text-xs lg:text-sm font-semibold ${isUpcoming
-                      ? "text-gray-400"
-                      : "text-gray-700 group-hover:text-white"
-                    } transition-colors duration-300 capitalize line-clamp-2`}>
+                  <p
+                    className={`text-xs lg:text-sm font-semibold ${
+                      isUpcoming
+                        ? "text-gray-400"
+                        : "text-gray-700 group-hover:text-white"
+                    } transition-colors duration-300 capitalize line-clamp-2`}
+                  >
                     {isUpcoming ? "Upcoming" : category.name}
                   </p>
                 </div>

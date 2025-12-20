@@ -20,7 +20,6 @@ import { getAllOffers } from "@/services/offer";
 import { LocationModalWrapper } from "@/components/kocation/LocationModalWrapper";
 import { PopularItems } from "@/components/pages/landing_pages/PopularItems/PopularItems";
 
-
 // import { getCartProducts } from "@/services/cart";
 // import NavBar from "@/components/pages/header/NavBar/NavBar";
 
@@ -43,7 +42,7 @@ const page = async () => {
   // ------for campaign----
 
   const { data: campaign } = await getCampaign();
-  const offrs = await getAllOffers()
+  const offrs = await getAllOffers();
 
   // const user = await getUser();
   // const userId = user?.id;
@@ -51,7 +50,7 @@ const page = async () => {
   // const products = await getCartProducts(userId, coupon);
   // ksdfj
 
-  const data = await getAllProductsForShop()
+  const data = await getAllProductsForShop();
 
   const allProducts = data?.data?.result || [];
 
@@ -67,7 +66,9 @@ const page = async () => {
     (item: any) => item.status === "popular"
   );
 
-
+  console.log(bestDealProducts, "bestdeal");
+  console.log(bestSellerProducts, "best seller");
+  console.log(popularProducts, "populer");
 
   return (
     <>
@@ -87,8 +88,18 @@ const page = async () => {
           <Offer offrs={offrs} />
           {/* <SubCategory /> */}
           {/* <ChildCategory />   */}
-          <HomeProductSection title="Best Deals" products={bestDealProducts} />
-          <HomeProductSection title="Best Sellers" products={bestSellerProducts} />
+          {bestDealProducts.length > 0 && (
+            <HomeProductSection
+              title="Best Deals"
+              products={bestDealProducts}
+            />
+          )}
+          {bestSellerProducts.length > 0 && (
+            <HomeProductSection
+              title="Best Sellers"
+              products={bestSellerProducts}
+            />
+          )}
         </div>
 
         <div
@@ -100,10 +111,8 @@ const page = async () => {
           }}
         >
           <PopularItems products={popularProducts} />
-          <WhyChooseUs />
         </div>
         {/* <Testimonial/> */}
-        <Subscribe />
         {/* <MiddleChildCategory
           childCategoriesList={middleChildCategoriesList?.data}
         />
@@ -112,6 +121,8 @@ const page = async () => {
         )} */}
 
         <Campaign campaign={campaign[0]} />
+        <WhyChooseUs />
+        <Subscribe />
 
         {/* <LowerMiddleChildCategory
           childCategoriesList={lowerMiddleChildCategoriesList?.data}

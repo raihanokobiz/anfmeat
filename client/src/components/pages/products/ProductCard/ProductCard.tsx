@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 import { addToCart } from "@/services/cart";
 // import { TbWeight } from 'react-icons/tb';
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Navigation } from "swiper/modules";
+import { Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 
@@ -85,7 +85,7 @@ const ProductCard: React.FC<{
 
   return (
     <div className="bg-white rounded-md overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 group border border-gray-100 flex flex-col max-h-80">
-      <div className="relative overflow-hidden lg:h-52 md:h-48 h-32">
+      <div className="relative overflow-hidden lg:h-52 md:h-48 h-32 sm:h-52">
         <Link
           href={`/product/${product.slug}`}
           className="absolute inset-0 z-0"
@@ -102,13 +102,13 @@ const ProductCard: React.FC<{
             </div>
           ) : (
             <div>
-              <Image
+              <img
                 src={apiBaseUrl + displayImage}
                 alt={product.name}
                 width={160}
                 height={160}
                 onError={handleImageError}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-110"
               />
             </div>
           )}
@@ -159,7 +159,7 @@ const ProductCard: React.FC<{
       </div>
 
       <div className="p-4 flex flex-col grow">
-        <h3 className="font-semibold text-gray-800 mb-3 line-clamp-2 text-lg leading-tight">
+        <h3 className=" font-semibold text-gray-800 mb-3 line-clamp-1 md:line-clamp-2 text-sm md:text-lg leading-tight">
           {product.name}
         </h3>
         <div className="flex justify-between gap-4">
@@ -168,7 +168,7 @@ const ProductCard: React.FC<{
             {product?.inventoryRef?.[0]?.level}
           </p> */}
           <div className="flex items-center gap-1 flex-wrap">
-            <span className="text-base font-bold text-gray-900 bg-gray-200 rounded-2xl py-1 px-6">
+            <span className=" text-sm md:text-lg font-medium md:font-semibold lg:font-bold text-gray-900 bg-gray-200 rounded-2xl py-1 px-6">
               ৳{product.price}
             </span>
             {hasDiscount && (
@@ -179,27 +179,29 @@ const ProductCard: React.FC<{
               </>
             )}
           </div>
-          <button
-            onClick={handleQuickAddClick}
-            disabled={isStockOut}
-            className={`px-3 py-1.5 rounded-sm transition-all duration-300 flex items-center justify-center gap-1.5 font-semibold text-xs shadow-md transform ${
-              isStockOut
-                ? "bg-gray-400 text-gray-200 cursor-not-allowed"
-                : "bg-primary text-white hover:from-[#E55A00] hover:to-[#CC4F00] hover:shadow-lg hover:-translate-y-0.5"
-            }`}
-          >
-            {isStockOut ? (
-              <>
-                <X size={16} strokeWidth={2.5} />
-                স্টক আউট
-              </>
-            ) : (
-              <>
-                <ShoppingCart size={16} strokeWidth={2.5} />
-                অর্ডার করুন
-              </>
-            )}
-          </button>
+          <div className=" hidden md:block">
+            <button
+              onClick={handleQuickAddClick}
+              disabled={isStockOut}
+              className={`px-3 py-1.5 rounded-sm transition-all duration-300 flex items-center justify-center gap-1.5 font-semibold text-xs shadow-md transform ${
+                isStockOut
+                  ? "bg-gray-400 text-gray-200 cursor-not-allowed"
+                  : "bg-primary text-white hover:from-[#E55A00] hover:to-[#CC4F00] hover:shadow-lg hover:-translate-y-0.5"
+              }`}
+            >
+              {isStockOut ? (
+                <>
+                  <X size={16} strokeWidth={2.5} />
+                  স্টক আউট
+                </>
+              ) : (
+                <>
+                  <ShoppingCart size={16} strokeWidth={2.5} />
+                  অর্ডার করুন
+                </>
+              )}
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -567,14 +569,13 @@ const HomeProductSection: React.FC<HomeProductSectionProps> = ({
     <div className="relative px-4 md:px-0">
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-screen h-28 bg-primary z-0"></div>
       <Swiper
-        modules={[Autoplay, Navigation]}
+        modules={[Autoplay]}
         spaceBetween={16}
-        slidesPerView={1}
-        navigation
+        slidesPerView={2}
         autoplay={{ delay: 2500, disableOnInteraction: false }}
         breakpoints={{
-          640: { slidesPerView: 1 },
-          768: { slidesPerView: 2 },
+          640: { slidesPerView: 2 },
+          768: { slidesPerView: 3 },
           1024: { slidesPerView: 4 },
           1280: { slidesPerView: 4 },
         }}
