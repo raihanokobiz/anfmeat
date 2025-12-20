@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import DOMPurify from "dompurify";
 
 interface TruncatedHtmlProps {
   html: string;
@@ -28,9 +29,9 @@ const TruncatedHtml: React.FC<TruncatedHtmlProps> = ({
 
   return (
     <div className="w-[250px]">
-      <div
+     <div
         dangerouslySetInnerHTML={{
-          __html: expanded || !shouldTruncate ? html : truncatedText,
+          __html: expanded || !shouldTruncate ? DOMPurify.sanitize(html) : truncatedText,
         }}
       />
       {shouldTruncate && (
