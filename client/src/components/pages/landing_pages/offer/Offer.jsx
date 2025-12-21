@@ -12,11 +12,12 @@ export default function Offer({ offrs }) {
   const offers = offrs?.data || [];
 
   return (
-    <div className="px-4 md:px-6 py-6 md:py-10  lg:py-12 max-w-6xl mx-auto">
+    <div className="px-4 md:px-6 py-6 md:py-10  lg:py-12 max-w-6xl mx-auto  ">
       <Swiper
         modules={[Navigation, Pagination, Autoplay]}
         pagination={{ clickable: true }}
-        autoplay={{ delay: 3000, disableOnInteraction: false }}
+        autoplay={{ delay: 2000, disableOnInteraction: false }}
+        speed={2000}
         loop={true}
         slidesPerView={1}
         breakpoints={{
@@ -29,13 +30,12 @@ export default function Offer({ offrs }) {
       >
         {offers?.map((item, index) => (
           <SwiperSlide key={index}>
-            <div className="relative w-full h-80 ">
-              <img
+            <div className="relative aspect-[16/9]">
+              <Image
                 src={item?.image}
                 alt={`Offer ${index + 1}`}
                 fill
-                style={{ objectFit: "cover" }}
-                className="rounded-md shadow-md object-contain"
+                className="rounded-md shadow-md bject-fill"
               />
             </div>
           </SwiperSlide>

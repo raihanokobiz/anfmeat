@@ -44,43 +44,29 @@ const ShopProductCard: React.FC<Product> = ({ product }) => {
 
   return (
     <div
-      className="rounded overflow-hidden shadow transition group p-4"
+      className="rounded overflow-hidden shadow transition group p-2 md:p-4"
       onMouseEnter={handleHoverStart}
       onMouseLeave={handleHoverEnd}
     >
-      <div className="relative w-full h-64 sm:h-64 md:h-64 lg:h-64 overflow-hidden">
+      <div className="relative w-full h-32 sm:h-52 md:h-48  lg:h-52 overflow-hidden">
         <Link href={`product/${slug}`}>
           <div className="relative w-full h-full">
             {/* Lottie loader until both images loaded */}
             {thumbnailImage && backViewImage
               ? (!imageLoaded.back || !imageLoaded.front) && (
-                  <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-white z-10">
-                    <div className="w-24 h-24">
-                      <Lottie animationData={cardImageLoading} loop autoplay />
-                    </div>
+                <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-white z-10">
+                  <div className="w-24 h-24">
+                    <Lottie animationData={cardImageLoading} loop autoplay />
                   </div>
-                )
+                </div>
+              )
               : !imageLoaded.front && (
-                  <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-white z-10">
-                    <div className="w-24 h-24">
-                      <Lottie animationData={cardImageLoading} loop autoplay />
-                    </div>
+                <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-white z-10">
+                  <div className="w-24 h-24">
+                    <Lottie animationData={cardImageLoading} loop autoplay />
                   </div>
-                )}
-
-            {backViewImage && (
-              <div className=" relative w-full h-full">
-                <Image
-                  src={apiBaseUrl + backViewImage}
-                  alt={`${name} backViewImage`}
-                  fill
-                  onLoad={() =>
-                    setImageLoaded((prev) => ({ ...prev, back: true }))
-                  }
-                  className=" object-cover"
-                />
-              </div>
-            )}
+                </div>
+              )}
 
             {thumbnailImage && backViewImage ? (
               <motion.div
@@ -97,7 +83,7 @@ const ShopProductCard: React.FC<Product> = ({ product }) => {
                     onLoad={() =>
                       setImageLoaded((prev) => ({ ...prev, front: true }))
                     }
-                    className="object-cover "
+                    className="object-fill "
                   />
                 </div>
               </motion.div>
@@ -111,48 +97,49 @@ const ShopProductCard: React.FC<Product> = ({ product }) => {
                   onLoad={() =>
                     setImageLoaded((prev) => ({ ...prev, front: true }))
                   }
-                  className=" object-cover"
+                  className=" object-fill"
                 />
               </div>
             )}
           </div>
         </Link>
+
       </div>
 
       <div className="flex flex-col justify-between">
         <Link href={`product/${slug}`}>
-          <div className="p-4 flex flex-col grow">
+          <div className="pb-4 flex flex-col grow">
             <h3 className="font-semibold text-gray-800 mb-3 line-clamp-1 md:line-clamp-2 text-sm md:text-lg leading-tight">
               {product.name}
             </h3>
             <div className="flex justify-between gap-4">
-              <p className="text-base font-bold text-gray-900 bg-gray-200 rounded-2xl px-6 flex items-center">
-                <TbWeight className="text-xl" />
+              <p className="text-sm font-medium md:font-semibold lg:font-bold text-gray-900  flex items-center">
+                <TbWeight className="text-sm md:text-xl" />
                 {product?.inventoryRef?.[0]?.level}
               </p>
-              <div className="flex items-center gap-1 flex-wrap">
-                <span className="text-base font-medium md:font-semibold lg:font-bold text-gray-900 bg-gray-200 rounded-2xl py-1 px-6">
+              <div className="flex items-center gap-1 md:gap-2 flex-wrap">
+                <span className=" text-xs md:text-base font-medium md:font-semibold lg:font-bold text-gray-900 ">
                   ৳{product.price}
                 </span>
                 {hasDiscount && (
                   <>
-                    <span className="text-[10px] text-gray-400 bg-gray-200 rounded-2xl px-6">
+                    <span className="text-[12px] text-gray-600 line-through ">
                       ৳{product.mrpPrice}
                     </span>
                   </>
                 )}
               </div>
-              <div>
-                <ProductDialog
-                  name={name}
-                  price={price}
-                  productRef={_id}
-                  thumbnailImage={thumbnailImage}
-                  inventoryRef={inventoryRef}
-                  inventoryType={inventoryType}
-                />
-              </div>
             </div>
+          </div>
+          <div>
+            <ProductDialog
+              name={name}
+              price={price}
+              productRef={_id}
+              thumbnailImage={thumbnailImage}
+              inventoryRef={inventoryRef}
+              inventoryType={inventoryType}
+            />
           </div>
         </Link>
       </div>

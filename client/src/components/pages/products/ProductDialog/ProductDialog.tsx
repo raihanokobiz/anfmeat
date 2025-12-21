@@ -159,7 +159,7 @@ const ProductDialog: React.FC<Product> = ({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <button className="flex items-center w-full justify-center  gap-2 bg-[#1e6a39] text-[#fff] text-[12px] px-3 py-1.5 rounded-sm cursor-pointer">
+        <button className="flex items-center w-full justify-center  gap-2 bg-primary text-[#fff] text-[12px] px-3 py-1.5 rounded-sm cursor-pointer">
           <span>
             <BsFillCartPlusFill />
           </span>

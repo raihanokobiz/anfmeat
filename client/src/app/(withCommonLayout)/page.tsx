@@ -4,7 +4,6 @@ import Category from "@/components/pages/landing_pages/Category/Category";
 import React from "react";
 import HomeProductSection from "@/components/pages/landing_pages/HomeProductSection/HomeProductSection";
 // import TopChildCategory from "@/components/pages/landing_pages/TopChildCategory/TopChildCategory";
-import { getAllProductsForShop } from "@/services/products";
 // import MiddleChildCategory from "@/components/pages/landing_pages/MiddleChildCategory/MiddleChildCategory";
 // import LowerMiddleChildCategory from "@/components/pages/landing_pages/LowerMiddleChildCategory/LowerMiddleChildCategory";
 // import { getAllChildCategorys } from "@/services/childCategorys";
@@ -19,6 +18,14 @@ import { Subscribe } from "@/components/pages/landing_pages/Subscribe/Subscribe"
 import { getAllOffers } from "@/services/offer";
 import { LocationModalWrapper } from "@/components/kocation/LocationModalWrapper";
 import { PopularItems } from "@/components/pages/landing_pages/PopularItems/PopularItems";
+import { getAllProduct } from "@/services/products";
+import {
+  Flame,
+  Trophy,
+  BadgePercent,
+  Sparkles,
+  TrendingUp,
+} from "lucide-react";
 
 // import { getCartProducts } from "@/services/cart";
 // import NavBar from "@/components/pages/header/NavBar/NavBar";
@@ -50,9 +57,9 @@ const page = async () => {
   // const products = await getCartProducts(userId, coupon);
   // ksdfj
 
-  const data = await getAllProductsForShop();
+  const data = await getAllProduct();
 
-  const allProducts = data?.data?.result || [];
+  const allProducts = data?.data || [];
 
   const bestDealProducts = allProducts.filter(
     (item: any) => item.status === "bestDeal"
@@ -65,10 +72,6 @@ const page = async () => {
   const popularProducts = allProducts.filter(
     (item: any) => item.status === "popular"
   );
-
-  console.log(bestDealProducts, "bestdeal");
-  console.log(bestSellerProducts, "best seller");
-  console.log(popularProducts, "populer");
 
   return (
     <>
@@ -92,12 +95,14 @@ const page = async () => {
             <HomeProductSection
               title="Best Deals"
               products={bestDealProducts}
+              icon={Trophy}
             />
           )}
           {bestSellerProducts.length > 0 && (
             <HomeProductSection
               title="Best Sellers"
               products={bestSellerProducts}
+              icon={Flame}
             />
           )}
         </div>

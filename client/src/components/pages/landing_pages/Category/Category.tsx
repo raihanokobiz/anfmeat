@@ -5,7 +5,7 @@ import React from "react";
 const Category = async () => {
   const { data: categoriesList } = await getAllCategorys();
   return (
-    <div className="max-w-4xl mx-auto flex justify-center relative z-20 mt-4">
+    <div className="max-w-4xl mx-auto flex justify-center relative z-20">
       <CategoryCardSlider categoriesList={categoriesList} />
     </div>
   );

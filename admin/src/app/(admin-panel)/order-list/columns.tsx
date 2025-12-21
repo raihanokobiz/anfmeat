@@ -39,7 +39,7 @@ export const columns: ColumnDef<TOrder>[] = [
     accessorKey: "orderId",
   },
   {
-    header: "Products",
+    header: "Products Info",
     cell: ({ row }) => {
       const { products } = row.original;
       return (
@@ -84,13 +84,8 @@ export const columns: ColumnDef<TOrder>[] = [
   {
     header: "Coupon Code",
     cell: ({ row }) => {
-      return (
-        <div>
-          {row.original.couponRef?.code || "N/A"}
-        </div>
-      );
+      return <div>{row.original.couponRef?.code || "N/A"}</div>;
     },
-
   },
   {
     header: "Coupon Discount",
@@ -136,36 +131,18 @@ export const columns: ColumnDef<TOrder>[] = [
           <span>{method}</span>
           {method === "MobileBanking" && (
             <>
-              <span className="mt-1">Provider: {row.original.mobileBankingProvider || "N/A"}</span>
-              <span className="mt-1">Number: {row.original.mobileNumber || "N/A"}</span>
+              <span className="mt-1">
+                Provider: {row.original.mobileBankingProvider || "N/A"}
+              </span>
+              <span className="mt-1">
+                Number: {row.original.mobileNumber || "N/A"}
+              </span>
             </>
           )}
         </div>
       );
     },
   },
-  // {
-  //   header: "User Info",
-  //   cell: ({ row }) => {
-  //     return (
-  //       <div>
-  //         <div className="flex justify-between items-center gap-2">
-  //           <p>Name: </p>
-  //           <p>{row.original.userRef?.name}</p>
-  //         </div>
-  //         <div className="flex justify-between items-center gap-2">
-  //           <p>Phone: </p>
-  //           <p>{row.original.userRef?.phone}</p>
-  //         </div>
-  //         <div className="flex justify-between items-center gap-2">
-  //           <p>Email: </p>
-  //           <p>{row.original.userRef?.email}</p>
-  //         </div>
-  //         {row.original.userRef?.isFistOrder && <div>First Order</div>}
-  //       </div>
-  //     );
-  //   },
-  // },
   {
     header: "Customer Info",
     cell: ({ row }) => {
@@ -196,10 +173,10 @@ export const columns: ColumnDef<TOrder>[] = [
     header: "Order Status",
     accessorKey: "status",
     cell: ({ row }) => {
-      console.log(
-        row.original.status,
-        "row from order status...........54461411321321321321321"
-      );
+      // console.log(
+      //   row.original.status,
+      //   "row from order status...........54461411321321321321321"
+      // );
       const rowStatus = orderStatuses.find((r) => {
         return r.key === row?.original?.status;
       });
@@ -262,54 +239,6 @@ export const columns: ColumnDef<TOrder>[] = [
     },
   },
   {
-    header: "Send To Courier",
-    cell: ({ row }) => {
-      const [loading, setLoading] = React.useState(false);
-      const { toast } = useToast();
-
-      const courierData: SteadfastOrderPayload = {
-        invoice: row.original.orderId,
-        recipient_name: row.original.customerName || "",
-        recipient_phone: row.original.customerPhone || "",
-        recipient_address: row.original.customerAddress || "",
-        cod_amount: row.original.totalPrice || "",
-        note: row.original.note,
-      };
-
-
-      const handleClick = async () => {
-        setLoading(true);
-        try {
-          const response = await createSteadfastOrder(courierData);
-
-          if (response) {
-            toast({
-              title: "Success",
-              description: "Order submitted to courier",
-            });
-          }
-        } catch (error: any) {
-          console.log(error.message);
-          toast({
-            title: "Error!",
-            variant: "destructive",
-            description: error.message,
-          });
-        } finally {
-          setLoading(false);
-        }
-      };
-
-      return (
-        <div>
-          <Button loading={loading} onClick={handleClick}>
-            Steadfast
-          </Button>
-        </div>
-      );
-    },
-  },
-  {
     header: "Invoice",
     cell: ({ row }) => {
       const orderData = row.original;
@@ -351,7 +280,6 @@ export const columns: ColumnDef<TOrder>[] = [
               toast({
                 title: "Order deleted successfully",
                 variant: "default",
-
               });
               window.location.reload();
             }
@@ -367,8 +295,6 @@ export const columns: ColumnDef<TOrder>[] = [
         }
       };
 
-
-
       return (
         <div>
           <Button
@@ -381,11 +307,8 @@ export const columns: ColumnDef<TOrder>[] = [
         </div>
       );
     },
-  }
-
-
+  },
 ];
 function fetchOrders() {
   throw new Error("Function not implemented.");
 }
-

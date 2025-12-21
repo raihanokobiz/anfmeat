@@ -185,7 +185,7 @@ export const CreateProductForm: React.FC = () => {
   const onSubmit = async (values: z.infer<typeof productFormSchema>) => {
     setLoading(true);
     const formData = makeFormData(values);
- 
+
     try {
       await createFormAction(formData);
       form.reset();
@@ -428,37 +428,6 @@ export const CreateProductForm: React.FC = () => {
                   </div>
                 )}
               />
-              {/* <FormField
-                control={form.control}
-                name="childCategoryRef"
-                render={({ field }) => (
-                  <div className="flex items-end gap-2 w-full">
-                    <FormItem className="flex-1">
-                      <FormLabel>Child Category</FormLabel>
-                      <FormControl>
-                        <Select
-                          onValueChange={field.onChange}
-                          value={field.value}
-                        >
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select child category" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {filteredChildCategories.map((item, index) => (
-                              <SelectItem key={index} value={String(item._id)}>
-                                {item.name}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </FormControl>
-                      <FormDescription className="text-red-400 text-xs min-h-4">
-                        {form.formState.errors.childCategoryRef?.message}
-                      </FormDescription>
-                    </FormItem>
-                  </div>
-                )}
-              /> */}
               <FormField
                 control={form.control}
                 name="inventoryType"
@@ -503,70 +472,6 @@ export const CreateProductForm: React.FC = () => {
                   key={field.id}
                   className="grid grid-cols-4 gap-1 border p-2 mb-2 rounded-md space-y-2 relative justify-center items-center"
                 >
-                  {(selectedInventoryType === "colorInventory" ||
-                    selectedInventoryType === "colorLevelInventory") && (
-                    <Controller
-                      control={control}
-                      name={`inventories.${index}.color`}
-                      render={({ field }) => (
-                        <FormItem className="flex flex-col">
-                          <FormLabel>Color</FormLabel>
-                          <FormControl>
-                            <ColorPicker
-                              value={field.value || "#1677ff"}
-                              showText
-                              allowClear
-                              onChange={(color) =>
-                                field.onChange(color.toHexString())
-                              }
-                            />
-                          </FormControl>
-                          <FormDescription className="text-red-400 text-xs min-h-4">
-                            {
-                              formState.errors?.inventories?.[index]?.color
-                                ?.message
-                            }
-                          </FormDescription>
-                        </FormItem>
-                      )}
-                    />
-                  )}
-
-                  {(selectedInventoryType === "colorInventory" ||
-                    selectedInventoryType === "colorLevelInventory") && (
-                    <FormItem>
-                      <FormLabel>Color Name</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="Enter color name"
-                          {...register(`inventories.${index}.colorName`)}
-                        />
-                      </FormControl>
-                      <FormDescription className="text-red-400 text-xs min-h-4">
-                        {
-                          formState.errors?.inventories?.[index]?.colorName
-                            ?.message
-                        }
-                      </FormDescription>
-                    </FormItem>
-                  )}
-
-                  {(selectedInventoryType === "levelInventory" ||
-                    selectedInventoryType === "colorLevelInventory") && (
-                    <FormItem>
-                      <FormLabel>Size</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="Enter size"
-                          {...register(`inventories.${index}.size`)}
-                        />
-                      </FormControl>
-                      <FormDescription className="text-red-400 text-xs min-h-4">
-                        {formState.errors?.inventories?.[index]?.size?.message}
-                      </FormDescription>
-                    </FormItem>
-                  )}
-
                   {selectedInventoryType !== "" && (
                     <FormItem>
                       <FormLabel>
@@ -672,55 +577,6 @@ export const CreateProductForm: React.FC = () => {
               </div>
             </div>
             <div className="">
-              <Label>Backview Image (Max 1 File)</Label>
-              <FormField
-                control={form.control}
-                name="backViewImage"
-                render={({ field }) => (
-                  <div>
-                    <Upload
-                      listType="picture-card"
-                      beforeUpload={() => false}
-                      fileList={backViewFileList}
-                      onChange={handleBackViewFileChange}
-                      multiple={false}
-                    >
-                      <div>
-                        <UploadOutlined />
-                        <div style={{ marginTop: 8 }}>Upload</div>
-                      </div>
-                    </Upload>
-                  </div>
-                )}
-              />
-
-              <div className="mt-4">
-                {form.getValues("backViewImage") &&
-                  form.getValues("backViewImage").length > 0 &&
-                  form.getValues("backViewImage").map((file, i) => (
-                    <div className="border-dashed border-2 rounded-lg p-2 px-3">
-                      <div
-                        key={i}
-                        className="flex flex-col gap-2 text-xs text-gray-500 justify-center h-full"
-                      >
-                        <div className="flex items-center gap-2">
-                          <Paperclip className="h-4 w-4 stroke-current" />
-                          <span>{file.name}</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <FileUp className="h-4 w-4 stroke-current" />
-                          <span>{humanFileSize(file.size)}</span>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-              </div>
-
-              <div className="text-red-400 text-xs min-h-4">
-                {form.formState.errors.backViewImage?.message}
-              </div>
-            </div>{" "}
-            <div className="">
               <Label>Optional Images</Label>
               <FormField
                 control={form.control}
@@ -766,55 +622,6 @@ export const CreateProductForm: React.FC = () => {
 
               <div className="text-red-400 text-xs min-h-4">
                 {form.formState.errors.images?.message}
-              </div>
-            </div>
-            <div className="">
-              <Label>Size Chart Image (Max 1 File) </Label>
-              <FormField
-                control={form.control}
-                name="sizeChartImage"
-                render={({ field }) => (
-                  <div>
-                    <Upload
-                      listType="picture-card"
-                      beforeUpload={() => false}
-                      fileList={sizeChartFileList}
-                      onChange={handleSizeChartFileChange}
-                      multiple={false}
-                    >
-                      <div>
-                        <UploadOutlined />
-                        <div style={{ marginTop: 8 }}>Upload</div>
-                      </div>
-                    </Upload>
-                  </div>
-                )}
-              />
-
-              <div className="mt-4">
-                {form.getValues("sizeChartImage") &&
-                  form.getValues("sizeChartImage").length > 0 &&
-                  form.getValues("sizeChartImage").map((file, i) => (
-                    <div className="border-dashed border-2 rounded-lg p-2 px-3">
-                      <div
-                        key={i}
-                        className="flex flex-col gap-2 text-xs text-gray-500 justify-center h-full"
-                      >
-                        <div className="flex items-center gap-2">
-                          <Paperclip className="h-4 w-4 stroke-current" />
-                          <span>{file.name}</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <FileUp className="h-4 w-4 stroke-current" />
-                          <span>{humanFileSize(file.size)}</span>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-              </div>
-
-              <div className="text-red-400 text-xs min-h-4">
-                {form.formState.errors.sizeChartImage?.message}
               </div>
             </div>
           </div>

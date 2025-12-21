@@ -12,6 +12,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
+import { TbWeight } from "react-icons/tb";
 
 interface InventoryItem {
   _id?: string;
@@ -84,8 +85,8 @@ const ProductCard: React.FC<{
   // };
 
   return (
-    <div className="bg-white rounded-md overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 group border border-gray-100 flex flex-col max-h-80">
-      <div className="relative overflow-hidden lg:h-52 md:h-48 h-32 sm:h-52">
+    <div className="p-2 md:p-4 bg-white rounded-md overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 group border border-gray-100 flex flex-col max-h-80">
+      <div className="relative overflow-hidden h-40 sm:h-52 md:h-48  lg:h-52 ">
         <Link
           href={`/product/${product.slug}`}
           className="absolute inset-0 z-0"
@@ -102,11 +103,10 @@ const ProductCard: React.FC<{
             </div>
           ) : (
             <div>
-              <img
+              <Image
                 src={apiBaseUrl + displayImage}
                 alt={product.name}
-                width={160}
-                height={160}
+                fill
                 onError={handleImageError}
                 className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-110"
               />
@@ -136,58 +136,39 @@ const ProductCard: React.FC<{
             Free Ship
           </div>
         )}
-
-        {/* Hover Actions */}
-        {/* <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-end justify-center pb-2 gap-2 z-30">
-          <button
-            onClick={handleViewDetailsClick}
-            className="p-2 bg-white text-gray-800 rounded-full hover:bg-[#FF6C0C] hover:text-white transition-all shadow-lg transform hover:scale-110"
-            title="Quick View"
-          >
-            <Eye size={16} strokeWidth={2} />
-          </button>
-          {!isStockOut && (
-            <button
-              onClick={handleQuickAddClick}
-              className="p-2 bg-[#FF6C0C] text-white rounded-full hover:bg-[#E55A00] transition-all shadow-lg transform hover:scale-110"
-              title="Add to Cart"
-            >
-              <ShoppingCart size={16} strokeWidth={2} />
-            </button>
-          )}
-        </div> */}
       </div>
 
-      <div className="p-4 flex flex-col grow">
+      <div className="flex flex-col">
         <h3 className=" font-semibold text-gray-800 mb-3 line-clamp-1 md:line-clamp-2 text-sm md:text-lg leading-tight">
           {product.name}
         </h3>
-        <div className="flex justify-between gap-4">
-          {/* <p className='text-base font-bold text-gray-900 bg-gray-200 rounded-2xl px-6 flex items-center'>
-            <TbWeight className='text-sm' />
-            {product?.inventoryRef?.[0]?.level}
-          </p> */}
-          <div className="flex items-center gap-1 flex-wrap">
-            <span className=" text-sm md:text-lg font-medium md:font-semibold lg:font-bold text-gray-900 bg-gray-200 rounded-2xl py-1 px-6">
-              ৳{product.price}
-            </span>
-            {hasDiscount && (
-              <>
-                <span className="text-[10px] text-gray-400 bg-gray-200 rounded-2xl px-6">
-                  ৳{product.mrpPrice}
-                </span>
-              </>
-            )}
+        <div >
+          <div className="flex justify-between">
+            <p className='text-sm font-medium md:font-semibold lg:font-bold text-gray-900  flex items-center'>
+              <TbWeight className='text-sm md:text-xl' />
+              {product?.inventoryRef?.[0]?.level}
+            </p>
+            <div className="flex items-center gap-1 md:gap-2 flex-wrap">
+              <span className=" text-xs md:text-base font-medium md:font-semibold lg:font-bold text-gray-900">
+                ৳{product.price}
+              </span>
+              {hasDiscount && (
+                <>
+                  <span className="text-[12px] text-gray-600 line-through ">
+                    ৳{product.mrpPrice}
+                  </span>
+                </>
+              )}
+            </div>
           </div>
-          <div className=" hidden md:block">
+          <div className=" block mt-3 w-full">
             <button
               onClick={handleQuickAddClick}
               disabled={isStockOut}
-              className={`px-3 py-1.5 rounded-sm transition-all duration-300 flex items-center justify-center gap-1.5 font-semibold text-xs shadow-md transform ${
-                isStockOut
-                  ? "bg-gray-400 text-gray-200 cursor-not-allowed"
-                  : "bg-primary text-white hover:from-[#E55A00] hover:to-[#CC4F00] hover:shadow-lg hover:-translate-y-0.5"
-              }`}
+              className={`w-full px-3 py-1.5 rounded-sm transition-all duration-300 flex items-center justify-center gap-1.5 font-semibold text-xs shadow-md transform ${isStockOut
+                ? "bg-gray-400 text-gray-200 cursor-not-allowed"
+                : "bg-primary text-white hover:from-[#E55A00] hover:to-[#CC4F00] hover:shadow-lg hover:-translate-y-0.5"
+                }`}
             >
               {isStockOut ? (
                 <>
@@ -197,7 +178,7 @@ const ProductCard: React.FC<{
               ) : (
                 <>
                   <ShoppingCart size={16} strokeWidth={2.5} />
-                  অর্ডার করুন
+                  কার্টে যোগ করুন
                 </>
               )}
             </button>
@@ -208,48 +189,6 @@ const ProductCard: React.FC<{
   );
 };
 
-// Category Banner Card - Matches ProductBannerCard style
-// const CategoryBannerCard: React.FC<{ product: TProduct }> = ({ product }) => {
-//   const [imageError, setImageError] = useState(false);
-
-//   // Use bannerImage if available, otherwise fallback to images array or thumbnailImage
-//   const displayImage = (product as any).bannerImage ||
-//     (product.images && product.images.length > 0 ? product.images[0] : product.thumbnailImage);
-
-//   return (
-//     <div className="w-full h-full relative group overflow-hidden">
-
-//       <Link href={`/shop?subCategory=${product.slug || product._id}`} className="block h-full relative">
-//         <div className="relative h-full rounded-lg overflow-hidden">
-//           {imageError ? (
-//             <div className="w-full h-full bg-linear-to-br from-orange-100 to-orange-200 flex items-center justify-center">
-//               <div className="text-center p-4">
-//                 <ShoppingCart size={64} className="mx-auto text-orange-400 mb-3" />
-//                 <p className="text-lg font-semibold text-gray-700">{product.name}</p>
-//               </div>
-//             </div>
-//           ) : (
-//             <Image
-//               src={apiBaseUrl + displayImage}
-//               alt={product.name}
-//               fill
-//               onError={() => setImageError(true)}
-//               className="object-cover rounded transition-transform duration-300 group-hover:scale-105"
-//             />
-//           )}
-
-//           {/* Overlay */}
-//           <div className="absolute inset-0 bg-black/15 w-full rounded"></div>
-
-//           {/* Bottom Title with hover effect */}
-//           <div className="bottom-0 absolute w-full text-center group-hover:bg-[#99C9F7]/20 group-hover:border-t border-white/30 rounded-b text-white z-50 duration-300">
-//             <h2 className="py-2 text-2xl capitalize font-semibold">{product.name}</h2>
-//           </div>
-//         </div>
-//       </Link>
-//     </div>
-//   );
-// };
 
 // Modal Component
 const AddToCartModal: React.FC<{
@@ -346,8 +285,8 @@ const AddToCartModal: React.FC<{
                 {product.inventoryType === "levelInventory"
                   ? "সাইজ নির্বাচন করুন"
                   : product.inventoryType === "colorInventory"
-                  ? "কালার নির্বাচন করুন"
-                  : "সাইজ ও কালার নির্বাচন করুন"}
+                    ? "কালার নির্বাচন করুন"
+                    : "সাইজ ও কালার নির্বাচন করুন"}
               </label>
               <div className="grid grid-cols-3 gap-2">
                 {product.inventoryRef.map((item: InventoryItem) => {
@@ -372,13 +311,12 @@ const AddToCartModal: React.FC<{
                         !isOutOfStock && setSelectedInventory(item._id)
                       }
                       disabled={isOutOfStock}
-                      className={`p-2 rounded-lg border-2 transition-all text-xs font-semibold ${
-                        selectedInventory === item._id
-                          ? "border-[#FF6C0C] bg-orange-50 text-[#FF6C0C]"
-                          : isOutOfStock
+                      className={`p-2 rounded-lg border-2 transition-all text-xs font-semibold ${selectedInventory === item._id
+                        ? "border-[#FF6C0C] bg-orange-50 text-[#FF6C0C]"
+                        : isOutOfStock
                           ? "border-gray-200 bg-gray-100 text-gray-400 cursor-not-allowed line-through"
                           : "border-gray-200 hover:border-[#FF6C0C] hover:bg-orange-50 text-gray-700"
-                      }`}
+                        }`}
                     >
                       <div className="flex flex-col items-center">
                         <span className="font-bold uppercase">
@@ -386,9 +324,8 @@ const AddToCartModal: React.FC<{
                         </span>
                         {item.quantity !== undefined && (
                           <span
-                            className={`text-xs mt-0.5 ${
-                              isOutOfStock ? "text-red-500" : "text-gray-500"
-                            }`}
+                            className={`text-xs mt-0.5 ${isOutOfStock ? "text-red-500" : "text-gray-500"
+                              }`}
                           >
                             {isOutOfStock ? "Stock Out" : `${item.quantity} টি`}
                           </span>
@@ -497,8 +434,8 @@ const AddToCartModal: React.FC<{
               {product.inventoryType === "levelInventory"
                 ? "সাইজ"
                 : product.inventoryType === "colorInventory"
-                ? "কালার"
-                : "সাইজ/কালার"}{" "}
+                  ? "কালার"
+                  : "সাইজ/কালার"}{" "}
               নির্বাচন করুন
             </p>
           )}
@@ -567,7 +504,7 @@ const HomeProductSection: React.FC<HomeProductSectionProps> = ({
 
   return (
     <div className="relative px-4 md:px-0">
-      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-screen h-28 bg-primary z-0"></div>
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-screen h-28 bg-green-600 z-0"></div>
       <Swiper
         modules={[Autoplay]}
         spaceBetween={16}

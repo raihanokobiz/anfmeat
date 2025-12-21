@@ -10,11 +10,18 @@ export const getHomePageSubCategoryProducts = async (viewType?: string) => {
   return result;
 };
 
+export const getAllProduct = async () => {
+  const result: TResponse = await apiRequest({
+    endpoint: `/product`,
+  });
+  return result;
+};
+
 export const getAllProductsForShop = async (
   categorySlug?: string,
   subCategorySlug?: string,
   childCategorySlug?: string,
-  page?: number 
+  page?: number
 ) => {
   const searchParams = new URLSearchParams();
 
@@ -40,7 +47,7 @@ export const getAllProductsForShop = async (
   }
 
   if (page) {
-    searchParams.append("page", page.toString()); // ✅ Add page to URL
+    searchParams.append("page", page.toString());
   }
 
   const url = `${apiBaseUrl}/product/pagination?${searchParams.toString()}`;
@@ -76,7 +83,9 @@ export const getRelativeProducts = async (productId: { productId: string }) => {
 // };
 
 export const getSearchProducts = async (search: { search: string }) => {
-  const res = await fetch(`${apiBaseUrl}/product/search?search=${search?.search}`);
+  const res = await fetch(
+    `${apiBaseUrl}/product/search?search=${search?.search}`
+  );
 
   return res.json();
 };

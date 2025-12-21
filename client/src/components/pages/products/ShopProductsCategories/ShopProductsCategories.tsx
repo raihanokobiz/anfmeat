@@ -52,7 +52,7 @@ const ShopProductsCategories: React.FC<ShopProductsCategoriesProps> = ({ shopSid
   };
 
   return (
-    <div className="max-w-5xl relative mx-auto px-12">
+    <div className="max-w-4xl relative mx-auto px-12 lg:px-16">
       <Swiper
         modules={[Navigation, Autoplay]}
         spaceBetween={16}
@@ -67,9 +67,9 @@ const ShopProductsCategories: React.FC<ShopProductsCategoriesProps> = ({ shopSid
         }}
         loop={true}
         breakpoints={{
-          640: { slidesPerView: 2, spaceBetween: 16 },
-          768: { slidesPerView: 3, spaceBetween: 16 },
-          1024: { slidesPerView: 5, spaceBetween: 20 },
+          640: { slidesPerView: 2, spaceBetween: 32, },
+          768: { slidesPerView: 3, spaceBetween: 32, },
+          1024: { slidesPerView: 5, spaceBetween: 32, },
         }}
         className="shop-category-swiper"
       >
@@ -77,7 +77,7 @@ const ShopProductsCategories: React.FC<ShopProductsCategoriesProps> = ({ shopSid
           <SwiperSlide key={cat.slug}>
             <div
               onClick={() => updateParams("category", cat.slug)}
-              className={`group relative h-36 w-32 rounded-md overflow-hidden 
+              className={`group relative h-36 rounded-md overflow-hidden 
               transition-all duration-300 cursor-pointer flex flex-col shadow-sm
               ${selectedCategories.includes(cat.slug) ? "bg-[#1e6a39] scale-105" : "bg-[#f5f7f9]"} 
               ${!selectedCategories.includes(cat.slug) && "hover:bg-[#1e6a39] hover:scale-105"}
@@ -86,7 +86,7 @@ const ShopProductsCategories: React.FC<ShopProductsCategoriesProps> = ({ shopSid
               {cat.image && (
                 <div className="relative w-full flex-1 flex items-center justify-center">
                   <div className="relative w-20 h-20">
-                    <Image src={cat.image} alt={cat.name} fill className="object-contain" />
+                    <Image src={cat.image} alt={cat.name} fill className="object-fill" />
                   </div>
                 </div>
               )}

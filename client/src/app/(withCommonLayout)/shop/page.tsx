@@ -51,7 +51,7 @@ export default async function ShopPage({
   // const { data } = await getAllBanners();
 
   const sortedData = [...products.result].sort((a, b) => (a.priority === b.priority ? 0 : a.priority ? -1 : 1));
-  
+
 
   return (
     <>

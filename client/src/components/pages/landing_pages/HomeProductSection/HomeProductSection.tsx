@@ -7,22 +7,23 @@ import Link from "next/link";
 import { ChevronRight, TrendingUp } from "lucide-react";
 interface ProductsProps {
   title?: string;
+  icon?: React.ElementType;
   products: TProduct[];
 }
 
-const HomeProducts = async ({ title, products }: ProductsProps) => {
+const HomeProducts = async ({ title, icon: Icon, products }: ProductsProps) => {
   const user = await getUser();
 
   return (
     <div className="max-w-6xl mx-auto md:px-6 py-6 md:py-10  lg:py-12">
-      <div className="flex items-center justify-between mb-6 px-4 pb-4 border-b-2 border-gray-200">
+      <div className="flex items-center justify-between mb-6 px-4 pb-4 border-b-2 border-gray-300">
         <h2 className="text-2xl md:text-3xl font-bold text-gray-800 flex items-center gap-2">
-          <TrendingUp className="w-7 h-7 text-[#1e6a39]" />
+          <Icon className="w-7 h-7 text-primary" />
           {title}
         </h2>
         <Link
           href="/shop"
-          className="flex items-center gap-2 px-4 py-2 bg-[#1e6a39] text-white rounded-md hover:bg-[#155028] transition-all duration-300 shadow-md hover:shadow-lg"
+          className="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-md hover:bg-[#155028] transition-all duration-300 shadow-md hover:shadow-lg"
         >
           <span className="text-sm md:text-base font-semibold">View All</span>
           <ChevronRight className="w-5 h-5" />
