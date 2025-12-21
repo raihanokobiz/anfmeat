@@ -64,9 +64,7 @@ export const discountTypes = [
 ];
 
 export const inventoryTypes = [
-  { name: "Color", key: "colorInventory" },
   { name: "Size", key: "levelInventory" },
-  { name: "Color - Size", key: "colorLevelInventory" },
   { name: "Without Any", key: "inventory" },
 ];
 
@@ -472,6 +470,22 @@ export const CreateProductForm: React.FC = () => {
                   key={field.id}
                   className="grid grid-cols-4 gap-1 border p-2 mb-2 rounded-md space-y-2 relative justify-center items-center"
                 >
+                  {(selectedInventoryType === "levelInventory" ||
+                    selectedInventoryType === "colorLevelInventory") && (
+                      <FormItem>
+                        <FormLabel>Size</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="Enter size"
+                            {...register(`inventories.${index}.size`)}
+                          />
+                        </FormControl>
+                        <FormDescription className="text-red-400 text-xs min-h-4">
+                          {formState.errors?.inventories?.[index]?.size?.message}
+                        </FormDescription>
+                      </FormItem>
+                    )}
+
                   {selectedInventoryType !== "" && (
                     <FormItem>
                       <FormLabel>

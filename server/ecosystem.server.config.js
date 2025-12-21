@@ -1,7 +1,7 @@
 module.exports = {
   apps: [
     {
-      name: "silkthread-server",
+      name: "anfmeat-server",
       script: "/var/www/anfmeat/server/src/server.js",
       watch: false,
       ignore_watch: [
