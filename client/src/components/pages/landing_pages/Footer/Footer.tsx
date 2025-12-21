@@ -7,16 +7,17 @@ import React from "react";
 // } from "react-icons/fa";
 import Link from "next/link";
 import DownFooter from "../../DownFooter/DownFooter";
+import { FaFacebookF, FaYoutube } from "react-icons/fa";
 
 interface FooterProps {
   userCartProducts: {
-    cartDetails: any[]; 
+    cartDetails: any[];
   };
 }
 
 
 const Footer: React.FC<FooterProps> = ({ userCartProducts }) => {
-  
+
   const quickLink = [
     {
       name: "Shop",
@@ -60,9 +61,9 @@ const Footer: React.FC<FooterProps> = ({ userCartProducts }) => {
               Contact Info
             </div>
             <div className="text-black text-md lg:text-lg flex flex-col space-y-1">
-              <div>WhatsApp: 01700000000</div>
-              <div>Phone: 01700000000</div>
-              <div>email: a..............@gmail.com</div>
+              <div>WhatsApp: 01571-155612</div>
+              <div>Phone: 01571-155612</div>
+              <div>email: anisggn@gmail.com</div>
               {/* <div>Address: Miprur 2, Oposite of Stadium Gate no. 1. Dhaka</div> */}
             </div>
           </div>
@@ -106,10 +107,10 @@ const Footer: React.FC<FooterProps> = ({ userCartProducts }) => {
             <div className="text-black font-semibold mb-5 text-xl">
               Social Media
             </div>
-            {/* <div className="">
+            <div className="">
               <div className="flex lg:justify-center lg:items-center gap-2 mt-4">
                 <a
-                  href="https://www.facebook.com/share/1BfwmV2KcS/"
+                  href="https://www.facebook.com/share/16seK1S2dm/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="px-2 py-2 bg-[#2563EB] rounded text-white border border-[#fff]/0 hover:scale-95 hover:border-[#fff] hover:border duration-300"
@@ -119,7 +120,7 @@ const Footer: React.FC<FooterProps> = ({ userCartProducts }) => {
                 </a>
 
                 <a
-                  href="https://youtube.com/@silkthread-d3v?si=oA7cwongy2QewMZ_"
+                  href="https://www.youtube.com/@ANFMeatFish"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="px-2 py-2 bg-[#F60000] rounded text-[#fff] border border-[#fff]/0 hover:scale-95 hover:border-[#fff] hover:border duration-300"
@@ -127,36 +128,8 @@ const Footer: React.FC<FooterProps> = ({ userCartProducts }) => {
                 >
                   <FaYoutube />
                 </a>
-                 
-                 <a
-                  href="https://www.instagram.com/silk3866?igsh=MXJjcWk3ZnBhOTJo"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-2 py-2   hover:scale-95 duration-300"
-                  aria-label="Facebook"
-                >
-                 <FaInstagram/>
-                </a>
-                <a
-                  href="http://tiktok.com/@silk.thread5"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-2 py-2 bg-black rounded text-white border border-white/0 hover:scale-95 hover:border-white hover:border duration-300"
-                  aria-label="tiktok"
-                >
-
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                  >
-                    <path d="M12.5 2c.7 0 1.4 0 2 .2 0 2.3 1.8 4.1 4.1 4.2v3.1c-1.5 0-3-.5-4.2-1.4v6.8c0 3.3-2.7 6-6 6S2.5 18.2 2.5 15s2.7-6 6-6c.5 0 1 .1 1.5.2V12c-.5-.2-1-.3-1.5-.3-1.7 0-3 1.4-3 3s1.3 3 3 3 3-1.4 3-3V2z" />
-                  </svg>
-                </a>
               </div>
-            </div> */}
+            </div>
           </div>
         </div>
       </div>

@@ -1,5 +1,4 @@
 "use client";
-import Link from "next/link";
 import { useState } from "react";
 import { FaWhatsapp, FaFacebookMessenger } from "react-icons/fa";
 
@@ -20,9 +19,8 @@ const MessengerBtn = () => {
       {/* Main Messenger Button */}
       <button
         onClick={toggleOptions}
-        className={`btnzoom text-white p-2 rounded-full shadow-md hover:scale-125 transition-all duration-300 ${
-          zoom ? "scale-125" : "scale-100"
-        }`}
+        className={`btnzoom text-white p-2 rounded-full shadow-md hover:scale-125 transition-all duration-300 ${zoom ? "scale-125" : "scale-100"
+          }`}
         style={{
           background: "linear-gradient(135deg, #00C6FF, #0072FF)",
         }}
@@ -35,7 +33,7 @@ const MessengerBtn = () => {
         <div className="absolute -top-32 right-0 mt-2 flex flex-col space-y-2">
           {/* WhatsApp Button */}
           <a
-            href="https://wa.me/+8801805112114"
+            href="https://wa.me/+8801571-155612"
             target="_blank"
             rel="noopener noreferrer"
             className="bg-green-500 text-white w-12 h-12 mx-auto flex justify-center items-center rounded-full shadow-md hover:scale-110  transition duration-300"
@@ -44,15 +42,15 @@ const MessengerBtn = () => {
           </a>
 
           {/* Messenger Button */}
-          <Link
+          <a
             // to="https://m.me/107585752267101"
-            href="https://www.facebook.com/UniCrescentLtd"
+            href="https://www.facebook.com/share/16seK1S2dm/"
             target="_blank"
             rel="noopener noreferrer"
             className="bg-blue-500 text-white w-12 h-12 mx-auto flex justify-center items-center rounded-full shadow-md hover:scale-110 hover:bg-opacity-80 transition duration-300"
           >
             <FaFacebookMessenger className="text-2xl" />
-          </Link>
+          </a>
         </div>
       )}
     </div>

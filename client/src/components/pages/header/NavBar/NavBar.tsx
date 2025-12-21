@@ -128,7 +128,7 @@ const NavBar: React.FC<NavBarProps> = ({ userCartProducts }) => {
       <div className="py-2 fixed w-full z-40 top-0 bg-white px-4 md:px-0 shadow-sm backdrop-blur-lg">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           {/* Logo */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center justify-between  gap-4">
             <div
               onClick={() => setShowSideMenu(!showSideMenu)}
               className="cursor-pointer lg:hidden"
@@ -199,7 +199,7 @@ const NavBar: React.FC<NavBarProps> = ({ userCartProducts }) => {
               <FiPhone className="text-primary text-lg" />
               <div className="flex flex-col">
                 <span className="text-xs text-gray-500">Call Us</span>
-                <span className="text-xs font-semibold text-gray-700">+8801700000000</span>
+                <span className="text-xs font-semibold text-gray-700">+8801571-155612</span>
               </div>
             </div>
 
@@ -212,7 +212,7 @@ const NavBar: React.FC<NavBarProps> = ({ userCartProducts }) => {
             </div>
 
             {/* Cart */}
-            <Link href="/cart">
+            <Link href="/cart" className=" hidden md:block" >
               <div className="px-2 py-2 rounded-full relative bg-primary text-white lg:font-bold font-semibold hover:bg-primary transition-colors duration-300">
                 <BsCart2 className="lg:text-lg text-md" />
                 <motion.p
@@ -226,7 +226,7 @@ const NavBar: React.FC<NavBarProps> = ({ userCartProducts }) => {
             </Link>
 
             {/* User */}
-            <div>
+            <div className=" hidden md:block">
               {userName ? (
                 <div className="p-1.5 border-2 border-gray-300 rounded-lg hover:border-primary transition-colors duration-300">
                   <UserPopover />

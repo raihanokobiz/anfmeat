@@ -85,7 +85,7 @@ const ProductCard: React.FC<{
   // };
 
   return (
-    <div className="p-2 md:p-4 bg-white rounded-md overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 group border border-gray-100 flex flex-col max-h-80">
+    <div className="w-full p-2 md:p-4 bg-white rounded-md overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 group border border-gray-100 flex flex-col max-h-80">
       <div className="relative overflow-hidden h-40 sm:h-52 md:h-48  lg:h-52 ">
         <Link
           href={`/product/${product.slug}`}
@@ -115,9 +115,17 @@ const ProductCard: React.FC<{
         </Link>
 
         {/* Stock Out Ribbon */}
-        {isStockOut && (
+        {/* {isStockOut && (
           <div className="absolute top-0 left-0 w-20 h-20 overflow-hidden pointer-events-none z-20">
-            <div className="bg-[#FF6C0C] text-white font-bold text-[10px] px-8 py-1 -rotate-45 shadow-lg transform -translate-x-6 translate-y-3 text-center">
+            <div className="bg-[#FF6C0C] text-white font-bold text-[10px] px-8 py-1  shadow-lg rotate-45 transform  text-center ">
+              STOCK OUT
+            </div>
+          </div>
+        )} */}
+
+        {isStockOut && (
+          <div className="absolute top-0 left-0 w-20 h-20 overflow-hidden z-20">
+            <div className="absolute top-4 -left-7 w-32 bg-gradient-to-r from-yellow-600 to-red-700 text-white text-center font-bold text-[10px] py-1 shadow-md transform -rotate-45">
               STOCK OUT
             </div>
           </div>
@@ -190,8 +198,8 @@ const ProductCard: React.FC<{
 };
 
 
-// Modal Component
-const AddToCartModal: React.FC<{
+// Modal Component 
+export const AddToCartModal: React.FC<{
   product: TProduct | null;
   isOpen: boolean;
   onClose: () => void;
@@ -503,7 +511,7 @@ const HomeProductSection: React.FC<HomeProductSectionProps> = ({
   const displayProducts = products?.slice(0, 8) || [];
 
   return (
-    <div className="relative px-4 md:px-0">
+    <div className="relative w-full px-4 md:px-0">
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-screen h-28 bg-green-600 z-0"></div>
       <Swiper
         modules={[Autoplay]}
@@ -518,14 +526,14 @@ const HomeProductSection: React.FC<HomeProductSectionProps> = ({
         }}
       >
         {displayProducts.map((product) => (
-          <SwiperSlide key={product._id}>
+          <SwiperSlide key={product._id} className="w-full" >
             <ProductCard product={product} onQuickAdd={handleQuickAdd} />
           </SwiperSlide>
         ))}
       </Swiper>
 
       {/* AddToCartModal */}
-      {selectedProduct && (
+      {/* {selectedProduct && (
         <AddToCartModal
           product={selectedProduct}
           isOpen={isModalOpen}
@@ -533,7 +541,7 @@ const HomeProductSection: React.FC<HomeProductSectionProps> = ({
           onConfirm={handleConfirmCart}
           isLoading={isLoading}
         />
-      )}
+      )} */}
     </div>
   );
 };

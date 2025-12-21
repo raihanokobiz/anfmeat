@@ -14,7 +14,7 @@ import { Metadata } from "next";
 import React from "react";
 
 export const metadata: Metadata = {
-  title: "SilkThread | Single Product",
+  title: "Anfmeat | Single Product",
   description: "Best E-commerce platform in BD",
 };
 

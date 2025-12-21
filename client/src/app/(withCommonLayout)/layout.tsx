@@ -39,7 +39,6 @@ export default async function Layout({
       <NavBar userCartProducts={products?.data} />
       {children}
       <Footer  userCartProducts={products?.data}/>
-
     </div>
   );
 }

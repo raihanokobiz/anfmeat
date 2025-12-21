@@ -199,21 +199,21 @@ const Cart = async () => {
             href={products?.data?.cartDetails?.length ? "/checkout" : "/shop"}
             className="text-white text-sm  items-center text-center w-[70%] sm:w-[50%] md:w-[40%]  bg-[#eb781b] hover:bg-[#f07b0e] px-2 py-1"
           >
-            <span>Place Order</span>
+            <span>অর্ডার করুন</span>
           </Link>
           <Link
             href="/shop"
             className="text-white text-sm  items-center text-center  w-[70%] sm:w-[50%] md:w-[40%]  bg-[#EC971F] hover:bg-[#eccd1f] px-2 py-1 mt-5"
           >
-            <span>Conting Shopping</span>
+            <span>শপে যান</span>
           </Link>
         </div>
         <div className="bg-[#F6F6F6] text-gray-600 rounded text-center py-5 px-8 my-5">
           <span>
             * If you wish to make a bulk order, please call us at{" "}
-            <span className="font-bold text-black"> 01700000000 </span>
+            <span className="font-bold text-black"> 01571-155612</span>
             or email at{" "}
-            <span className="font-bold text-black">a..............@gmail.com</span> for more
+            <span className="font-bold text-black">anisggn@gmail.com</span> for more
             information.
           </span>
         </div>

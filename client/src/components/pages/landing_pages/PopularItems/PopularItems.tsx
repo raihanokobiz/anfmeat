@@ -4,29 +4,91 @@ import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import { ChevronLeft, ChevronRight, Star, TrendingUp, Sparkles, } from "lucide-react";
+import { ChevronRight, Sparkles, X, ShoppingCart, } from "lucide-react";
 import Image from "next/image";
 import { FaCrown } from "react-icons/fa";
 import { TbCoinTaka } from "react-icons/tb";
 import { apiBaseUrl } from "@/config/config";
 import Link from "next/link";
+import { useState } from "react";
+import { addToCart } from "@/services/cart";
+import { toast } from "react-toastify";
+// import { AddToCartModal } from "../../products/ProductCard/ProductCard";
+
+// Updated interface to match TProduct structure
+interface InventoryItem {
+  _id?: string;
+  level?: string;
+  size?: string;
+  name?: string;
+  quantity?: number;
+}
 
 interface PopularProduct {
-  _id?: string;
+  _id: string; // Changed from optional to required
   id?: string;
   name: string;
+  slug: string; // Added required slug property
   thumbnailImage: string;
+  images: string[]; // Added required images array
   weight?: string;
   badge?: string;
   rating?: number;
-  price?: number;
+  price: number; // Changed from optional to required
+  mrpPrice: number; // Added required property
+  discount: number; // Added required property
+  discountType: string; // Added required property
+  discountAmount: number; // Added required property
+  description: string; // Added required property
+  inventoryType: string; // Added required property
+  inventoryRef: InventoryItem[]; // Added required property
+  mainInventory: number; // Added required property
+  productId: string; // Added required property
+  sizeChartImage?: string;
+  videoUrl?: string;
+  subCategoryRef?: any;
+  freeShipping: boolean; // Added required property
 }
 
 interface PopularItemsProps {
   products: PopularProduct[];
+  userRef?: string;
 }
 
-export const PopularItems = ({ products }: PopularItemsProps) => {
+export const PopularItems = ({ products, userRef }: PopularItemsProps) => {
+
+  const [selectedProduct, setSelectedProduct] = useState<PopularProduct | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleQuickAdd = (product: PopularProduct) => {
+    setSelectedProduct(product);
+    setIsModalOpen(true);
+  };
+
+  const handleConfirmCart = async (quantity: number, inventoryRef?: string) => {
+    if (!selectedProduct) return;
+    setIsLoading(true);
+
+    try {
+      const cartData = {
+        productRef: selectedProduct._id,
+        quantity: quantity,
+        userRef: userRef,
+        inventoryRef: inventoryRef || null,
+      };
+
+      await addToCart(cartData);
+      setIsModalOpen(false);
+      toast.success("Product added to cart successfully!");
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+      toast.error("Failed to add to cart. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="bg-white ">
       <div className="px-4 md:px-6 py-6 md:py-10  lg:py-12 max-w-6xl mx-auto">
@@ -74,6 +136,7 @@ export const PopularItems = ({ products }: PopularItemsProps) => {
             {products.map((product) => (
               <SwiperSlide key={product.id}>
                 <Link
+                  key={product._id}
                   href={`/product/${product.slug}`}
                 >
                   <div className="bg-white rounded-md border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow h-[220px]">
@@ -104,8 +167,37 @@ export const PopularItems = ({ products }: PopularItemsProps) => {
                           </div>
                           <div className="flex items-center gap-1 font-semibold bg-gray-100 px-2 py-1 rounded-2xl mt-6">
                             <TbCoinTaka size={18} />
-                            <span>375</span>
+                            <span>{product.price}</span>
                           </div>
+                        </div>
+
+                        <div className="block mt-3 w-full">
+                          <button
+                            onClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              if (product.mainInventory > 0) {
+                                handleQuickAdd(product);
+                              }
+                            }}
+                            disabled={product.mainInventory <= 0}
+                            className={`w-full px-3 py-1.5 rounded-sm transition-all duration-300 flex items-center justify-center gap-1.5 font-semibold text-xs shadow-md transform ${product.mainInventory <= 0
+                              ? "bg-gray-400 text-gray-200 cursor-not-allowed"
+                              : "bg-primary text-white hover:bg-[#155028] hover:shadow-lg hover:-translate-y-0.5"
+                              }`}
+                          >
+                            {product.mainInventory <= 0 ? (
+                              <>
+                                <X size={16} strokeWidth={2.5} />
+                                স্টক আউট
+                              </>
+                            ) : (
+                              <>
+                                <ShoppingCart size={16} strokeWidth={2.5} />
+                                কার্টে যোগ করুন
+                              </>
+                            )}
+                          </button>
                         </div>
                       </div>
 
@@ -152,6 +244,19 @@ export const PopularItems = ({ products }: PopularItemsProps) => {
           border-radius: 4px;
         }
       `}</style>
+
+
+      {/* Modal এখানে add করুন - Swiper এর পরে */}
+      {/* {selectedProduct && (
+        <AddToCartModal
+          product={selectedProduct}
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          onConfirm={handleConfirmCart}
+          isLoading={isLoading}
+        />
+      )} */}
+
     </div>
   );
 };

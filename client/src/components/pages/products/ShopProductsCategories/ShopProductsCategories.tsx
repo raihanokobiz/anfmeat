@@ -32,20 +32,14 @@ const ShopProductsCategories: React.FC<ShopProductsCategoriesProps> = ({ shopSid
   }, [searchParams]);
 
   const updateParams = (type: "category" | "subCategory" | "childCategory", value: string) => {
+
     const newParams = new URLSearchParams(searchParams.toString());
-    const currentValues = new Set((searchParams.get(type)?.split(",") || []).filter(Boolean));
+    const currentValue = searchParams.get(type);
 
-    if (currentValues.has(value)) {
-      currentValues.delete(value);
-    } else {
-      currentValues.add(value);
-
-    }
-
-    if (currentValues.size > 0) {
-      newParams.set(type, Array.from(currentValues).join(","));
-    } else {
+    if (currentValue === value) {
       newParams.delete(type);
+    } else {
+      newParams.set(type, value);
     }
 
     router.push(`?${newParams.toString()}`);

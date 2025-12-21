@@ -2,10 +2,14 @@
 import React, { useEffect, useState } from "react";
 import { LiaHomeSolid } from "react-icons/lia";
 import { AiOutlineShopping } from "react-icons/ai";
-import { RiFileInfoLine } from "react-icons/ri";
+
 
 import Link from "next/link";
 import { BsCart2 } from "react-icons/bs";
+import UserPopover from "@/shared/UserPopover/UserPopover";
+import { FiUser } from "react-icons/fi";
+import { TUser } from "@/types";
+import { getUser } from "@/services/auth";
 interface FooterProps {
   userCartProducts: {
     cartDetails: any[]; // Replace 'any' with the specific type if known
@@ -13,6 +17,7 @@ interface FooterProps {
 }
 const DownFooter: React.FC<FooterProps> = ({ userCartProducts }) => {
   const [isVisible, setIsVisible] = useState(false);
+  const [usersId, setUsersId] = useState<TUser | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -36,12 +41,28 @@ const DownFooter: React.FC<FooterProps> = ({ userCartProducts }) => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+
+  useEffect(() => {
+    const userData = async () => {
+      try {
+        const user = await getUser();
+        setUsersId(user);
+      } catch (error) {
+        console.error("get user:", error);
+      }
+    };
+
+    userData();
+  }, []);
+
+  const userName = usersId?.name;
+
   return (
     // <div className="fixed bottom-0 md:py-12 py-2 w-full bg-[#fff] shadow-2xl z-[999]">
     <div
-      className={`fixed  bottom-0 md:py-12 py-4 w-full bg-[#fff] shadow-2xl border-t border-[#1D4095] z-[999]  transition-transform duration-300 ${
-        isVisible ? "translate-y-0 " : "translate-y-full"
-      } md:hidden`}
+      className={`fixed  bottom-0 md:py-12 py-4 w-full bg-[#fff] shadow-2xl border-t border-[#1D4095] z-[999]  transition-transform duration-300 ${isVisible ? "translate-y-0 " : "translate-y-full"
+        } md:hidden`}
     >
       <div className="px-12 flex items-center justify-between">
         {/* <Link href="/contact">
@@ -59,15 +80,6 @@ const DownFooter: React.FC<FooterProps> = ({ userCartProducts }) => {
               <LiaHomeSolid className="text-lg text-[#1D4095]" />
             </p>
             <p className="text-[#1D4095]">Home</p>
-          </div>
-        </Link>
-
-        <Link href="/about">
-          <div className="flex flex-col items-center justify-between capitalize text-sm font-semibold">
-            <p>
-              <RiFileInfoLine className="text-lg text-[#1D4095]" />
-            </p>
-            <p className="text-[#1D4095]">About</p>
           </div>
         </Link>
 
@@ -91,6 +103,19 @@ const DownFooter: React.FC<FooterProps> = ({ userCartProducts }) => {
             <p className="text-[#1D4095]">Cart</p>
           </div>
         </Link>
+        <div className=" block md:hidden ">
+          {userName ? (
+            <div className="p-1.5 border-2 border-gray-300 rounded-lg hover:border-primary transition-colors duration-300">
+              <UserPopover />
+            </div>
+          ) : (
+            <Link href="/login">
+              <div className="px-2 py-2 rounded-full bg-primary text-white lg:font-bold font-semibold hover:bg-primary transition-colors duration-300">
+                <FiUser className="lg:text-lg text-md" />
+              </div>
+            </Link>
+          )}
+        </div>
       </div>
     </div>
   );

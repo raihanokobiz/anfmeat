@@ -121,7 +121,7 @@ const ProductDetails: React.FC<Props> = ({ product }) => {
   };
 
   return (
-    <div className="Container  py-8  lg:mt-14 mt-16">
+    <div className="Container  py-8  lg:mt-10 mt-16">
       <div className="grid lg:grid-cols-2 gap-8 ">
         <ProductDetailsSlide
           thumbnailImage={thumbnailImage}

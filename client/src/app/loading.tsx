@@ -5,11 +5,6 @@ import React, { CSSProperties } from "react";
 // import loader from "@/assets/loader/file.png";
 import { BeatLoader } from "react-spinners";
 
-const override: CSSProperties = {
-  display: "block",
-  margin: "0 auto",
-  borderColor: "red",
-};
 
 const Loading = () => {
   // let [color, setColor] = useState("#ffffff");

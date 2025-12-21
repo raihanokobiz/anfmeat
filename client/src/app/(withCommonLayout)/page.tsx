@@ -22,9 +22,6 @@ import { getAllProduct } from "@/services/products";
 import {
   Flame,
   Trophy,
-  BadgePercent,
-  Sparkles,
-  TrendingUp,
 } from "lucide-react";
 
 // import { getCartProducts } from "@/services/cart";

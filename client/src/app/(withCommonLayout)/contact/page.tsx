@@ -29,16 +29,18 @@ const Contact = async () => {
             <div className="text-xl">Our Information</div>
             <div className="mt-2">
               <div className="font-bold">Address:</div>
-              <div>Miprur 2, Oposite of Stadium Gate no. 1. Dhaka</div>
+              <div>Dhaka Office:
+                1022, Malibagh Bazar, 2nd Floor
+                Dhaka 1219</div>
             </div>
             <div className="mt-2">
-              <span className="font-bold">Hotline: </span>  01700000000
+              <span className="font-bold">Hotline: </span>  01571-155612
             </div>
             <div className="mt-2">
-              <span className="font-bold">WhatsApp: </span> 01700000000
+              <span className="font-bold">WhatsApp: </span> 01571-155612
             </div>
             <div className="mt-2">
-              <span className="font-bold">Email: </span>  a..............@gmail.com
+              <span className="font-bold">Email: </span>  anisggn@gmail.com
             </div>
           </div>
         </div>

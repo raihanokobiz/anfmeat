@@ -50,7 +50,7 @@ const ProductDetailsSlide: React.FC<Props> = ({
     <div>
       <div className="relative flex justify-center mt-6 md:mt-8 lg:mt-0">
         {/* Main image preview (Zoomable) */}
-        <div className="w-full  max-w-[360px] h-[300px] sm:max-w-[590px] md:max-w-[710px] md:h-[400px] xl:max-w-[620px] xl:h-[400px] rounded overflow-hidden">
+        <div className="w-full  max-w-[330px] h-[300px] sm:max-w-[590px] md:max-w-[710px] md:h-[400px] xl:max-w-[620px] xl:h-[400px] rounded overflow-hidden">
           <Swiper
             modules={[Navigation]}
             // navigation
