@@ -13,6 +13,7 @@ import { toast } from "react-toastify";
 import { getUser } from "@/services/auth";
 import { useRouter } from "next/navigation";
 import { useAnimation } from "framer-motion";
+import Link from "next/link";
 interface Props {
   product: TProduct;
 }
@@ -22,6 +23,8 @@ const ProductDetails: React.FC<Props> = ({ product }) => {
   const [selectedLevel, setSelectedLevel] = useState<string | null>(null);
   const [level, setLevel] = useState<string | null>(null);
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
+  const [addedToCart, setAddedToCart] = useState(false);
+
 
   const [levelError, setLevelError] = useState(false);
   const [colorError, setColorError] = useState(false);
@@ -104,6 +107,7 @@ const ProductDetails: React.FC<Props> = ({ product }) => {
       toast.success("Product added to cart!");
       setLevelError(false);
       setColorError(false);
+      setAddedToCart(true);
       controls.start({
         scale: 0.01,
         x: 1200,
@@ -157,94 +161,48 @@ const ProductDetails: React.FC<Props> = ({ product }) => {
           <div className="mt-3">
             {(inventoryType === "levelInventory" ||
               inventoryType === "colorLevelInventory") && (
-              <div className="flex flex-col">
-                <h3
-                  className={`text-base md:text-lg font-semibold ${rajdhani.className}`}
-                >
-                  Select Size:
-                </h3>
-                <div className="flex items-center gap-2 text-sm font-semibold text-[#262626]/60 mt-1 cursor-pointer">
-                  {inventoryRef
-                    ?.filter(
-                      (value, index, item) =>
-                        index === item.findIndex((t) => t.level === value.level)
-                    )
-                    .map((size) => (
-                      <p
-                        key={size._id}
-                        onClick={() => {
-                          setLevel(size.level);
-                          setSelectedLevel(size._id);
-                          setSelectedColor(null);
-                          setLevelError(false);
-                        }}
-                        className={`w-[40px] h-[30px] border border-primary hover:text-primary duration-300 cursor-pointer rounded text-center flex items-center justify-center uppercase ${
-                          level === size.level
+                <div className="flex flex-col">
+                  <h3
+                    className={`text-base md:text-lg font-semibold ${rajdhani.className}`}
+                  >
+                    Select Size:
+                  </h3>
+                  <div className="flex items-center gap-2 text-sm font-semibold text-[#262626]/60 mt-1 cursor-pointer">
+                    {inventoryRef
+                      ?.filter(
+                        (value, index, item) =>
+                          index === item.findIndex((t) => t.level === value.level)
+                      )
+                      .map((size) => (
+                        <p
+                          key={size._id}
+                          onClick={() => {
+                            setLevel(size.level);
+                            setSelectedLevel(size._id);
+                            setSelectedColor(null);
+                            setLevelError(false);
+                          }}
+                          className={` p-2 h-[30px] border border-primary hover:text-primary duration-300 cursor-pointer rounded text-center flex items-center justify-center uppercase ${level === size.level
                             ? "bg-primary text-white"
                             : "border-primary"
-                        }`}
-                      >
-                        {size.level}
-                      </p>
-                    ))}
+                            }`}
+                        >
+                          {size.level}
+                        </p>
+                      ))}
+                  </div>
+                  {levelError && (
+                    <p className="text-red-500 text-sm mt-1">
+                      Please select a size.
+                    </p>
+                  )}
                 </div>
-                {levelError && (
-                  <p className="text-red-500 text-sm mt-1">
-                    Please select a size.
-                  </p>
-                )}
-              </div>
-            )}
-          </div>
-
-          <div className="mt-3">
-            {(inventoryType === "colorLevelInventory" && selectedLevel) ||
-            inventoryType === "colorInventory" ? (
-              <div className="flex flex-col">
-                <h3
-                  className={`text-base md:text-lg font-semibold text-[#262626] ${rajdhani.className}`}
-                >
-                  Select Color:
-                </h3>
-                <div className="flex items-center gap-2 text-sm font-semibold text-[#262626]/60 mt-1">
-                  {inventoryRef
-                    ?.filter((item) =>
-                      inventoryType === "colorLevelInventory"
-                        ? item.level === level
-                        : true
-                    )
-                    .filter(
-                      (value, index, arr) =>
-                        index === arr.findIndex((t) => t.color === value.color)
-                    )
-                    .map((colorItem) => (
-                      <div
-                        key={colorItem._id}
-                        onClick={() => {
-                          setSelectedColor(colorItem._id);
-                          setColorError(false);
-                        }}
-                        className={`border ${
-                          selectedColor === colorItem._id
-                            ? "border-[#1F4193] border-2 w-[20px] h-[20px]"
-                            : "border-[#262626] w-[25px] h-[25px]"
-                        } rounded-full cursor-pointer`}
-                        style={{ backgroundColor: colorItem.color }}
-                      />
-                    ))}
-                </div>
-                {colorError && (
-                  <p className="text-primary text-sm mt-1">
-                    Please select color.
-                  </p>
-                )}
-              </div>
-            ) : null}
+              )}
           </div>
 
           <div className="border-b-2 pb-4 border-primary">
             <div className="mt-4 flex items-center gap-2 ">
-              <div className="flex items-center justify-between border border-primary rounded px-3 py-[7px] md:w-[25%] w-[30%]">
+              <div className=" w-full flex items-center justify-between border border-primary rounded px-3 py-[7px]">
                 <p onClick={handleDecrement} className="cursor-pointer">
                   <FiMinus />
                 </p>
@@ -253,28 +211,33 @@ const ProductDetails: React.FC<Props> = ({ product }) => {
                   <FiPlus />
                 </p>
               </div>
-              <div className="w-full cursor-pointer">
-                <button
-                  onClick={handleAddToCart}
-                  className="bg-primary flex items-center gap-1 px-6 py-2.5 font-semibold text-sm  rounded text-[#fff] cursor-pointer"
-                >
-                  <span>
-                    <FiPlus />
-                  </span>
-                  <span>অর্ডার করুন </span>
-                </button>
-              </div>
-              {/* <div className="w-full cursor-pointer">
-                <button
-                  onClick={handleAddToCart}
-                  className="bg-[#FF6C0C] flex items-center gap-1 px-6 py-2.5 font-semibold text-sm  rounded text-[#fff] cursor-pointer"
-                >
-                  <span>
-                    <FiPlus />
-                  </span>
-                  <span>Order Via Whatsapp</span>
-                </button>
-              </div> */}
+              {!addedToCart ? (
+
+                <div className="w-full cursor-pointer">
+                  <button
+                    onClick={handleAddToCart}
+                    className="bg-primary flex items-center gap-1 px-6 py-2.5 font-semibold text-sm  rounded text-[#fff] cursor-pointer"
+                  >
+                    <span>
+                      <FiPlus />
+                    </span>
+                    <span>কার্টে যোগ করুন </span>
+                  </button>
+                </div>
+              ) : (
+                <div className="w-full cursor-pointer">
+                  <Link href="/checkout">
+                    <button
+                      className="bg-primary flex items-center gap-1 px-6 py-2.5 font-semibold text-sm  rounded text-[#fff] cursor-pointer"
+                    >
+                      <span>
+                        <FiPlus />
+                      </span>
+                      <span>চেকআউট পেইজে যান</span>
+                    </button>
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
           <div className="mt-3 flex flex-col gap-2">

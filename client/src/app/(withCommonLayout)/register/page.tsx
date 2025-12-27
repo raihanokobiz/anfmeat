@@ -2,13 +2,13 @@
 "use client";
 
 // import NavBar from "@/components/pages/header/NavBar/NavBar";
-import {  registrationUser } from "@/services/auth";
+import { registrationUser } from "@/services/auth";
 // import { getCartProducts } from "@/services/cart";
 import { TResponse } from "@/types";
 // import { Metadata } from "next";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { VscEyeClosed, VscEye } from "react-icons/vsc";
 import { toast, ToastContainer } from "react-toastify";
@@ -233,7 +233,7 @@ const Registration = () => {
             <button
               type="submit"
               disabled={isSubmitting}
-              className={`bg-orange-500 text-white p-2 rounded-md flex items-center justify-center gap-2 ${isSubmitting ? "opacity-50 cursor-not-allowed" : "hover:bg-orange-600"
+              className={`bg-[#16a34a] text-white p-2 rounded-md flex items-center justify-center gap-2 ${isSubmitting ? "opacity-50 cursor-not-allowed" : "hover:bg-orange-600"
                 }`}
             >
               {isSubmitting && (
@@ -266,7 +266,7 @@ const Registration = () => {
           <div className="flex justify-center gap-2 mt-4 text-md">
             <div className="mt-2 text-center">
               Already have an account?{" "}
-              <Link href="/login" className="text-orange-500 hover:underline">
+              <Link href="/login" className="text-primary hover:underline">
                 Login
               </Link>
             </div>

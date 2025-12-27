@@ -80,11 +80,10 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ userRef, productRef }) => {
             {[1, 2, 3, 4, 5].map((star) => (
               <FaRegStar
                 key={star}
-                className={`w-5 h-5 cursor-pointer ${
-                  selectedRating >= star
-                    ? "fill-primary stroke-primary"
+                className={`w-5 h-5 cursor-pointer ${selectedRating >= star
+                    ? "fill-yellow-500 stroke-primary"
                     : "stroke-gray-400"
-                }`}
+                  }`}
                 onClick={() => handleStarClick(star)}
               />
             ))}

@@ -52,8 +52,8 @@ const ShopProductCard: React.FC<Product> = ({ product }) => {
         <Link href={`product/${slug}`}>
           <div className="relative w-full h-full">
             {/* Lottie loader until both images loaded */}
-            {thumbnailImage && backViewImage
-              ? (!imageLoaded.back || !imageLoaded.front) && (
+            {thumbnailImage
+              ? (!imageLoaded.front) && (
                 <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-white z-10">
                   <div className="w-24 h-24">
                     <Lottie animationData={cardImageLoading} loop autoplay />

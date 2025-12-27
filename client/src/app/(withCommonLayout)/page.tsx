@@ -23,6 +23,7 @@ import {
   Flame,
   Trophy,
 } from "lucide-react";
+import { getUser } from "@/services/auth";
 
 // import { getCartProducts } from "@/services/cart";
 // import NavBar from "@/components/pages/header/NavBar/NavBar";
@@ -48,7 +49,7 @@ const page = async () => {
   const { data: campaign } = await getCampaign();
   const offrs = await getAllOffers();
 
-  // const user = await getUser();
+  const user = await getUser();
   // const userId = user?.id;
   // const coupon = "";
   // const products = await getCartProducts(userId, coupon);
@@ -112,7 +113,12 @@ const page = async () => {
             backgroundPosition: "center",
           }}
         >
-          <PopularItems products={popularProducts} />
+          <PopularItems products={popularProducts} userRef={user?.id} />
+
+          <Campaign campaign={campaign[0]} />
+          <WhyChooseUs />
+          <Subscribe />
+
         </div>
         {/* <Testimonial/> */}
         {/* <MiddleChildCategory
@@ -121,10 +127,6 @@ const page = async () => {
         {middleRes?.status === "success" && (
           <HomeProductSection products={middleRes?.data} />
         )} */}
-
-        <Campaign campaign={campaign[0]} />
-        <WhyChooseUs />
-        <Subscribe />
 
         {/* <LowerMiddleChildCategory
           childCategoriesList={lowerMiddleChildCategoriesList?.data}

@@ -143,12 +143,13 @@ export function LocationModal({ outlets, isOpen: externalIsOpen, onClose }: Loca
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 bg-opacity-50 p-4">
-            <div className="bg-white rounded-2xl shadow-2xl w-full max-w-4xl max-h-[60vh] overflow-hidden">
+            <div className="bg-white rounded-md shadow-md w-full max-w-4xl max-h-[70vh] overflow-y-auto">
                 {/* Header */}
                 <div className="bg-gradient-to-r from-green-600 to-green-700 px-6 py-4 text-white relative">
                     <button
                         onClick={handleClose}
-                        className="absolute right-4 top-1/2 -translate-y-1/2 text-white hover:bg-white/20 rounded-full p-2 transition-colors cursor-pointer"
+                        className={`absolute right-4 top-1/2 -translate-y-1/2 text-white hover:bg-white/20 rounded-full p-2 transition-colors cursor-pointer ${!selectedCity || !selectedArea ? 'hidden' : ''
+                            }`}
                     >
                         <X size={24} />
                     </button>

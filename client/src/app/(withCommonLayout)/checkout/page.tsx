@@ -19,12 +19,12 @@ const Checkout = async () => {
   // const user = await getUser();
   // const userId = user?.id;
   // const products = await getCartProducts(userId, coupon || "");
-  
+
 
   return (
-    <div>
+    <div className="max-w-6xl mx-auto" >
       {/* <NavBar userCartProducts={products?.data} /> */}
-      <MainCheckOut  />
+      <MainCheckOut />
     </div>
   );
 };

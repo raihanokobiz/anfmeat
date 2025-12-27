@@ -42,6 +42,7 @@ export const addToCart = async (product: {
   userRef: string | undefined;
   inventoryRef?: string | null;
 }) => {
+
   const res = await apiRequest({
     endpoint: "/cart",
     method: "POST",

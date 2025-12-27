@@ -13,7 +13,8 @@ import Link from "next/link";
 import { useState } from "react";
 import { addToCart } from "@/services/cart";
 import { toast } from "react-toastify";
-// import { AddToCartModal } from "../../products/ProductCard/ProductCard";
+import { AddToCartModal } from "../../products/ProductCard/ProductCard";
+import { getUser } from "@/services/auth";
 
 // Updated interface to match TProduct structure
 interface InventoryItem {
@@ -78,6 +79,9 @@ export const PopularItems = ({ products, userRef }: PopularItemsProps) => {
         inventoryRef: inventoryRef || null,
       };
 
+      console.log(cartData, "ok");
+
+
       await addToCart(cartData);
       setIsModalOpen(false);
       toast.success("Product added to cart successfully!");
@@ -90,7 +94,7 @@ export const PopularItems = ({ products, userRef }: PopularItemsProps) => {
   };
 
   return (
-    <div className="bg-white ">
+    <div className="bg-white">
       <div className="px-4 md:px-6 py-6 md:py-10  lg:py-12 max-w-6xl mx-auto">
         {/* Header */}
         <div className="flex items-center justify-between mb-6 px-4 pb-4 border-b-2 border-gray-300">
@@ -140,34 +144,36 @@ export const PopularItems = ({ products, userRef }: PopularItemsProps) => {
                   href={`/product/${product.slug}`}
                 >
                   <div className="bg-white rounded-md border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow h-[220px]">
-                    <div className="flex h-full">
+                    <div className="flex gap-3 h-full">
                       {/* Left Side - Product Info */}
-                      <div className="flex-1 flex flex-col p-2">
+                      <div className="flex-1 flex flex-col justify-between p-3 ">
                         {/* Badge */}
-                        {product.badge && (
-                          <div className="flex items-center gap-1 mb-2">
-                            <span className="text-yellow-500 lg:text-xl text-lg">
-                              <FaCrown />
-                            </span>
-                            <span className="lg:text-md text-sm text-gray-600 font-semibold">
-                              {product.badge}
-                            </span>
-                          </div>
-                        )}
+                        <div className="flex-1 flex flex-col p-2">
+                          {product.badge && (
+                            <div className="flex items-center gap-1 mb-2">
+                              <span className="text-yellow-500 lg:text-xl text-lg">
+                                <FaCrown />
+                              </span>
+                              <span className="lg:text-md text-sm text-gray-600 font-semibold">
+                                {product.badge}
+                              </span>
+                            </div>
+                          )}
 
-                        <h3 className="text-base md:text-2xl font-bold text-gray-800">
-                          {product.name}
-                        </h3>
+                          <h3 className="text-base md:text-2xl font-bold text-gray-800">
+                            {product.name}
+                          </h3>
 
-                        {/* Weight and Price */}
-                        <div className="flex items-center gap-3 md:gap-4 mb-3 text-xs md:text-sm text-gray-600">
-                          <div className="flex items-center gap-1 font-semibold bg-gray-100 px-2 py-1 rounded-2xl mt-6">
-                            <span>📦</span>
-                            <span> {product?.inventoryRef?.[0]?.level}</span>
-                          </div>
-                          <div className="flex items-center gap-1 font-semibold bg-gray-100 px-2 py-1 rounded-2xl mt-6">
-                            <TbCoinTaka size={18} />
-                            <span>{product.price}</span>
+                          {/* Weight and Price */}
+                          <div className="flex items-center gap-3 md:gap-4 mb-3 text-xs md:text-sm text-gray-600">
+                            <div className="flex items-center gap-1 font-semibold bg-gray-100 px-2 py-1 rounded-2xl mt-6">
+                              <span>📦</span>
+                              <span> {product?.inventoryRef?.[0]?.level}</span>
+                            </div>
+                            <div className="flex items-center gap-1 font-semibold bg-gray-100 px-2 py-1 rounded-2xl mt-6">
+                              <TbCoinTaka size={18} />
+                              <span>{product.price}</span>
+                            </div>
                           </div>
                         </div>
 
@@ -181,7 +187,7 @@ export const PopularItems = ({ products, userRef }: PopularItemsProps) => {
                               }
                             }}
                             disabled={product.mainInventory <= 0}
-                            className={`w-full px-3 py-1.5 rounded-sm transition-all duration-300 flex items-center justify-center gap-1.5 font-semibold text-xs shadow-md transform ${product.mainInventory <= 0
+                            className={`w-full cursor-pointer px-3 py-1.5 rounded-sm transition-all duration-300 flex items-center justify-center gap-1.5 font-semibold text-xs shadow-md transform ${product.mainInventory <= 0
                               ? "bg-gray-400 text-gray-200 cursor-not-allowed"
                               : "bg-primary text-white hover:bg-[#155028] hover:shadow-lg hover:-translate-y-0.5"
                               }`}
@@ -246,8 +252,8 @@ export const PopularItems = ({ products, userRef }: PopularItemsProps) => {
       `}</style>
 
 
-      {/* Modal এখানে add করুন - Swiper এর পরে */}
-      {/* {selectedProduct && (
+      {/* Modal */}
+      {selectedProduct && (
         <AddToCartModal
           product={selectedProduct}
           isOpen={isModalOpen}
@@ -255,7 +261,7 @@ export const PopularItems = ({ products, userRef }: PopularItemsProps) => {
           onConfirm={handleConfirmCart}
           isLoading={isLoading}
         />
-      )} */}
+      )}
 
     </div>
   );

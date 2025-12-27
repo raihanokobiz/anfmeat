@@ -173,7 +173,7 @@ const ProductCard: React.FC<{
             <button
               onClick={handleQuickAddClick}
               disabled={isStockOut}
-              className={`w-full px-3 py-1.5 rounded-sm transition-all duration-300 flex items-center justify-center gap-1.5 font-semibold text-xs shadow-md transform ${isStockOut
+              className={`w-full px-3 py-1.5 rounded-sm transition-all duration-300 flex items-center justify-center gap-1.5 font-semibold text-xs shadow-md transform cursor-pointer ${isStockOut
                 ? "bg-gray-400 text-gray-200 cursor-not-allowed"
                 : "bg-primary text-white hover:from-[#E55A00] hover:to-[#CC4F00] hover:shadow-lg hover:-translate-y-0.5"
                 }`}
@@ -230,21 +230,21 @@ export const AddToCartModal: React.FC<{
 
   return (
     <div
-      className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+      className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 cursor-pointer "
       onClick={onClose}
     >
       <div
         className="bg-white rounded-lg shadow-2xl animate-scale-in overflow-hidden max-w-md w-full max-h-[90vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="bg-linear-to-r from-[#FF6C0C] to-[#E55A00] p-4 flex items-center justify-between sticky top-0 z-10">
+        <div className="bg-primary p-4 flex items-center justify-between sticky top-0 z-10 cursor-pointer">
           <h2 className="text-xl font-bold text-white flex items-center gap-2">
             <ShoppingCart size={24} />
             Add to Cart
           </h2>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-white/20 rounded-full transition-colors"
+            className="p-2 hover:bg-white/20 rounded-full transition-colors cursor-pointer"
           >
             <X size={24} className="text-white" />
           </button>
@@ -252,7 +252,7 @@ export const AddToCartModal: React.FC<{
 
         <div className="p-4">
           <div className="flex gap-3 mb-4 bg-gray-50 p-3 rounded-lg">
-            <div className="w-24 h-24 shrink-0 bg-white rounded-lg overflow-hidden shadow-md">
+            <div className="w-24 h-24 shrink-0 bg-white rounded-lg overflow-hidden shadow-md relative">
               <Image
                 src={apiBaseUrl + modalImage}
                 alt={product.name}
@@ -268,7 +268,7 @@ export const AddToCartModal: React.FC<{
                 ID: {product.productId}
               </p>
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-xl font-bold text-[#FF6C0C]">
+                <span className="text-xl font-bold text-primary">
                   ৳{product.price}
                 </span>
                 {hasDiscount && (
@@ -276,7 +276,7 @@ export const AddToCartModal: React.FC<{
                     <span className="text-sm line-through text-gray-400">
                       ৳{product.mrpPrice}
                     </span>
-                    <span className="bg-red-100 text-red-600 px-2 py-0.5 rounded-full text-xs font-bold">
+                    <span className="bg-red-100 text-primary px-2 py-0.5 rounded-full text-xs font-bold">
                       {product.discountType === "percent"
                         ? `${product.discount}% OFF`
                         : `৳${product.discountAmount} OFF`}
@@ -291,7 +291,7 @@ export const AddToCartModal: React.FC<{
             <div className="mb-4">
               <label className="block text-sm font-semibold text-gray-700 mb-2">
                 {product.inventoryType === "levelInventory"
-                  ? "সাইজ নির্বাচন করুন"
+                  ? "ওজন নির্বাচন করুন"
                   : product.inventoryType === "colorInventory"
                     ? "কালার নির্বাচন করুন"
                     : "সাইজ ও কালার নির্বাচন করুন"}
@@ -319,25 +319,25 @@ export const AddToCartModal: React.FC<{
                         !isOutOfStock && setSelectedInventory(item._id)
                       }
                       disabled={isOutOfStock}
-                      className={`p-2 rounded-lg border-2 transition-all text-xs font-semibold ${selectedInventory === item._id
-                        ? "border-[#FF6C0C] bg-orange-50 text-[#FF6C0C]"
+                      className={`p-2 rounded-lg border-2 transition-all text-xs font-semibold cursor-pointer ${selectedInventory === item._id
+                        ? "border-primary bg-orange-50 text-primary"
                         : isOutOfStock
                           ? "border-gray-200 bg-gray-100 text-gray-400 cursor-not-allowed line-through"
-                          : "border-gray-200 hover:border-[#FF6C0C] hover:bg-orange-50 text-gray-700"
+                          : "border-gray-200 hover:borderp-rimary hover:bg-orange-50 text-gray-700"
                         }`}
                     >
                       <div className="flex flex-col items-center">
-                        <span className="font-bold uppercase">
+                        <span className="font-bold uppercase  ">
                           {displayValue}
                         </span>
-                        {item.quantity !== undefined && (
+                        {/* {item.quantity !== undefined && (
                           <span
-                            className={`text-xs mt-0.5 ${isOutOfStock ? "text-red-500" : "text-gray-500"
+                            className={`text-xs mt-0.5 ${isOutOfStock ? "text-primary" : "text-gray-500"
                               }`}
                           >
                             {isOutOfStock ? "Stock Out" : `${item.quantity} টি`}
                           </span>
-                        )}
+                        )} */}
                       </div>
                     </button>
                   );
@@ -353,7 +353,7 @@ export const AddToCartModal: React.FC<{
             <div className="flex items-center gap-3 bg-gray-50 p-3 rounded-lg">
               <button
                 onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                className="p-2 bg-white hover:bg-gray-100 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-sm border border-gray-200"
+                className="p-2 cursor-pointer bg-white hover:bg-gray-100 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-sm border border-gray-200"
                 disabled={quantity <= 1}
               >
                 <Minus size={18} strokeWidth={2.5} />
@@ -365,7 +365,7 @@ export const AddToCartModal: React.FC<{
                 onClick={() =>
                   setQuantity(Math.min(product.mainInventory, quantity + 1))
                 }
-                className="p-2 bg-white hover:bg-gray-100 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-sm border border-gray-200"
+                className="p-2 cursor-pointer bg-white hover:bg-gray-100 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-sm border border-gray-200"
                 disabled={quantity >= product.mainInventory}
               >
                 <Plus size={18} strokeWidth={2.5} />
@@ -411,7 +411,7 @@ export const AddToCartModal: React.FC<{
                   </span>
                 </div>
               )}
-              <div className="flex justify-between text-lg font-bold text-[#FF6C0C] pt-3 border-t-2 border-gray-300">
+              <div className="flex justify-between text-lg font-bold text-primary pt-3 border-t-2 border-gray-300">
                 <span>Total</span>
                 <span>৳{totalPrice}</span>
               </div>
@@ -421,7 +421,7 @@ export const AddToCartModal: React.FC<{
           <button
             onClick={() => onConfirm(quantity, selectedInventory || undefined)}
             disabled={isLoading || (hasInventoryOptions && !selectedInventory)}
-            className="w-full bg-linear-to-r from-green-500 to-green-600 text-white py-3 rounded-lg hover:from-green-600 hover:to-green-700 transition-all duration-300 font-bold text-base flex items-center justify-center gap-2 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed transform hover:-translate-y-0.5"
+            className="w-full cursor-pointer bg-linear-to-r from-green-500 to-green-600 text-white py-3 rounded-lg hover:from-green-600 hover:to-green-700 transition-all duration-300 font-bold text-base flex items-center justify-center gap-2 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed transform hover:-translate-y-0.5"
           >
             {isLoading ? (
               <>
@@ -437,7 +437,7 @@ export const AddToCartModal: React.FC<{
           </button>
 
           {hasInventoryOptions && !selectedInventory && (
-            <p className="text-center text-sm text-red-500 mt-3 font-semibold">
+            <p className="text-center text-sm text-primary mt-3 font-semibold">
               অনুগ্রহ করে{" "}
               {product.inventoryType === "levelInventory"
                 ? "সাইজ"
@@ -496,6 +496,9 @@ const HomeProductSection: React.FC<HomeProductSectionProps> = ({
         inventoryRef: inventoryRef || null,
       };
 
+      console.log(cartData, "ok");
+
+
       await addToCart(cartData);
 
       setIsModalOpen(false);
@@ -533,7 +536,7 @@ const HomeProductSection: React.FC<HomeProductSectionProps> = ({
       </Swiper>
 
       {/* AddToCartModal */}
-      {/* {selectedProduct && (
+      {selectedProduct && (
         <AddToCartModal
           product={selectedProduct}
           isOpen={isModalOpen}
@@ -541,7 +544,7 @@ const HomeProductSection: React.FC<HomeProductSectionProps> = ({
           onConfirm={handleConfirmCart}
           isLoading={isLoading}
         />
-      )} */}
+      )}
     </div>
   );
 };

@@ -17,10 +17,10 @@ const CartOverView: React.FC<Props> = ({ products, shipping }) => {
 
   const [showCartOverview, setShowCartOverview] = useState(false);
 
-// const productDiscount = products?.productDiscount;
+  // const productDiscount = products?.productDiscount;
 
 
- 
+
   return (
     <div className="top-20 sticky">
       <div
@@ -58,11 +58,11 @@ const CartOverView: React.FC<Props> = ({ products, shipping }) => {
                 <div className="xl:py-8 py-4">
                   {products?.cartDetails?.map(
                     (product: {
-                      _id: Key | null | undefined;
+                      cartId: Key | null | undefined;
                       quantity: string;
                       product: TProduct;
                     }) => (
-                      <div className="py-2" key={product._id}>
+                      <div className="py-2" key={product.cartId}>
                         <p className="pb-1">{product?.product?.name}</p>
                         <div className="flex justify-between">
                           {product?.product?.thumbnailImage && (
@@ -103,7 +103,7 @@ const CartOverView: React.FC<Props> = ({ products, shipping }) => {
               </div>
             </motion.div>
           )}
-          
+
       </AnimatePresence>
     </div>
   );

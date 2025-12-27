@@ -23,7 +23,7 @@ const Cart = async () => {
   return (
     <>
       {/* <NavBar userCartProducts={products?.data} /> */}
-      <div className="Container w-full mx-auto  md:px-20 xl:px-60 2xl:px-60 lg:mt-0 mt-16">
+      <div className="max-w-6xl lg:mx-auto mx-4 md:mx-6 mt-16 lg:mt-18">
         <div className="hidden lg:block">
           <h2 className="font-bold text-3xl text-center py-8">Your Cart</h2>
 
@@ -50,7 +50,7 @@ const Cart = async () => {
               product: TProduct;
             }) => (
               <div
-                key={product._id}
+                key={product.cartId}
                 className="grid grid-cols-7 items-center border-t border-black/20 py-3"
               >
                 {/* Product */}
@@ -197,13 +197,13 @@ const Cart = async () => {
           </div>
           <Link
             href={products?.data?.cartDetails?.length ? "/checkout" : "/shop"}
-            className="text-white text-sm  items-center text-center w-[70%] sm:w-[50%] md:w-[40%]  bg-[#eb781b] hover:bg-[#f07b0e] px-2 py-1"
+            className="text-white text-sm  items-center text-center w-[70%] sm:w-[50%] md:w-[40%]  bg-primary hover:bg-green-700 px-2 py-2"
           >
             <span>অর্ডার করুন</span>
           </Link>
           <Link
             href="/shop"
-            className="text-white text-sm  items-center text-center  w-[70%] sm:w-[50%] md:w-[40%]  bg-[#EC971F] hover:bg-[#eccd1f] px-2 py-1 mt-5"
+            className="text-white text-sm  items-center text-center  w-[70%] sm:w-[50%] md:w-[40%]  bg-primary hover:bg-green-700 px-2 py-2 mt-5"
           >
             <span>শপে যান</span>
           </Link>

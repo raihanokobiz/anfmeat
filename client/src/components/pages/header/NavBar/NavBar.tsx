@@ -125,7 +125,7 @@ const NavBar: React.FC<NavBarProps> = ({ userCartProducts }) => {
   return (
     <>
       {/* Main Navbar - Sticky */}
-      <div className="py-2 fixed w-full z-40 top-0 bg-white px-4 md:px-0 shadow-sm backdrop-blur-lg">
+      <div className="py-2 fixed w-full z-40 top-0 bg-white px-4 md:px-6 shadow-sm backdrop-blur-lg">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center justify-between  gap-4">
@@ -181,7 +181,7 @@ const NavBar: React.FC<NavBarProps> = ({ userCartProducts }) => {
             {/* Location Display - Desktop */}
             <div
               onClick={() => openLocationModal()}
-              className="hidden lg:flex items-center gap-2 px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-lg cursor-pointer transition-colors"
+              className="flex items-center gap-2 px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-lg cursor-pointer transition-colors"
             >
               <FiMapPin className="text-primary text-lg" />
               <div className="flex flex-col">

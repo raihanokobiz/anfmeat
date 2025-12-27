@@ -21,11 +21,12 @@ export function Subscribe() {
 
   return (
     <section className="relative max-w-6xl mx-auto px-4 md:px-6 py-6 md:py-10  lg:py-12">
+      <div className="absolute inset-0 bg-gradient-to-b from-cyan-50/40 to-blue-50/40 pointer-events-none" />
       <Player
         autoplay
         loop
         src={FAnimation}
-        className="absolute inset-0 left-1/2 -translate-x-1/2 w-full h-full opacity-30 pointer-events-none"
+        className="absolute inset-0 left-1/2 -translate-x-1/2 w-full h-full opacity-60 pointer-events-none"
       />
       <div className="container mx-auto px-6 relative z-10">
         <div className="flex flex-col md:flex-row items-center justify-between gap-8">

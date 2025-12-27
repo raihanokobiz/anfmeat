@@ -4,7 +4,7 @@ import cashOnDelivery from "@/assets/payment/cash-on-delivery.png";
 import bikashNagad from "@/assets/payment/bikash-nagad.jpg";
 import { addOrder } from "@/services/order";
 import { TProduct } from "@/types";
-import { cities } from "@/utilits/cities";
+import { cities, cityThanas } from "@/utilits/cities";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -117,7 +117,6 @@ const CheckOutForm: React.FC<Props> = ({
     // Check: does ANY product have discount?
     const hasProductDiscount = Number(products.data.productDiscount > 0);
 
-    console.log(hasProductDiscount)
 
     if (coupon) {
       setCoupon(coupon);
@@ -194,10 +193,10 @@ const CheckOutForm: React.FC<Props> = ({
 
 
   return (
-    <div className="lg:mt-8 mt-4">
+    <div className="lg:mt-16 mt-4">
       <h1 className="text-center font-extrabold text-2xl lg:text-3xl mb-6">Checkout Info</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
-  
+
         {/*Shipping Info */}
         <div className="lg:flex justify-center items-center lg:space-x-2 space-x-0">
 
@@ -257,23 +256,6 @@ const CheckOutForm: React.FC<Props> = ({
 
 
         <div className="flex md:flex-row flex-col items-center md:gap-3 gap-1  ">
-          <div className="w-full ">
-            <h2 className="font-semibold text-gray-700 ">আপনার থানা </h2>
-            <input
-              {...register("customerThana", {
-                required: "Thana is required"
-              })}
-              className="w-full  border border-black/20 p-1.5 
-            rounded focus:border-black focus:outline-none "
-              type="text"
-              placeholder="আপনার থানা লিখুন*"
-            />
-            {errors.customerThana && (
-              <span className="text-red-500">
-                {String(errors.customerThana.message)}
-              </span>
-            )}
-          </div>
           <div className="w-full">
             <h2 className="font-semibold text-gray-700 "> জেলা সিলেক্ট করুন</h2>
             <select
@@ -297,12 +279,42 @@ const CheckOutForm: React.FC<Props> = ({
               </span>
             )}
           </div>
+
+          <div className="w-full overflow-y-auto ">
+            <h2 className="font-semibold text-gray-700 ">আপনার থানা </h2>
+            {watch("customerCity") && cityThanas[watch("customerCity")] ? (
+              <select
+                {...register("customerThana", { required: "থানা অবশ্যই দিতে হবে" })}
+                className="w-full border border-black/20 p-1.5 rounded focus:border-black focus:outline-none"
+              >
+                <option value="">থানা সিলেক্ট করুন*</option>
+                {cityThanas[watch("customerCity")].map((thana) => (
+                  <option key={thana} value={thana}>
+                    {thana}
+                  </option>
+                ))}
+              </select>
+            ) : (
+              <input
+                {...register("customerThana", { required: "থানা অবশ্যই দিতে হবে" })}
+                className="w-full border border-black/20 p-1.5 rounded focus:border-black focus:outline-none"
+                type="text"
+                placeholder="আপনার থানা লিখুন*"
+              />
+            )}
+            {errors.customerThana && (
+              <span className="text-red-500">
+                {String(errors.customerThana.message)}
+              </span>
+            )}
+          </div>
+
         </div>
 
         {/*BreakDown */}
         <div className="text-center rounded lg:py-8 py-4 lg:my-8 my-4 bg-gray-100">
           <p className="">Your total payable amount is</p>
-          <h4 className="font-extrabold text-2xl text-[#FF6C0C] pt-2">
+          <h4 className="font-extrabold text-2xl text-primary pt-2">
             ৳{payableAmount}
           </h4>
           <p className="font-bold text-xl pb-2">BreakDown</p>
@@ -500,9 +512,9 @@ const CheckOutForm: React.FC<Props> = ({
             </div>
             <div
               onClick={() => handleAddCoupon()}
-              className="bg-[#FF6C0C] py-2 px-10 text-white 2xl:w-[30%] xl:w-[40%] lg:w-[50%] rounded cursor-pointer text-center w-full"
+              className="bg-primary py-2 px-10 text-white 2xl:w-[30%] xl:w-[40%] lg:w-[50%] rounded cursor-pointer text-center w-full"
             >
-              Add Coupon
+              কুপন যোগ করুন
             </div>
           </div>
 
@@ -534,7 +546,7 @@ const CheckOutForm: React.FC<Props> = ({
               >
                 Privacy Policy
               </Link>
-              of Silk Thrad.
+              of Anfmeat.
             </label>
           </div>
           {errors.terms && (
@@ -549,8 +561,8 @@ const CheckOutForm: React.FC<Props> = ({
             cursor-pointer flex items-center justify-center gap-2 relative overflow-hidden 
             ${isSubmitting ? " cursor-not-allowed" : ""}
             ${startCar === true
-                ? "bg-[#ffffff] border border-[#e18243] "
-                : "bg-[#FF6C0C]"
+                ? "bg-primary border border-primary "
+                : "bg-primary"
               }
             `}
           >
@@ -560,7 +572,7 @@ const CheckOutForm: React.FC<Props> = ({
 
                 {startCar ? (
                   <AnimatePresence>
-                    <div className="py-2.5">
+                    <div className="py-2.5 flex justify-center items-center">
                       <motion.div
                         initial={{ x: 30 }}
                         animate={{ x: finalY, scale: 1.1 }}
@@ -591,10 +603,10 @@ const CheckOutForm: React.FC<Props> = ({
                 )}
               </>
             ) : (
-              "Confirm Order"
+              "অর্ডার নিশ্চিত করুন"
             )}
           </button>
-          </div>
+        </div>
       </form>
     </div>
   );

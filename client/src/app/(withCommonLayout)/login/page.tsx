@@ -68,7 +68,7 @@ const SignIn = () => {
   return (
     <div>
       {/* <NavBar userCartProducts={productsByUser?.data} /> */}
-      <div className="flex flex-col justify-center items-center py-20">
+      <div className="flex flex-col justify-center items-center py-20 mt-4 md:mt-6">
         <div className="w-[350px] lg:w-[600px]">
           <div className="border-b border-black/20 text-center pb-3 mb-5">
             <h2 className="text-3xl font-bold">Sign In</h2>
@@ -140,8 +140,8 @@ const SignIn = () => {
               </label>
             </div>
 
-            {/* Submit Button */} 
-            <button type="submit" className=" button-primary bg-orange-400" >
+            {/* Submit Button */}
+            <button type="submit" className=" button-[#16a34a] bg-primary py-2 text-white" >
               Login
             </button>
           </form>
@@ -149,14 +149,14 @@ const SignIn = () => {
             <div className="mt-2 text-center  ">
               <Link
                 href="/forgotpassword"
-                className="text-orange-400 pr-1 hover:underline"
+                className="text-primary pr-1 hover:underline"
               >
                 Forgot Your Password?
               </Link>{" "}
               |
             </div>
             <div className="mt-2 text-center">
-              <Link href="/register" className="text-orange-400  hover:underline">
+              <Link href="/register" className="text-[#16a34a]  hover:underline">
                 Registration
               </Link>
             </div>

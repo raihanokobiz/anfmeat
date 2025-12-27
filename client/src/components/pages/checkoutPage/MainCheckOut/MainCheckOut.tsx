@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 
 
 const MainCheckOut = () => {
-  
+
   const [products, setProducts] = useState<TProduct | null>(null);
   const [userId, setUserId] = useState<string | null>(null);
   const [coupon, setCoupon] = useState<string | null>(null);
@@ -38,7 +38,7 @@ const MainCheckOut = () => {
 
   return (
     <div className="min-h-screen">
-      {products && <div className="flex lg:flex-row flex-col-reverse  Container xl:mx-20 py-6 md:my-7 xl:gap-30 gap-8 relative">
+      {products && <div className="flex lg:flex-row flex-col-reverse  py-6 md:my-7  gap-4 md:gap-6 lg:gap-8 xl:gap-10 relative">
         <div className="lg:w-3/5 w-full">
           {products && (
             <CheckOutForm

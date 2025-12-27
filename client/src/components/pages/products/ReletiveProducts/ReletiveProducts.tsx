@@ -10,8 +10,12 @@ interface Products {
 }
 
 const ReletiveProducts: React.FC<Products> = ({ relativeProducts }) => {
+
+  console.log(relativeProducts, "ok");
+
+
   return (
-    <div className="w-full">
+    <div className="w-full mb-4 md:mb-6 lg:mb-8">
       <h2
         className={`text-xl font-semibold border-b pb-3 ${rajdhani.className}`}
       >

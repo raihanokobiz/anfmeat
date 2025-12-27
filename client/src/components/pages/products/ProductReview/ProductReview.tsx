@@ -17,6 +17,9 @@ const ProductReview = async ({ userRef, productRef }: ProductReviewProps) => {
   // const reviews = await getPaginatedReviews(1, 4);
   const reviews = (await getPaginatedReviews(1, 4)) as TProductReviewsResponse;
 
+  console.log(reviews, "ok");
+
+
 
   return (
     <div className=" Container">
@@ -45,7 +48,7 @@ const ProductReview = async ({ userRef, productRef }: ProductReviewProps) => {
                     <p className="font-semibold md:text-base text-sm capitalize">
                       {review.name}
                     </p>
-                    <div className="flex items-center gap-1 text-primary md:text-base text-sm">
+                    <div className="flex items-center gap-1 text-yellow-500 md:text-base text-sm">
                       {Array.from({ length: 5 }, (_, i) => {
                         const fullStars = Math.floor(review.rating);
                         const hasHalfStar = review.rating - fullStars >= 0.5;
