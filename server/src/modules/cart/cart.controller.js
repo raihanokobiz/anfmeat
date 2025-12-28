@@ -36,9 +36,11 @@ class CartController {
   getAllCartByUser = catchError(async (req, res) => {
     const { userId, coupon } = req.query;
     const payload = { userId };
+
     if (coupon) {
       payload.coupon = coupon;
     }
+
     const cartResult = await CartService.getAllCartByUser(payload);
 
     const resDoc = responseHandler(

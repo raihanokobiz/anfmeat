@@ -257,9 +257,8 @@ export const columns: ColumnDef<TProduct>[] = [
       return (
         <button
           onClick={togglePriority}
-          className={`px-3 py-1 rounded-md font-bold ${
-            value ? "bg-red-600 text-white" : "bg-green-600 text-white"
-          }`}
+          className={`px-3 py-1 rounded-md font-bold ${value ? "bg-red-600 text-white" : "bg-green-600 text-white"
+            }`}
         >
           {value ? "High" : "Low"}
         </button>

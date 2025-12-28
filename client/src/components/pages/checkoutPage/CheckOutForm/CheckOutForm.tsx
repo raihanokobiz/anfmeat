@@ -75,48 +75,19 @@ const CheckOutForm: React.FC<Props> = ({
   const Subtotal = products?.data?.subTotalPrice || 0;
   const discountValue = Number(products?.data?.couponDiscount) || 0;
   const payableAmount = Subtotal + (shipping || 0) - discountValue;
-  console.log("payableAmount", payableAmount)
+
   // ----------------- Submit Handler -----------------
   const onSubmit = async (data: FormData) => {
     // No need to check for product discounts, coupon always applies on MRP
     await confirmOrder(data);
   };
 
-  // ----------------- Apply Coupon -----------------
-  // const handleAddCoupon = () => {
-  //   const coupon = getValues("coupon");
 
-  // if(products.discount !== null){
-  //     if (coupon && coupon.trim() !== "") {
-  //     setCoupon(coupon.trim());
-  //     toast.success("Coupon applied on MRP Price", {
-  //       theme: "colored",
-  //       autoClose: 5000,
-  //     });
-  //   } else {
-  //     setCoupon(null);
-  //     toast.info("No coupon applied.", { theme: "colored", autoClose: 5000 });
-  //   }
-  // }else{
-  //  if (coupon && coupon.trim() !== "") {
-  //     setCoupon(coupon.trim());
-  //     toast.success("Coupon applied ", {
-  //       theme: "colored",
-  //       autoClose: 5000,
-  //     });
-  //   } else {
-  //     setCoupon(null);
-  //     toast.info("No coupon applied.", { theme: "colored", autoClose: 5000 });
-  //   }
-  // }
-
-  // }
   const handleAddCoupon = () => {
     const coupon = getValues("coupon")?.trim();
 
     // Check: does ANY product have discount?
     const hasProductDiscount = Number(products.data.productDiscount > 0);
-
 
     if (coupon) {
       setCoupon(coupon);
@@ -130,6 +101,7 @@ const CheckOutForm: React.FC<Props> = ({
           autoClose: 5000,
         }
       );
+
     } else {
       setCoupon(null);
       toast.info("No coupon applied.", {
@@ -137,6 +109,7 @@ const CheckOutForm: React.FC<Props> = ({
         autoClose: 5000,
       });
     }
+
   };
 
   // ----------------- Confirm Order -----------------
@@ -152,7 +125,6 @@ const CheckOutForm: React.FC<Props> = ({
         shippingCost: shipping || 0,
         ...data,
       };
-      console.log(order.totalPrice);
 
       setIsSubmitting(true);
       const result = (await addOrder(order)) as {

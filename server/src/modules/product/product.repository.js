@@ -531,6 +531,7 @@ class ProductRepository extends BaseRepository {
       throw error;
     }
   }
+
   async updateProductInventory(id, productRef, session) {
     const data = await this.#model.findByIdAndUpdate(
       productRef,
@@ -547,6 +548,7 @@ class ProductRepository extends BaseRepository {
       { new: true }
     );
   }
+
   async addProductInventory(id, productRef, session) {
     const data = await this.#model.findByIdAndUpdate(
       productRef,
@@ -555,6 +557,7 @@ class ProductRepository extends BaseRepository {
     );
     return data;
   }
+
   async getAllProductForHomePage(payload) {
     const { limit = 10, subCategoryRef } = payload;
 
@@ -578,7 +581,9 @@ class ProductRepository extends BaseRepository {
         _id: { $ne: id },
       })
       .sort({ createdAt: -1 })
-      .limit(10);
+      .limit(10)
+      .populate("inventoryRef");
+
     return relatedProducts;
   }
 

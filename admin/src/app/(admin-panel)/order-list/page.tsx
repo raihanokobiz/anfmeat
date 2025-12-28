@@ -22,6 +22,9 @@ export default async function OrdersPage({ searchParams }: Props) {
 
   const { data } = await getOrderWithPagination(page, limit);
 
+  console.log(data, "ok");
+
+
   return (
     <ContentLayout title="Order">
       <OrderTable

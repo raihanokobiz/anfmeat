@@ -91,10 +91,13 @@ class ProductController {
     const payload = {
       id: req.params.id,
     };
+
     const productResult = await ProductService.getRelatedProduct(payload);
+
     const resDoc = responseHandler(200, "Get All Products", productResult);
     res.status(resDoc.statusCode).json(resDoc);
   });
+
   getSearchProduct = catchError(async (req, res) => {
     const payload = {
       search: req.query.search,
@@ -231,7 +234,7 @@ class ProductController {
       next(error);
     }
   });
-  
+
   togglePriority = catchError(async (req, res) => {
     const { id } = req.params;
     const updatedProduct = await ProductService.togglePriority(id);
@@ -247,7 +250,7 @@ class ProductController {
     const id = req.params.id;
     const { status } = req.body;
     console.log(status, "ok");
-    
+
     await ProductService.updateProductStatus(id, status);
     const resDoc = responseHandler(201, "Product Status Update successfully");
     res.status(resDoc.statusCode).json(resDoc);

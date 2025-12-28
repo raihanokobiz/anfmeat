@@ -76,7 +76,7 @@ class ProductService extends BaseService {
         const color = item.colorCode || "#000000";
         const name = item.color || "Unknown";
         const quantity = parseInt(item.quantity) || 0;
-        console.log("inventory Quantity ",quantity)
+        console.log("inventory Quantity ", quantity)
         inventoryTotal += quantity;
         const title = "INV-";
         if (newInventoryId === "") {
@@ -241,9 +241,9 @@ class ProductService extends BaseService {
     }
 
     payload.productId = await idGenerate("PRO-", "productId", this.#repository);
-    
+
     const productData = await this.#repository.createProduct(payload, session);
-    
+
     if (productData) {
       for (const invenoryId of invenoryIds) {
         const data = await this.#inventoryRepository.updateById(
@@ -283,6 +283,7 @@ class ProductService extends BaseService {
     const product = await this.#repository.getAllProductForHomePage(payload);
     return { product, subCategory };
   }
+
   async getRelatedProduct(payload) {
     const product = await this.#repository.getRelatedProduct(payload);
     return product;

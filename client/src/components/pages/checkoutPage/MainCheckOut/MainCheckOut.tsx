@@ -15,6 +15,8 @@ const MainCheckOut = () => {
   const [userId, setUserId] = useState<string | null>(null);
   const [coupon, setCoupon] = useState<string | null>(null);
   const [shipping, setShipping] = useState(0);
+
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -22,8 +24,7 @@ const MainCheckOut = () => {
         const userId = user?.id;
         const products = await getCartProducts(userId, coupon || "");
         toast.success(products?.message || "Products fetched successfully")
-
-
+        
         // set state here if needed
         setUserId(userId ?? null);
         setProducts(products);
@@ -34,7 +35,8 @@ const MainCheckOut = () => {
 
     fetchData();
   }, [coupon]);
-  // ============
+
+
 
   return (
     <div className="min-h-screen">
