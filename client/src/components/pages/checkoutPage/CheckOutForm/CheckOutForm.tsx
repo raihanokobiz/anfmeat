@@ -81,37 +81,64 @@ const CheckOutForm: React.FC<Props> = ({
     // No need to check for product discounts, coupon always applies on MRP
     await confirmOrder(data);
   };
+const handleAddCoupon = () => {
+  const coupon = getValues("coupon")?.trim();
 
+  if (coupon) {
+    setCoupon(coupon);
 
-  const handleAddCoupon = () => {
-    const coupon = getValues("coupon")?.trim();
+    // Wait a bit for products to update with coupon info
+    setTimeout(() => {
+      // Check if coupon applies to ANY product
+      const applicableCount = products?.data?.cartDetails?.filter(
+        (item: any) => item.isCouponApplicable === true
+      ).length || 0;
 
-    // Check: does ANY product have discount?
-    const hasProductDiscount = Number(products.data.productDiscount > 0);
+      const totalProducts = products?.data?.cartDetails?.length || 0;
+      const hasProductDiscount = Number(products.data.productDiscount) > 0;
 
-    if (coupon) {
-      setCoupon(coupon);
+      if (applicableCount === 0) {
+        // Coupon doesn't apply to any product
+        toast.warning(
+          "This coupon is not applicable to any products in your cart",
+          {
+            theme: "colored",
+            autoClose: 5000,
+          }
+        );
+      } else if (applicableCount < totalProducts) {
+        // Coupon applies to some products, not all
+        toast.info(
+          hasProductDiscount
+            ? `Coupon applied to ${applicableCount} product(s) from MRP Price (out of ${totalProducts} total)`
+            : `Coupon applie Succecssfully`,
+          {
+            theme: "colored",
+            autoClose: 5000,
+          }
+        );
+      } else {
+        // Coupon applies to all products
+        toast.success(
+          hasProductDiscount
+            ? "Coupon successfully applied to all products from MRP Price!"
+            : "Coupon successfully applied!",
+          {
+            theme: "colored",
+            autoClose: 5000,
+          }
+        );
+      }
+    }, 500); // Small delay to ensure state updates
 
-      toast.success(
-        hasProductDiscount
-          ? "Coupon applied on Product  MRP Price"
-          : "Coupon applied",
-        {
-          theme: "colored",
-          autoClose: 5000,
-        }
-      );
-
-    } else {
-      setCoupon(null);
-      toast.info("No coupon applied.", {
-        theme: "colored",
-        autoClose: 5000,
-      });
-    }
-
-  };
-
+  } else {
+    setCoupon(null);
+    toast.info("No coupon applied.", {
+      theme: "colored",
+      autoClose: 5000,
+    });
+  }
+};
   // ----------------- Confirm Order -----------------
   const confirmOrder = async (data: FormData) => {
     try {
