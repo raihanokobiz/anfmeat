@@ -315,7 +315,7 @@ const ProductDialog: React.FC<Product> = ({
                   <FiPlus />
                 </p>
               </div>
-              <div onClick={handleAddToCart} className="w-[50%] bg-[#FF6C0C] text-center flex items-center justify-center rounded cursor-pointer">
+              <div onClick={handleAddToCart} className="w-[50%] bg-primary text-center flex items-center justify-center rounded cursor-pointer">
                 <button
 
                   className=" flex items-center justify-center gap-1 px-4 py-3 font-semibold text-[12px] cursor-pointer rounded text-[#fff] "

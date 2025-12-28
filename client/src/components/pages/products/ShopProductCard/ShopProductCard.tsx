@@ -131,17 +131,17 @@ const ShopProductCard: React.FC<Product> = ({ product }) => {
               </div>
             </div>
           </div>
-          <div>
-            <ProductDialog
-              name={name}
-              price={price}
-              productRef={_id}
-              thumbnailImage={thumbnailImage}
-              inventoryRef={inventoryRef}
-              inventoryType={inventoryType}
-            />
-          </div>
         </Link>
+        <div>
+          <ProductDialog
+            name={name}
+            price={price}
+            productRef={_id}
+            thumbnailImage={thumbnailImage}
+            inventoryRef={inventoryRef}
+            inventoryType={inventoryType}
+          />
+        </div>
       </div>
     </div>
   );
