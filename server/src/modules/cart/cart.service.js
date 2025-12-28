@@ -57,6 +57,7 @@ class CartService extends BaseService {
   }
 
   async getAllCart() {
+    
     return await this.#repository.findAll({}, ["productRef"]);
   }
 

@@ -39,7 +39,7 @@ class CartController {
     if (coupon) {
       payload.coupon = coupon;
     }
-
+console.log("Coupon",coupon)
     const cartResult = await CartService.getAllCartByUser(payload);
 
     const resDoc = responseHandler(

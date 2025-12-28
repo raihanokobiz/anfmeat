@@ -49,13 +49,12 @@ const MainCheckOut = () => {
               shipping={shipping}
               setShipping={setShipping}
               setCoupon={setCoupon} type={function (value: React.SetStateAction<string | null>): void {
-                console.log(value)
                 throw new Error("Function not implemented.");
               }} />
           )}
         </div>
         <div className="lg:w-2/5 w-full">
-          <CartOverView products={products?.data} shipping={shipping} />
+          <CartOverView products={products?.data} shipping={shipping} coupon={coupon } />
         </div>
       </div>
       }
