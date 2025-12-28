@@ -8,7 +8,6 @@ class CartController {
   // Create a cart item
   createCart = withTransaction(async (req, res, next, session) => {
 
-
     const payload = {
       quantity: req.body.quantity || 1,
       // color: req.body.color,
