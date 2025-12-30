@@ -46,7 +46,12 @@ export const columns: ColumnDef<TOrder>[] = [
         <div className="w-40 flex flex-col gap-3">
           {products?.map((item, index) => (
             <div key={index} className="p-3 border rounded-md">
-              <p>{item?.productRef?.name} </p>
+              <p className="mb-2">
+                {item?.productRef?.productId} </p>
+              <p></p>
+              <p className="mb-2">
+                <span> Product Nmae </span>
+                {item?.productRef?.title} </p>
               <p>
                 <span className="font-semibold">{item?.productRef?.price}</span>{" "}
                 x <span className="font-bold">{item?.quantity}</span>

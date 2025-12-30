@@ -342,6 +342,7 @@ export type TProduct = {
   _id: string;
   productId: string;
   name: string;
+  title: string;
   description?: string;
   discountType?: "flat" | "percent";
   discount?: number;
@@ -364,10 +365,10 @@ export type TProduct = {
   mainInventory?: number;
   quantity?: number;
   inventoryType?:
-    | "colorInventory"
-    | "levelInventory"
-    | "colorLevelInventory"
-    | "inventory";
+  | "colorInventory"
+  | "levelInventory"
+  | "colorLevelInventory"
+  | "inventory";
   inventoryRef?: TInventory[];
   categoryRef?: TCategory;
   subCategoryRef?: TSubCategory;
