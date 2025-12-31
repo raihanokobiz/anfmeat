@@ -41,7 +41,7 @@ export function LocationModalWrapper() {
 
     return (
         <div>
-            <LocationModal outlets={outlets} isOpen={modalOpen}
+            <LocationModal isOpen={modalOpen}
                 onClose={() => setModalOpen(false)} />
         </div>
     )

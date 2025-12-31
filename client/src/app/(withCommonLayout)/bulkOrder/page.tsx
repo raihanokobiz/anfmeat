@@ -1,4 +1,4 @@
-import BulkForm from "@/components/pages/bulkOrder/BulkForm";
+// import BulkForm from "@/components/pages/bulkOrder/BulkForm";
 // import NavBar from "@/components/pages/header/NavBar/NavBar";
 // import { getUser } from "@/services/auth";
 // import { getCartProducts } from "@/services/cart";
@@ -21,7 +21,7 @@ const Bulk = async () => {
       {/* <BulkBanner></BulkBanner>
       <BulkCustom></BulkCustom>
       <BulkLineUp></BulkLineUp> */}
-      <BulkForm></BulkForm>
+      {/* <BulkForm></BulkForm> */}
     </div>
   );
 };
