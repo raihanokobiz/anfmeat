@@ -58,6 +58,8 @@ const ProductCard: React.FC<{
 }> = ({ product, onQuickAdd }) => {
   const [imageError, setImageError] = useState(false);
   const hasDiscount = product.discount > 0;
+
+
   const isStockOut = product.mainInventory <= 0;
 
   // Get the first image from the images array, fallback to thumbnailImage
@@ -240,7 +242,7 @@ export const AddToCartModal: React.FC<{
         <div className="bg-primary p-4 flex items-center justify-between sticky top-0 z-10 cursor-pointer">
           <h2 className="text-xl font-bold text-white flex items-center gap-2">
             <ShoppingCart size={24} />
-            Add to Cart
+            কার্টে যোগ করুন
           </h2>
           <button
             onClick={onClose}

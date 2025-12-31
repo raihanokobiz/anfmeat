@@ -1,5 +1,6 @@
 // import NavBar from "@/components/pages/header/NavBar/NavBar";
 
+import { LocationModalWrapper } from "@/components/kocation/LocationModalWrapper";
 import NavBar from "@/components/pages/header/NavBar/NavBar";
 import Footer from "@/components/pages/landing_pages/Footer/Footer";
 import { getUser } from "@/services/auth";
@@ -20,6 +21,8 @@ export default async function Layout({
   const products = await getCartProducts(userId, coupon);
   return (
     <div className="">
+      <LocationModalWrapper />
+
       <ToastContainer
         position="top-right"
         autoClose={500}
@@ -38,7 +41,7 @@ export default async function Layout({
       <MessengerBtn />
       <NavBar userCartProducts={products?.data} />
       {children}
-      <Footer  userCartProducts={products?.data}/>
+      <Footer userCartProducts={products?.data} />
     </div>
   );
 }

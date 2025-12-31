@@ -202,15 +202,15 @@ const ProductDetails: React.FC<Props> = ({ product }) => {
 
           <div className="border-b-2 pb-4 border-primary">
             <div className="mt-4 flex items-center gap-2 ">
-              <div className=" w-full flex items-center justify-between border border-primary rounded px-3 py-[7px]">
-                <p onClick={handleDecrement} className="cursor-pointer">
+              <button className=" flex items-center justify-between border border-primary rounded px-3 py-[7px]">
+                <button onClick={handleDecrement} className="cursor-pointer">
                   <FiMinus />
-                </p>
-                <span>{count}</span>
+                </button>
+                <span className="px-5">{count}</span>
                 <p onClick={handleIncrement} className="cursor-pointer">
                   <FiPlus />
                 </p>
-              </div>
+              </button>
               {!addedToCart ? (
 
                 <div className="w-full cursor-pointer">

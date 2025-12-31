@@ -9,6 +9,7 @@ import { TProduct } from "@/types";
 import { Key, ReactNode } from "react";
 import { Metadata } from "next";
 
+
 export const metadata: Metadata = {
   title: "ANF Meat | cart",
   description: "Best E-commerce platform in BD",
@@ -195,6 +196,7 @@ const Cart = async () => {
               {products?.data?.totalPrice}
             </span>
           </div>
+
           <Link
             href={products?.data?.cartDetails?.length ? "/checkout" : "/shop"}
             className="text-white text-sm  items-center text-center w-[70%] sm:w-[50%] md:w-[40%]  bg-primary hover:bg-green-700 px-2 py-2"
@@ -218,23 +220,6 @@ const Cart = async () => {
           </span>
         </div>
         {/* You May Also Like */}
-        {/* ------------------------if we have enough time after completed all required then we work this part------------------------------ */}
-        {/* <div className="text-center py-5  my-5">
-        <span className=" font-bold text-[20px] ">You May Also Like</span>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-10 py-8 text-black border-t border-black/20 ">
-          {products?.cartDetails?.slice(0, 4).map((product) => (
-            <ProductCard
-              key={product._id}
-              product={{
-                thumbnailImage: product.image,
-                name: product.title,
-                mrpPrice: product.price,
-                price: product.salePrice,
-              }}
-            />
-          ))}
-        </div>
-      </div> */}
       </div>
     </>
   );

@@ -163,7 +163,7 @@ const ProductDialog: React.FC<Product> = ({
           <span>
             <BsFillCartPlusFill />
           </span>
-          <span className="capitalize">add to cart</span>
+          <span className="capitalize">কার্টে যোগ করুন</span>
         </button>
       </DialogTrigger>
       <DialogContent className="">
@@ -323,7 +323,7 @@ const ProductDialog: React.FC<Product> = ({
                   <span>
                     <FiPlus />
                   </span>
-                  <span>Add To Cart</span>
+                  <span>কার্টে যোগ করুন</span>
                 </button>
               </div>
             </div>

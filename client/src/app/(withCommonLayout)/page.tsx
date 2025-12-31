@@ -25,26 +25,12 @@ import {
 } from "lucide-react";
 import { getUser } from "@/services/auth";
 
-// import { getCartProducts } from "@/services/cart";
-// import NavBar from "@/components/pages/header/NavBar/NavBar";
 
-// import { getUser } from "@/services/auth";
 
 const page = async () => {
-  // const topRes = await getHomePageSubCategoryProducts("top");
-  // const middleRes = await getHomePageSubCategoryProducts("middle");
-  // const lowerMiddleRes = await getHomePageSubCategoryProducts("lowerMiddle");
-  // const buttomRes = await getHomePageSubCategoryProducts("buttom");
 
-  // const topChildCategoriesList = await getAllChildCategorys("top");
 
-  // const middleChildCategoriesList = await getAllChildCategorys("middle");
-  // const lowerMiddleChildCategoriesList = await getAllChildCategorys(
-  //   "lowerMiddle"
-  // );
-  // const buttomChildCategoriesList = await getAllChildCategorys("buttom");
-
-  // ------for campaign----
+  // ------for campaign---
 
   const { data: campaign } = await getCampaign();
   const offrs = await getAllOffers();
@@ -71,11 +57,13 @@ const page = async () => {
     (item: any) => item.status === "popular"
   );
 
+
+
+
   return (
     <>
       {/* <NavBar userCartProducts={products?.data} /> */}
       <div className="">
-        <LocationModalWrapper />
         <Banner banners={[]} />
         <div
           style={{

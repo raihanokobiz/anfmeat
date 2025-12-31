@@ -68,7 +68,7 @@ const CheckOutForm: React.FC<Props> = ({
           item.product?.freeShipping
       ) || false;
 
-    setShipping(hasFreeShipping ? 0 : selectedCity === "dhaka" ? 60 : 120);
+    setShipping(hasFreeShipping ? 0 : selectedCity === "dhaka" ? 80 : 120);
   };
 
   // ----------------- Calculation -----------------
@@ -81,64 +81,64 @@ const CheckOutForm: React.FC<Props> = ({
     // No need to check for product discounts, coupon always applies on MRP
     await confirmOrder(data);
   };
-const handleAddCoupon = () => {
-  const coupon = getValues("coupon")?.trim();
+  const handleAddCoupon = () => {
+    const coupon = getValues("coupon")?.trim();
 
-  if (coupon) {
-    setCoupon(coupon);
+    if (coupon) {
+      setCoupon(coupon);
 
-    // Wait a bit for products to update with coupon info
-    setTimeout(() => {
-      // Check if coupon applies to ANY product
-      const applicableCount = products?.data?.cartDetails?.filter(
-        (item: any) => item.isCouponApplicable === true
-      ).length || 0;
+      // Wait a bit for products to update with coupon info
+      setTimeout(() => {
+        // Check if coupon applies to ANY product
+        const applicableCount = products?.data?.cartDetails?.filter(
+          (item: any) => item.isCouponApplicable === true
+        ).length || 0;
 
-      const totalProducts = products?.data?.cartDetails?.length || 0;
-      const hasProductDiscount = Number(products.data.productDiscount) > 0;
+        const totalProducts = products?.data?.cartDetails?.length || 0;
+        const hasProductDiscount = Number(products.data.productDiscount) > 0;
 
-      if (applicableCount === 0) {
-        // Coupon doesn't apply to any product
-        toast.warning(
-          "This coupon is not applicable to any products in your cart",
-          {
-            theme: "colored",
-            autoClose: 5000,
-          }
-        );
-      } else if (applicableCount < totalProducts) {
-        // Coupon applies to some products, not all
-        toast.info(
-          hasProductDiscount
-            ? `Coupon applied to ${applicableCount} product(s) from MRP Price (out of ${totalProducts} total)`
-            : `Coupon applie Succecssfully`,
-          {
-            theme: "colored",
-            autoClose: 5000,
-          }
-        );
-      } else {
-        // Coupon applies to all products
-        toast.success(
-          hasProductDiscount
-            ? "Coupon successfully applied to all products from MRP Price!"
-            : "Coupon successfully applied!",
-          {
-            theme: "colored",
-            autoClose: 5000,
-          }
-        );
-      }
-    }, 500); // Small delay to ensure state updates
+        if (applicableCount === 0) {
+          // Coupon doesn't apply to any product
+          toast.warning(
+            "This coupon is not applicable to any products in your cart",
+            {
+              theme: "colored",
+              autoClose: 5000,
+            }
+          );
+        } else if (applicableCount < totalProducts) {
+          // Coupon applies to some products, not all
+          toast.info(
+            hasProductDiscount
+              ? `Coupon applied to ${applicableCount} product(s) from MRP Price (out of ${totalProducts} total)`
+              : `Coupon applie Succecssfully`,
+            {
+              theme: "colored",
+              autoClose: 5000,
+            }
+          );
+        } else {
+          // Coupon applies to all products
+          toast.success(
+            hasProductDiscount
+              ? "Coupon successfully applied to all products from MRP Price!"
+              : "Coupon successfully applied!",
+            {
+              theme: "colored",
+              autoClose: 5000,
+            }
+          );
+        }
+      }, 500); // Small delay to ensure state updates
 
-  } else {
-    setCoupon(null);
-    toast.info("No coupon applied.", {
-      theme: "colored",
-      autoClose: 5000,
-    });
-  }
-};
+    } else {
+      setCoupon(null);
+      toast.info("No coupon applied.", {
+        theme: "colored",
+        autoClose: 5000,
+      });
+    }
+  };
   // ----------------- Confirm Order -----------------
   const confirmOrder = async (data: FormData) => {
     try {
@@ -336,7 +336,7 @@ const handleAddCoupon = () => {
             </div>
           </div>
           <div className="pt-2">
-            <p>You will get the delivery within 2-3 days after confirmation.</p>
+            <p>You will get the delivery within 48 Hour after confirmation.</p>
           </div>
         </div>
 

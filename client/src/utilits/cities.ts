@@ -5,7 +5,6 @@ export const cities = [
   "Chattogram",
 ];
 
-
 export const cityThanas: Record<string, string[]> = {
   Dhaka: [
     "Uttara",
