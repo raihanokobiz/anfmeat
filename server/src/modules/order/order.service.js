@@ -107,7 +107,7 @@ class OrderService extends BaseService {
       totalDiscount += Number(order?.discount) * Number(order?.quantity) || 0;
       subTotalPrice +=
         productInfo?.productRef?.mrpPrice * Number(order?.quantity) -
-          totalDiscount || 0;
+        totalDiscount || 0;
 
       const availableQuantity = productInfo?.availableQuantity || 0;
       const quantityToHold = Number(order?.quantity);
