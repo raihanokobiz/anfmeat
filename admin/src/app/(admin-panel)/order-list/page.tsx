@@ -22,7 +22,7 @@ export default async function OrdersPage({ searchParams }: Props) {
 
   const { data } = await getOrderWithPagination(page, limit);
 
-  console.log(data, "ok");
+  console.log(data.result, "ok");
 
 
   return (
