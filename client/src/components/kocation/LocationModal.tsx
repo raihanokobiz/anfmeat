@@ -18,7 +18,7 @@ export const cityThanas: Record<string, string[]> = {
         "Kafrul", "Shah Ali", "Darus Salam", "Adabar",
         "Mohammadpur", "Tejgaon", "Tejgaon Industrial Area",
     ],
-    Rajshahi: ["Boalia", "Shah Mokhdum", "Chatmohar", "Paba", "Motihar", "Godagari"],
+    Rajshahi: ["Boalia", "Motihar", "Rajpara", "Shah Makhdum", "Chandrima ", "Kashiadanga", "Katakhali", "Belpukur", "Airport", "Karnahar", "Damkura", "Paba"],
     Sylhet: ["Sylhet Sadar", "Zindabazar", "Ambarkhana", "Subidbazar", "Shibganj"],
     Chattogram: ["Chattogram Sadar", "Pahartali", "Panchlaish", "Kotwali", "Double Mooring", "Halishahar", "Chandgaon", "Bayezid"],
 }
