@@ -17,30 +17,32 @@ const Contact = async () => {
   return (
     <>
       {/* <NavBar userCartProducts={products?.data} /> */}
-      <div className="py-6 px-4">
-        <div className="text-2xl lg:text-4xl text-center font-bold mt-14 lg:mt-0 mb-3 lg:mb-6">
-          Contact Us
-        </div>
-        <div className="flex flex-col lg:flex-row space-x-0 lg:space-x-10 space-y-10 lg:space-y-0 lg:px-10 max-w-7xl mx-auto">
-          <div className="flex-1">
-            <ContactFrom></ContactFrom>
+      <div className="pt-28 pb-12 px-4 md:mx-6 lg:mx-0">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-2xl lg:text-4xl text-center font-bold mt-14 lg:mt-0 mb-3 lg:mb-6">
+            Contact Us
           </div>
-          <div className="flex-1">
-            <div className="text-xl">Our Information</div>
-            <div className="mt-2">
-              <div className="font-bold">Address:</div>
-              <div>Dhaka Office:
-                1022, Malibagh Bazar, 2nd Floor
-                Dhaka 1219</div>
+          <div className="flex flex-col lg:flex-row space-x-0 lg:space-x-10 space-y-10 lg:space-y-0">
+            <div className="flex-1">
+              <ContactFrom></ContactFrom>
             </div>
-            <div className="mt-2">
-              <span className="font-bold">Hotline: </span>  01571-155612
-            </div>
-            <div className="mt-2">
-              <span className="font-bold">WhatsApp: </span> 01571-155612
-            </div>
-            <div className="mt-2">
-              <span className="font-bold">Email: </span>  anisggn@gmail.com
+            <div className="flex-1">
+              <div className="text-xl">Our Information</div>
+              <div className="mt-2">
+                <div className="font-bold">Address:</div>
+                <div>Dhaka Office:
+                  1022, Malibagh Bazar, 2nd Floor
+                  Dhaka 1219</div>
+              </div>
+              <div className="mt-2">
+                <span className="font-bold">Hotline: </span>  01571-155612
+              </div>
+              <div className="mt-2">
+                <span className="font-bold">WhatsApp: </span> 01571-155612
+              </div>
+              <div className="mt-2">
+                <span className="font-bold">Email: </span>  anisggn@gmail.com
+              </div>
             </div>
           </div>
         </div>

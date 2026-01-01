@@ -498,9 +498,6 @@ const HomeProductSection: React.FC<HomeProductSectionProps> = ({
         inventoryRef: inventoryRef || null,
       };
 
-      console.log(cartData, "ok");
-
-
       await addToCart(cartData);
 
       setIsModalOpen(false);

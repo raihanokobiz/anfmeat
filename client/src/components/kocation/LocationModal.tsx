@@ -71,6 +71,8 @@ export function LocationModal({ isOpen: externalIsOpen, onClose }: LocationModal
         if (selectedCity && selectedArea) {
             localStorage.setItem("selectedCity", selectedCity)
             localStorage.setItem("selectedArea", selectedArea)
+
+            window.dispatchEvent(new Event("locationChanged"))
             setIsOpen(false)
             onClose?.()
         }

@@ -27,6 +27,8 @@ const ShopProductCard: React.FC<Product> = ({ product }) => {
     _id,
   } = product;
 
+  const isStockOut = product.mainInventory <= 0;
+
   const controls = useAnimation();
   const [imageLoaded, setImageLoaded] = useState({
     back: false,
@@ -51,6 +53,13 @@ const ShopProductCard: React.FC<Product> = ({ product }) => {
       <div className="relative w-full h-32 sm:h-52 md:h-48  lg:h-52 overflow-hidden">
         <Link href={`product/${slug}`}>
           <div className="relative w-full h-full">
+            {isStockOut && (
+              <div className="absolute top-0 left-0 w-20 h-20 overflow-hidden z-20">
+                <div className="absolute top-4 -left-7 w-32 bg-gradient-to-r from-yellow-600 to-red-700 text-white text-center font-bold text-[10px] py-1 shadow-md transform -rotate-45">
+                  STOCK OUT
+                </div>
+              </div>
+            )}
             {/* Lottie loader until both images loaded */}
             {thumbnailImage
               ? (!imageLoaded.front) && (
@@ -89,7 +98,6 @@ const ShopProductCard: React.FC<Product> = ({ product }) => {
               </motion.div>
             ) : (
               <div className="relative w-full h-full">
-                {" "}
                 <Image
                   src={apiBaseUrl + thumbnailImage}
                   alt={`${name} thumbnailImage`}

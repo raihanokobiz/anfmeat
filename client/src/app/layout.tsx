@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { lato } from "./font";
+import { rajdhani } from "./font";
 import NextTopLoader from "nextjs-toploader";
 import { LanguageProvider } from "@/context/LanguageContext";
 
@@ -17,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${lato.className} antialiased `}>
+      <body className={`${rajdhani.className} antialiased `}>
         <NextTopLoader showSpinner={false} color="#1e6a39" />
         <LanguageProvider>
           {children}

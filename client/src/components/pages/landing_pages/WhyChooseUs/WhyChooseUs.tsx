@@ -16,7 +16,7 @@ const data = [W1, W2, W3, W4];
 
 export function WhyChooseUs() {
   return (
-    <section className="bg-white px-4 md:px-6 py-6 md:py-10  lg:py-12 max-w-6xl mx-auto">
+    <section className="bg-white px-4 md:px-6 py-6 md:py-10  lg:py-12">
       <div className="max-w-6xl mx-auto">
         {/* Heading */}
         <h2 className="text-3xl md:text-4xl font-bold text-center text-[#1a1a1a] mb-6">

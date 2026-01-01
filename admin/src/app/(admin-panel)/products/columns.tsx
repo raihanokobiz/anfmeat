@@ -150,9 +150,8 @@ export const columns: ColumnDef<TProduct>[] = [
     cell: ({ row }) => (
       <div className="">
         {row.original.inventoryType === "colorLevelInventory" && (
-          <p>Color - Size</p>
+          <p>Size</p>
         )}
-        {row.original.inventoryType === "colorInventory" && <p>Color</p>}
         {row.original.inventoryType === "levelInventory" && <p>Size</p>}
         {row.original.inventoryType === "inventory" && <p>-</p>}
       </div>
@@ -171,24 +170,13 @@ export const columns: ColumnDef<TProduct>[] = [
               className="border p-2 rounded-md shadow hover:shadow-xl transition-all duration-500"
             >
               <div className="flex items-center justify-start gap-2">
-                <div className="flex items-center justify-start gap-1">
-                  Color: {item.name ? upperCase(item.name) : "N/A"}
-                  {item.color ? (
-                    <div
-                      style={{ backgroundColor: item.color }}
-                      className="w-5 aspect-square rounded-full border border-black"
-                    ></div>
-                  ) : (
-                    "-"
-                  )}
-                </div>
-                <p>Level: {item.level ? upperCase(item.level) : "N/A"}</p>
+                <p>Size: {item.level ? upperCase(item.level) : "N/A"}</p>
               </div>
               <p>
                 Quantity: <span className="font-bold"> {item.quantity}</span>
               </p>
               <p>Sold Quantity: {item.soldQuantity}</p>
-              <p>Hold Quantity: {item.holdQuantity}</p>
+              {/* <p>Hold Quantity: {item.holdQuantity}</p> */}
             </div>
           ))}
         </div>

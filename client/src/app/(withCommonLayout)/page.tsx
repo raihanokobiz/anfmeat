@@ -24,6 +24,8 @@ import {
   Trophy,
 } from "lucide-react";
 import { getUser } from "@/services/auth";
+import CartSideBar from "@/components/pages/cartSideBar/CartSideBar";
+import { getCartProducts } from "@/services/cart";
 
 
 
@@ -36,9 +38,9 @@ const page = async () => {
   const offrs = await getAllOffers();
 
   const user = await getUser();
-  // const userId = user?.id;
-  // const coupon = "";
-  // const products = await getCartProducts(userId, coupon);
+  const userId = user?.id;
+  const coupon = "";
+  const products = await getCartProducts(userId, coupon);
   // ksdfj
 
   const data = await getAllProduct();
@@ -109,28 +111,7 @@ const page = async () => {
 
         </div>
         {/* <Testimonial/> */}
-        {/* <MiddleChildCategory
-          childCategoriesList={middleChildCategoriesList?.data}
-        />
-        {middleRes?.status === "success" && (
-          <HomeProductSection products={middleRes?.data} />
-        )} */}
-
-        {/* <LowerMiddleChildCategory
-          childCategoriesList={lowerMiddleChildCategoriesList?.data}
-        />
-
-        {lowerMiddleRes?.status === "success" && (
-          <HomeProductSection products={lowerMiddleRes?.data} />
-        )}
-
-        <ButtomChildCategory
-          childCategoriesList={buttomChildCategoriesList?.data}
-        />
-
-        {buttomRes?.status === "success" && (
-          <HomeProductSection products={buttomRes?.data} />
-        )} */}
+        <CartSideBar cartProducts={products?.data} />
       </div>
     </>
   );

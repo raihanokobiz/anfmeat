@@ -57,12 +57,6 @@ export const columns: ColumnDef<TOrder>[] = [
                 x <span className="font-bold">{item?.quantity}</span>
               </p>
               <p>
-                Color:{" "}
-                {item?.inventoryRef?.name
-                  ? upperCase(item?.inventoryRef?.name)
-                  : "N/A"}
-              </p>
-              <p>
                 Size:{" "}
                 {item?.inventoryRef?.level
                   ? upperCase(item?.inventoryRef?.level)
